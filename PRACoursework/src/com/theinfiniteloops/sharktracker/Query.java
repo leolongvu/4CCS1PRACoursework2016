@@ -77,5 +77,6 @@ public class Query {
 		for (int i = 0; i < getSharkList.size(); i++) {
 			System.out.println(getSharkList.get(i).getName());
 		}
+		System.out.println("Raf test");
 	}
 }
