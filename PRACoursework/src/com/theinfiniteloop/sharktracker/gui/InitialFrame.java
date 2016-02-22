@@ -1,4 +1,4 @@
-package com.theinfiniteloops.sharktracker.gui;
+package com.theinfiniteloop.sharktracker.gui;
 
 import java.awt.Color;
 import java.awt.Component;

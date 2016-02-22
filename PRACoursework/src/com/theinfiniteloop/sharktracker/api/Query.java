@@ -1,4 +1,4 @@
-package com.theinfiniteloops.sharktracker;
+package com.theinfiniteloop.sharktracker.api;
 
 import java.util.ArrayList;
 
