@@ -3,6 +3,8 @@ package com.theinfiniteloop.sharktracker.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import javax.swing.border.Border;
 
 public class InitialFrame {
 
+	private JFrame frame;
 	private JButton searchButton;
 	private JButton favsButton;
 	private JLabel logo;
@@ -24,7 +27,7 @@ public class InitialFrame {
 	}
 
 	public void createFrame() {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.setTitle("Shark Tracker");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -40,6 +43,7 @@ public class InitialFrame {
 		frame.setLayout(boxLayout);
 		frame.getContentPane().setBackground(Color.white);
 		frame.setSize(new Dimension(300, 400));
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 
@@ -65,6 +69,13 @@ public class InitialFrame {
 		searchButton.setMaximumSize(new Dimension(250, 50));
 		searchButton.setBorder(border);
 		searchButton.setBackground(Color.white);
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame mainFrame = new MainFrame();
+				frame.dispose();
+			}
+		});
 
 		favsButton = new JButton("Favourites");
 		favsButton.setEnabled(false);
@@ -75,6 +86,6 @@ public class InitialFrame {
 	}
 
 	public static void main(String[] args) {
-		InitialFrame frame = new InitialFrame();
+		InitialFrame initialFrame = new InitialFrame();
 	}
 }
