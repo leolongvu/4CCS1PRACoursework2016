@@ -27,13 +27,13 @@ public class MainFrame {
 
 	public MainFrame() {
 
-		createFrame();
+		createPane();
 		createSidePanel();
 		createMainPanel();
+		createFrame();
 	}
 
-	public void createFrame() {
-
+	public void createPane() {
 		// Create content pane
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -41,6 +41,9 @@ public class MainFrame {
 		JLabel acknowledgementLabel = new JLabel(
 				"All the information used in this application is the property of Ocearch (http://ocearch.org/) and CAT (http://www.cat.com/). Thanks to EPMF.");
 		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
+	}
+
+	public void createFrame() {
 
 		// Create the frame
 		JFrame frame = new JFrame();
