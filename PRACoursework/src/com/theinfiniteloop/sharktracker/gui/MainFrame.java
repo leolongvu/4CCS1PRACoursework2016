@@ -31,11 +31,10 @@ public class MainFrame {
 		frame.setTitle("Search");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 1200, 700);
-		
+
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
 
 		JPanel sidePanel = new JPanel();
 		sidePanel.setBackground(Color.white);
@@ -73,6 +72,7 @@ public class MainFrame {
 
 		JComboBox genderBox = new JComboBox();
 		genderBox.setMaximumSize(new Dimension(250, 20));
+		genderBox.addItem("All Genders");
 		genderBox.addItem("Male");
 		genderBox.addItem("Female");
 		sidePanel.add(genderBox);
@@ -87,6 +87,10 @@ public class MainFrame {
 
 		JComboBox stageOfLifeBox = new JComboBox();
 		stageOfLifeBox.setMaximumSize(new Dimension(250, 20));
+		stageOfLifeBox.addItem("All Stages of Life");
+		stageOfLifeBox.addItem("Mature");
+		stageOfLifeBox.addItem("Immature");
+		stageOfLifeBox.addItem("Undetermined");
 		sidePanel.add(stageOfLifeBox);
 
 		JSeparator separator4 = new JSeparator();
@@ -99,6 +103,15 @@ public class MainFrame {
 
 		JComboBox tagLocationBox = new JComboBox();
 		tagLocationBox.setMaximumSize(new Dimension(250, 20));
+		String[] Locations = { "All Locations", "Batt Reef, Australia", "Cairns", "Cape Cod", "Cape Town", "Chile",
+				"Darwin Arch, Galapagos Islands", "Durban", "False Bay", "Fernado de Noronha",
+				"Fraser Island, Australia", "Galapagos Islands", "Gansbaai", "Itabaca Channel, Galapagos Islands",
+				"Montauk, NY", "Mosquera Island, Galapagos Islands", "Mossel Bay", "Ningaloo Reef, Australia",
+				"North Central Gulf of Mexico", "Playa Millonario Baltra, Galapagos Islands", "Port Aransas, TX",
+				"Port Edward", "Port Royal Sound, South Carolina", "South Maui", "Struisbaai" };
+		for (int i = 0; i < (Locations.length); i++) {
+			tagLocationBox.addItem(Locations[i]);
+		}
 		sidePanel.add(tagLocationBox);
 
 		JSeparator separator5 = new JSeparator();
@@ -113,7 +126,7 @@ public class MainFrame {
 		JSeparator separator6 = new JSeparator();
 		separator6.setMaximumSize(new Dimension(300, 50));
 		sidePanel.add(separator6);
-		
+
 		JLabel logo = new JLabel("New label");
 		BufferedImage logoPicture = null;
 		try {
@@ -137,7 +150,7 @@ public class MainFrame {
 		JLabel acknowledgementLabel = new JLabel(
 				"All the information used in this application is the property of Ocearch (http://ocearch.org/) and CAT (http://www.cat.com/). Thanks to EPMF.");
 		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
-		
+
 		frame.setContentPane(contentPane);
 		frame.setVisible(true);
 
