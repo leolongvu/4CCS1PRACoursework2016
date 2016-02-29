@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -24,23 +23,43 @@ import javax.swing.border.MatteBorder;
 
 public class MainFrame {
 
+	private JPanel contentPane;
+
 	public MainFrame() {
 
+		createFrame();
+		createSidePanel();
+		createMainPanel();
+	}
+
+	public void createFrame() {
+
+		// Create content pane
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		JLabel acknowledgementLabel = new JLabel(
+				"All the information used in this application is the property of Ocearch (http://ocearch.org/) and CAT (http://www.cat.com/). Thanks to EPMF.");
+		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
+
+		// Create the frame
 		JFrame frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("Search");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 1200, 700);
+		frame.setContentPane(contentPane);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
 
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
+	public void createSidePanel() {
 
+		// Side panel
 		JPanel sidePanel = new JPanel();
 		sidePanel.setBackground(Color.white);
 		sidePanel.setPreferredSize(new Dimension(300, 700));
 		sidePanel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
-		contentPane.add(sidePanel, BorderLayout.WEST);
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
 
 		JLabel sharkTrackerLabel = new JLabel("Shark Tracker");
@@ -51,6 +70,7 @@ public class MainFrame {
 		separator1.setMaximumSize(new Dimension(300, 20));
 		sidePanel.add(separator1);
 
+		// Tracking Range
 		JLabel trackingRangeLabel = new JLabel("Tracking Rage");
 		trackingRangeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(trackingRangeLabel);
@@ -66,6 +86,7 @@ public class MainFrame {
 		separator2.setMaximumSize(new Dimension(300, 20));
 		sidePanel.add(separator2);
 
+		// Gender
 		JLabel genderLabel = new JLabel("Gender");
 		genderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(genderLabel);
@@ -81,6 +102,7 @@ public class MainFrame {
 		separator3.setMaximumSize(new Dimension(300, 20));
 		sidePanel.add(separator3);
 
+		// Stage of Life
 		JLabel stageOfLifeLabel = new JLabel("Stage of Life");
 		stageOfLifeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(stageOfLifeLabel);
@@ -97,6 +119,7 @@ public class MainFrame {
 		separator4.setMaximumSize(new Dimension(300, 20));
 		sidePanel.add(separator4);
 
+		// Tag Location
 		JLabel tagLocationLabel = new JLabel("Tag Location");
 		tagLocationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(tagLocationLabel);
@@ -118,6 +141,7 @@ public class MainFrame {
 		separator5.setMaximumSize(new Dimension(300, 35));
 		sidePanel.add(separator5);
 
+		// Search button
 		JButton searchButton = new JButton("Search");
 		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		searchButton.setMaximumSize(new Dimension(250, 25));
@@ -127,6 +151,7 @@ public class MainFrame {
 		separator6.setMaximumSize(new Dimension(300, 50));
 		sidePanel.add(separator6);
 
+		// Shark logo
 		JLabel logo = new JLabel("New label");
 		BufferedImage logoPicture = null;
 		try {
@@ -138,21 +163,22 @@ public class MainFrame {
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(logo);
 
+		contentPane.add(sidePanel, BorderLayout.WEST);
+	}
+
+	public void createMainPanel() {
+
+		// Main panel
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBorder(new MatteBorder(3, 0, 3, 3, (Color) new Color(0, 0, 0)));
 		FlowLayout flowLayout = (FlowLayout) mainPanel.getLayout();
 		mainPanel.setPreferredSize(new Dimension(700, 700));
-		contentPane.add(mainPanel);
 
+		// Scroll pane to show information
 		JScrollPane scrollPane = new JScrollPane();
 		mainPanel.add(scrollPane);
 
-		JLabel acknowledgementLabel = new JLabel(
-				"All the information used in this application is the property of Ocearch (http://ocearch.org/) and CAT (http://www.cat.com/). Thanks to EPMF.");
-		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
-
-		frame.setContentPane(contentPane);
-		frame.setVisible(true);
+		contentPane.add(mainPanel, BorderLayout.CENTER);
 
 	}
 

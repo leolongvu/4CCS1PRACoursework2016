@@ -27,6 +27,8 @@ public class InitialFrame {
 	}
 
 	public void createFrame() {
+		
+		// Create the frame and add components
 		frame = new JFrame();
 		frame.setTitle("Shark Tracker");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,10 +46,13 @@ public class InitialFrame {
 		frame.getContentPane().setBackground(Color.white);
 		frame.setSize(new Dimension(300, 400));
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
 	public void createLabels() {
+		
+		// Creates the logo and label
 		BufferedImage logoPicture = null;
 		try {
 			logoPicture = ImageIO.read(new File("Shark Logo.jpg"));
@@ -62,6 +67,8 @@ public class InitialFrame {
 	}
 
 	public void createButtons() {
+		
+		// Creates the search and favourites buttons
 		Border border = BorderFactory.createLineBorder(Color.black, 2);
 
 		searchButton = new JButton("Search");
@@ -69,6 +76,8 @@ public class InitialFrame {
 		searchButton.setMaximumSize(new Dimension(250, 50));
 		searchButton.setBorder(border);
 		searchButton.setBackground(Color.white);
+		
+		// Action listener for the search button to open the main frame
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
