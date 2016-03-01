@@ -3,7 +3,8 @@ package com.theinfiniteloop.sharktracker.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,32 +14,61 @@ import javax.swing.border.Border;
 
 public class InitialFrame {
 
+	private JFrame frame;
 	private JButton searchButton;
 	private JButton favsButton;
 	private JLabel logo;
 	private JLabel label;
 
 	public InitialFrame() {
+		createLabels();
+		createButtons();
+		createFrame();
+	}
 
-		JFrame frame = new JFrame();
+	public void createFrame() {
+		
+		// Create the frame and add components
+		frame = new JFrame();
 		frame.setTitle("Shark Tracker");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		BoxLayout boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
 
+		frame.add(logo);
+		frame.add(label);
+		frame.add(new Box.Filler(new Dimension(10, 20), new Dimension(10, 20), new Dimension(10, 20)));
+		frame.add(searchButton);
+		frame.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
+		frame.add(favsButton);
+
+		frame.setLayout(boxLayout);
+		frame.getContentPane().setBackground(Color.white);
+		frame.setSize(new Dimension(300, 400));
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+
+	public void createLabels() {
+		
+		// Creates the logo and label
 		BufferedImage logoPicture = null;
 		try {
 			logoPicture = ImageIO.read(new File("Shark Logo.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		logo = new JLabel(new ImageIcon(logoPicture.getScaledInstance(200, 200, logoPicture.SCALE_DEFAULT)));
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		label = new JLabel("Shark Tracker");
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
 
+	public void createButtons() {
+		
+		// Creates the search and favourites buttons
 		Border border = BorderFactory.createLineBorder(Color.black, 2);
 
 		searchButton = new JButton("Search");
@@ -47,27 +77,24 @@ public class InitialFrame {
 		searchButton.setBorder(border);
 		searchButton.setBackground(Color.white);
 		
+		// Action listener for the search button to open the main frame
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame mainFrame = new MainFrame();
+				frame.dispose();
+			}
+		});
+
 		favsButton = new JButton("Favourites");
 		favsButton.setEnabled(false);
 		favsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		favsButton.setMaximumSize(new Dimension(250, 50));
 		favsButton.setBorder(border);
 		favsButton.setBackground(Color.white);
-
-		frame.setLayout(boxLayout);
-		frame.add(logo);
-		frame.add(label);
-		frame.add(new Box.Filler(new Dimension(10, 20), new Dimension(10, 20), new Dimension(10, 20)));
-		frame.add(searchButton);
-		frame.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
-		frame.add(favsButton);
-		
-		frame.getContentPane().setBackground(Color.white);
-		frame.setSize(new Dimension(300, 400));
-		frame.setVisible(true);
 	}
 
 	public static void main(String[] args) {
-		InitialFrame i = new InitialFrame();
+		InitialFrame initialFrame = new InitialFrame();
 	}
 }
