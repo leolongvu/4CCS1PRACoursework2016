@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,34 +26,37 @@ import javax.swing.border.MatteBorder;
 public class MainFrame {
 
 	private JPanel contentPane;
+	private JFrame frame;
+	private JButton searchButton;
+	private JButton favouritesButton;
 
 	public MainFrame() {
-
-		createPane();
+		createPanel();
 		createSidePanel();
 		createMainPanel();
 		createFrame();
 	}
 
-	public void createPane() {
-		// Create content pane
+	// Create the content pane
+	public void createPanel() {
+		
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JLabel acknowledgementLabel = new JLabel(
 				"All the information used in this application is the property of Ocearch (http://ocearch.org/) and CAT (http://www.cat.com/). Thanks to EPMF.");
 		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
 	}
 
+	// Create the frame
 	public void createFrame() {
-
-		// Create the frame
-		JFrame frame = new JFrame();
-		frame.setResizable(false);
+		
+		frame = new JFrame();
 		frame.setTitle("Search");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 1200, 700);
 		frame.setContentPane(contentPane);
+		frame.setSize(1200, 700);
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -130,11 +135,12 @@ public class MainFrame {
 		JComboBox tagLocationBox = new JComboBox();
 		tagLocationBox.setMaximumSize(new Dimension(250, 20));
 		String[] Locations = { "All Locations", "Batt Reef, Australia", "Cairns", "Cape Cod", "Cape Town", "Chile",
-				"Darwin Arch, Galapagos Islands", "Durban", "False Bay", "Fernado de Noronha",
+				"Darwin Arch, Galápagos Islands", "Durban", "False Bay", "Fernado de Noronha",
 				"Fraser Island, Australia", "Galapagos Islands", "Gansbaai", "Itabaca Channel, Galapagos Islands",
 				"Montauk, NY", "Mosquera Island, Galapagos Islands", "Mossel Bay", "Ningaloo Reef, Australia",
 				"North Central Gulf of Mexico", "Playa Millonario Baltra, Galapagos Islands", "Port Aransas, TX",
-				"Port Edward", "Port Royal Sound, South Carolina", "South Maui", "Struisbaai" };
+				"Port Edward", "Port Royal Sound, South Carolina", "South Maui", "Struisbaai",
+				"Whale Rock Beach, Plettenberg Bay", "Wolf Island, Galapagos Islands" };
 		for (int i = 0; i < (Locations.length); i++) {
 			tagLocationBox.addItem(Locations[i]);
 		}
@@ -145,13 +151,13 @@ public class MainFrame {
 		sidePanel.add(separator5);
 
 		// Search button
-		JButton searchButton = new JButton("Search");
+		searchButton = new JButton("Search");
 		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		searchButton.setMaximumSize(new Dimension(250, 25));
 		sidePanel.add(searchButton);
 
 		JSeparator separator6 = new JSeparator();
-		separator6.setMaximumSize(new Dimension(300, 50));
+		separator6.setMaximumSize(new Dimension(300, 10));
 		sidePanel.add(separator6);
 
 		// Shark logo
@@ -165,6 +171,23 @@ public class MainFrame {
 		logo = new JLabel(new ImageIcon(logoPicture.getScaledInstance(300, 300, logoPicture.SCALE_DEFAULT)));
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(logo);
+
+		// Favourites button
+		favouritesButton = new JButton("Favourites");
+		favouritesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		favouritesButton.setMaximumSize(new Dimension(250, 25));
+		favouritesButton.setEnabled(false);
+		sidePanel.add(favouritesButton);
+
+		// Action listener for the favourites button to open the favourites
+		// frame
+		favouritesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FavouritesFrame favouritesFrame = new FavouritesFrame();
+				frame.dispose();
+			}
+		});
 
 		contentPane.add(sidePanel, BorderLayout.WEST);
 	}
@@ -183,6 +206,12 @@ public class MainFrame {
 
 		contentPane.add(mainPanel, BorderLayout.CENTER);
 
+	}
+
+	// Method to enable the favourites button, to be used later when the
+	// favourites list is not empty
+	public void enableFavourites() {
+		favouritesButton.setEnabled(true);
 	}
 
 }
