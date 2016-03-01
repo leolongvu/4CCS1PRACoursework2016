@@ -14,69 +14,67 @@ import javax.swing.border.Border;
 
 public class InitialFrame {
 
+	private JPanel contentPane;
 	private JFrame frame;
-	private JButton searchButton;
-	private JButton favsButton;
-	private JLabel logo;
-	private JLabel label;
+	private JButton favouritesButton;
 
 	public InitialFrame() {
+		createPanel();
 		createLabels();
 		createButtons();
 		createFrame();
 	}
 
-	public void createFrame() {
+	// Create the content pane
+	public void createPanel() {
 		
-		// Create the frame and add components
+		contentPane = new JPanel();
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		contentPane.setBackground(Color.white);
+	}
+	
+	// Create the frame
+	public void createFrame() {
 		frame = new JFrame();
 		frame.setTitle("Shark Tracker");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		BoxLayout boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
-
-		frame.add(logo);
-		frame.add(label);
-		frame.add(new Box.Filler(new Dimension(10, 20), new Dimension(10, 20), new Dimension(10, 20)));
-		frame.add(searchButton);
-		frame.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
-		frame.add(favsButton);
-
-		frame.setLayout(boxLayout);
-		frame.getContentPane().setBackground(Color.white);
+		frame.setContentPane(contentPane);
 		frame.setSize(new Dimension(300, 400));
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
+	
+	// Creates the logo and label
 	public void createLabels() {
-		
-		// Creates the logo and label
 		BufferedImage logoPicture = null;
 		try {
 			logoPicture = ImageIO.read(new File("Shark Logo.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		logo = new JLabel(new ImageIcon(logoPicture.getScaledInstance(200, 200, logoPicture.SCALE_DEFAULT)));
+		JLabel logo = new JLabel(new ImageIcon(logoPicture.getScaledInstance(200, 200, logoPicture.SCALE_DEFAULT)));
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		contentPane.add(logo);
 
-		label = new JLabel("Shark Tracker");
+		JLabel label = new JLabel("Shark Tracker");
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		contentPane.add(label);
+
+		contentPane.add(new Box.Filler(new Dimension(10, 20), new Dimension(10, 20), new Dimension(10, 20)));
 	}
 
+	// Creates the search and favourites buttons
 	public void createButtons() {
-		
-		// Creates the search and favourites buttons
 		Border border = BorderFactory.createLineBorder(Color.black, 2);
 
-		searchButton = new JButton("Search");
+		JButton searchButton = new JButton("Search");
 		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		searchButton.setMaximumSize(new Dimension(250, 50));
 		searchButton.setBorder(border);
 		searchButton.setBackground(Color.white);
-		
+
 		// Action listener for the search button to open the main frame
 		searchButton.addActionListener(new ActionListener() {
 			@Override
@@ -85,16 +83,35 @@ public class InitialFrame {
 				frame.dispose();
 			}
 		});
+		contentPane.add(searchButton);
+		contentPane.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
 
-		favsButton = new JButton("Favourites");
-		favsButton.setEnabled(false);
-		favsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		favsButton.setMaximumSize(new Dimension(250, 50));
-		favsButton.setBorder(border);
-		favsButton.setBackground(Color.white);
+		favouritesButton = new JButton("Favourites");
+		favouritesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		favouritesButton.setMaximumSize(new Dimension(250, 50));
+		favouritesButton.setBorder(border);
+		favouritesButton.setBackground(Color.white);
+		favouritesButton.setEnabled(false);
+
+		// Action listener for the favourites button to open the favourites
+		// frame
+		favouritesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FavouritesFrame favouritesFrame = new FavouritesFrame();
+				frame.dispose();
+			}
+		});
+		contentPane.add(favouritesButton);
+	}
+
+	// Method to enable the favourites button, to be used later when the
+	// favourites list is not empty
+	public void enableFavourites() {
+		favouritesButton.setEnabled(true);
 	}
 
 	public static void main(String[] args) {
-		InitialFrame initialFrame = new InitialFrame();
+		InitialFrame GUI = new InitialFrame();
 	}
 }
