@@ -1,6 +1,10 @@
 package com.theinfiniteloop.sharktracker.api;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import api.jaws.Jaws;
 import api.jaws.Ping;
@@ -17,7 +21,7 @@ public class Query {
 		jawAPI = new Jaws(privateKey, publicKey, true);
 	}	
 	
-	public ArrayList<Shark> getSharkByTimeFrame(String timeFrame) {
+	public ArrayList<SharkTime> getSharkByTimeFrame(String timeFrame) {
 		// Setup a list of ping return by time frame, which we will be using to
 		// extract the name of all sharks.
 		ArrayList<Ping> pingTimeFrameConstrain = new ArrayList<Ping>();
@@ -32,13 +36,39 @@ public class Query {
 				pingTimeFrameConstrain = jawAPI.pastMonth();
 				break;
 		}
-		ArrayList<Shark> sharkTimeFrameConstrain = new ArrayList<Shark>();
-		// Illiterate through all ping objects and then call getShark() methods with 
-		// parameter String name return from every ping object.
+		HashMap<String, Ping> map = new HashMap<String, Ping>();
 		for (int i = 0; i < pingTimeFrameConstrain.size(); i++) {
-			// This will break Demeter's Law, but we do not have access to Ping class's code.
-			String name = pingTimeFrameConstrain.get(i).getName(); 
-			sharkTimeFrameConstrain.add(jawAPI.getShark(name));
+			Ping toCompare = map.get(pingTimeFrameConstrain.get(i).getName());
+			if (toCompare == null) {
+				// Add the new Ping into the list
+				map.put(pingTimeFrameConstrain.get(i).getName(), pingTimeFrameConstrain.get(i));
+			}
+			else {
+				// Ping of the same shark is already existed
+				// Time formatter for the Ping object
+				SimpleDateFormat inFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				try {
+					// Parse two time frame to compare them
+					Date oldPingTime = inFormat.parse(toCompare.getTime());
+					Date toUpdatedPingTime = inFormat.parse(pingTimeFrameConstrain.get(i).getTime());
+					// So if the new found Ping refer to same shark and its time frame is after the
+					// found one, update ping object
+					if (toUpdatedPingTime.after(oldPingTime)) {
+						map.put(pingTimeFrameConstrain.get(i).getName(), pingTimeFrameConstrain.get(i));
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+		}
+		ArrayList<SharkTime> sharkTimeFrameConstrain = new ArrayList<SharkTime>();
+		// Illiterate through the hashmap and then call getShark() methods with 
+		// parameter String name return from its keys
+		for (HashMap.Entry<String, Ping> entry : map.entrySet())
+		{
+			SharkTime sharkAdd = new SharkTime(jawAPI.getShark(entry.getKey()), entry.getValue().getTime());
+			sharkTimeFrameConstrain.add(sharkAdd);
 		}
 		return sharkTimeFrameConstrain;
 	}
@@ -73,10 +103,11 @@ public class Query {
 	public static void main(String[] args) {
 		Query testing = new Query();
 		System.out.println("Downloading data...");
-		ArrayList<Shark> getSharkList = testing.getSharkByTimeFrame("Month");
+		ArrayList<SharkTime> getSharkList = testing.getSharkByTimeFrame("Week");
 		for (int i = 0; i < getSharkList.size(); i++) {
-			System.out.println(getSharkList.get(i).getName());
+			System.out.println(getSharkList.get(i).getShark().getName() + " "
+					+ getSharkList.get(i).getTime());
 		}
-		System.out.println("Raf test");
+		System.out.println("Finish!");
 	}
 }
