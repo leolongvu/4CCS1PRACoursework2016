@@ -4,13 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -34,9 +35,11 @@ public class MainFrame {
 	private JFrame frame;
 	private JButton searchButton;
 	private JButton favouritesButton;
-	
+
+	private JPanel mainPanel;
+
 	private Query query;
-	private ArrayList<SharkTime> sharkFilter; 
+	private ArrayList<SharkTime> sharkFilter;
 
 	public MainFrame() {
 		query = new Query();
@@ -49,7 +52,7 @@ public class MainFrame {
 
 	// Create the content pane
 	public void createPanel() {
-		
+
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -59,7 +62,7 @@ public class MainFrame {
 
 	// Create the frame
 	public void createFrame() {
-		
+
 		frame = new JFrame();
 		frame.setTitle("Search");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,15 +146,11 @@ public class MainFrame {
 
 		JComboBox tagLocationBox = new JComboBox();
 		tagLocationBox.setMaximumSize(new Dimension(250, 20));
-		String[] Locations = { "All Locations", "Batt Reef, Australia", "Cairns", "Cape Cod", "Cape Town", "Chile",
-				"Darwin Arch, Galápagos Islands", "Durban", "False Bay", "Fernado de Noronha",
-				"Fraser Island, Australia", "Galapagos Islands", "Gansbaai", "Itabaca Channel, Galapagos Islands",
-				"Montauk, NY", "Mosquera Island, Galapagos Islands", "Mossel Bay", "Ningaloo Reef, Australia",
-				"North Central Gulf of Mexico", "Playa Millonario Baltra, Galapagos Islands", "Port Aransas, TX",
-				"Port Edward", "Port Royal Sound, South Carolina", "South Maui", "Struisbaai",
-				"Whale Rock Beach, Plettenberg Bay", "Wolf Island, Galapagos Islands" };
-		for (int i = 0; i < (Locations.length); i++) {
-			tagLocationBox.addItem(Locations[i]);
+		ArrayList<String> locations = query.getTagLocations();
+		Collections.sort(locations);
+		locations.add(0, "All Locations");
+		for (String s : locations) {
+			tagLocationBox.addItem(s);
 		}
 		sidePanel.add(tagLocationBox);
 
@@ -164,11 +163,21 @@ public class MainFrame {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub	
-				sharkFilter = query.implementAllSearch(trackingRangeBox.getSelectedItem().toString(), 
-						genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(), 
+				// TODO Auto-generated method stub
+				query.implementAllSearch(trackingRangeBox.getSelectedItem().toString(),
+						genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
 						tagLocationBox.getSelectedItem().toString());
-			}			
+
+				sharkFilter = query.getSharkList();
+				
+				mainPanel.removeAll();
+
+				System.out.println("Shark count: " + sharkFilter.size());
+				//for (SharkTime s : sharkFilter) {
+					mainPanel.add(new SharkPanel());
+				//}
+				mainPanel.revalidate();
+			}
 		});
 		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		searchButton.setMaximumSize(new Dimension(250, 25));
@@ -213,16 +222,15 @@ public class MainFrame {
 	public void createMainPanel() {
 
 		// Main panel
-		JPanel mainPanel = new JPanel();
-		mainPanel.setBorder(new MatteBorder(3, 0, 3, 3, (Color) new Color(0, 0, 0)));
-		FlowLayout flowLayout = (FlowLayout) mainPanel.getLayout();
-		mainPanel.setPreferredSize(new Dimension(700, 700));
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setMaximumSize(new Dimension(700,700));
 
 		// Scroll pane to show information
-		JScrollPane scrollPane = new JScrollPane();
-		mainPanel.add(scrollPane);
-
-		contentPane.add(mainPanel, BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(mainPanel);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBorder(new MatteBorder(3, 0, 3, 3, (Color) new Color(0, 0, 0)));
+		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 	}
 
