@@ -89,7 +89,7 @@ public class MainFrame {
 		sidePanel.add(separator1);
 
 		// Tracking Range
-		JLabel trackingRangeLabel = new JLabel("Tracking Rage");
+		JLabel trackingRangeLabel = new JLabel("Tracking Range");
 		trackingRangeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(trackingRangeLabel);
 
