@@ -74,7 +74,7 @@ public class Query {
 
 	public ArrayList<SharkTime> getSharkByGender(String gender, ArrayList<SharkTime> sharkFilter) {
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!gender.equals("All genders") && !sharkFilter.get(i).getShark().getGender().equals(gender)) {
+			if (!gender.equals("All Genders") && !sharkFilter.get(i).getShark().getGender().equals(gender)) {
 				sharkFilter.remove(i);
 			}
 		}
@@ -83,7 +83,7 @@ public class Query {
 
 	public ArrayList<SharkTime> getSharkByLifeStage(String lifeStage, ArrayList<SharkTime> sharkFilter) {
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!lifeStage.equals("All stage of life") && !sharkFilter.get(i).getShark().getStageOfLife().equals(lifeStage)) {
+			if (!lifeStage.equals("All Stages of Life") && !sharkFilter.get(i).getShark().getStageOfLife().equals(lifeStage)) {
 				sharkFilter.remove(i);
 			}
 		}
@@ -92,7 +92,7 @@ public class Query {
 
 	public ArrayList<SharkTime> getSharkByLocation(String location, ArrayList<SharkTime> sharkFilter) {
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!location.equals("All locations") && !sharkFilter.get(i).getShark().getTagLocation().equals(location)) {
+			if (!location.equals("All Locations") && !sharkFilter.get(i).getShark().getTagLocation().equals(location)) {
 				sharkFilter.remove(i);
 			}
 		}
@@ -100,20 +100,22 @@ public class Query {
 	}
 
 	public ArrayList<SharkTime> implementAllSearch(String timeFrame, String gender, String lifeStage, String location) {
+		System.out.println("Downloading data...");
 		ArrayList<SharkTime> getSharkList = getSharkByTimeFrame(timeFrame);
 		getSharkList = getSharkByGender(gender, getSharkList);
 		getSharkList = getSharkByLifeStage(lifeStage, getSharkList);
 		getSharkList = getSharkByLocation(location, getSharkList);
+		for (int i = 0; i < getSharkList.size(); i++) {
+			System.out.println(getSharkList.get(i).getShark().getName() + " " + getSharkList.get(i).getTime());
+		}
+		System.out.println("Done!");
 		return getSharkList;
 	}
 
 	public static void main(String[] args) {
 		Query testing = new Query();
-		System.out.println("Downloading data...");
-		ArrayList<SharkTime> getSharkList = testing.getSharkByTimeFrame("Week");
-		for (int i = 0; i < getSharkList.size(); i++) {
-			System.out.println(getSharkList.get(i).getShark().getName() + " " + getSharkList.get(i).getTime());
-		}
-		System.out.println("Finish!");
+		
+		//ArrayList<SharkTime> getSharkList = testing.implementAllSearch("Month", "All Genders", "All stage of life", "All locations");
+		
 	}
 }
