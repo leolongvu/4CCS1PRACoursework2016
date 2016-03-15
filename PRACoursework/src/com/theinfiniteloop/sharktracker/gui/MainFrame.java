@@ -39,12 +39,12 @@ public class MainFrame {
 	private ArrayList<SharkTime> sharkFilter; 
 
 	public MainFrame() {
+		query = new Query();
+		sharkFilter = new ArrayList<SharkTime>();
 		createPanel();
 		createSidePanel();
 		createMainPanel();
 		createFrame();
-		query = new Query();
-		sharkFilter = new ArrayList<SharkTime>();
 	}
 
 	// Create the content pane
@@ -53,8 +53,7 @@ public class MainFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		JLabel acknowledgementLabel = new JLabel(
-				"All the information used in this application is the property of Ocearch (http://ocearch.org/) and CAT (http://www.cat.com/). Thanks to EPMF.");
+		JLabel acknowledgementLabel = new JLabel(query.getAcknowledgement());
 		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
 	}
 

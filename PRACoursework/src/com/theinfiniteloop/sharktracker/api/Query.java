@@ -111,6 +111,10 @@ public class Query {
 		System.out.println("Done!");
 		return getSharkList;
 	}
+	
+	public String getAcknowledgement(){
+		return jawAPI.getAcknowledgement();
+	}
 
 	public static void main(String[] args) {
 		Query testing = new Query();
