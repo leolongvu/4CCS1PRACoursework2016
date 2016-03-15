@@ -73,31 +73,43 @@ public class Query {
 		return sharkTimeFrameConstrain;
 	}
 	
-	public ArrayList<Shark> getSharkByGender(String gender, ArrayList<Shark> sharkFilter) {
+	public ArrayList<SharkTime> getSharkByGender(String gender, ArrayList<SharkTime> sharkFilter) {
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!sharkFilter.get(i).getGender().equals(gender)) {
+			if (!sharkFilter.get(i).getShark().getGender().equals(gender)) {
 				sharkFilter.remove(i);
 			}
 		}
 		return sharkFilter;
 	}
 	
-	public ArrayList<Shark> getSharkByLifeStage(String lifeStage, ArrayList<Shark> sharkFilter) {
+	public ArrayList<SharkTime> getSharkByLifeStage(String lifeStage, ArrayList<SharkTime> sharkFilter) {
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!sharkFilter.get(i).getStageOfLife().equals(lifeStage)) {
+			if (!sharkFilter.get(i).getShark().getStageOfLife().equals(lifeStage)) {
 				sharkFilter.remove(i);
 			}
 		}
 		return sharkFilter;
 	}
 	
-	public ArrayList<Shark> getSharkByLocation(String lifeStage, ArrayList<Shark> sharkFilter) {
+	public ArrayList<SharkTime> getSharkByLocation(String location, ArrayList<SharkTime> sharkFilter) {
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!sharkFilter.get(i).getStageOfLife().equals(lifeStage)) {
+			if (!sharkFilter.get(i).getShark().getTagLocation().equals(location)) {
 				sharkFilter.remove(i);
 			}
 		}
 		return sharkFilter;
+	}
+	
+	public ArrayList<SharkTime> implementAllSearch(String timeFrame, String gender, String lifeStage, 
+			String location) {
+		ArrayList<SharkTime> getSharkList = getSharkByTimeFrame(timeFrame);
+		getSharkList = getSharkByGender(gender, getSharkList); {
+			getSharkList = getSharkByGender(gender, getSharkList);
+		}
+		getSharkList = getSharkByGender(gender, getSharkList);
+		getSharkList = getSharkByLifeStage(lifeStage, getSharkList);
+		getSharkList = getSharkByLocation(location, getSharkList);
+		return getSharkList;
 	}
 	
 	public static void main(String[] args) {
