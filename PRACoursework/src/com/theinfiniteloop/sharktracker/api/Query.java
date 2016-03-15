@@ -9,17 +9,19 @@ import java.util.HashMap;
 import api.jaws.Jaws;
 import api.jaws.Location;
 import api.jaws.Ping;
-import api.jaws.Shark;
 
 public class Query {
 
 	private static final String privateKey = "Wi1TzUkfnMAAdJAo";
 	private static final String publicKey = "5J9KvvPX5L0sPTFG";
 
+	private ArrayList<SharkTime> sharkFilter;
+	
 	private Jaws jawAPI;
 
 	public Query() {
 		jawAPI = new Jaws(privateKey, publicKey, true);
+		sharkFilter = new ArrayList<SharkTime>();
 	}
 
 	public ArrayList<SharkTime> getSharkByTimeFrame(String timeFrame) {
@@ -27,7 +29,7 @@ public class Query {
 		// extract the name of all sharks.
 		ArrayList<Ping> pingTimeFrameConstrain = new ArrayList<Ping>();
 		switch (timeFrame) {
-		case "24 hours":
+		case "24 Hours":
 			pingTimeFrameConstrain = jawAPI.past24Hours();
 			break;
 		case "Week":
@@ -100,17 +102,17 @@ public class Query {
 		return sharkFilter;
 	}
 
-	public ArrayList<SharkTime> implementAllSearch(String timeFrame, String gender, String lifeStage, String location) {
+	public void implementAllSearch(String timeFrame, String gender, String lifeStage, String location) {
 		System.out.println("Downloading data...");
-		ArrayList<SharkTime> getSharkList = getSharkByTimeFrame(timeFrame);
-		getSharkList = getSharkByGender(gender, getSharkList);
-		getSharkList = getSharkByLifeStage(lifeStage, getSharkList);
-		getSharkList = getSharkByLocation(location, getSharkList);
-		for (int i = 0; i < getSharkList.size(); i++) {
-			System.out.println(getSharkList.get(i).getShark().getName() + " " + getSharkList.get(i).getTime());
+		sharkFilter.clear();
+		sharkFilter = getSharkByTimeFrame(timeFrame);
+		sharkFilter = getSharkByGender(gender, sharkFilter);
+		sharkFilter = getSharkByLifeStage(lifeStage, sharkFilter);
+		sharkFilter = getSharkByLocation(location, sharkFilter);
+		for (int i = 0; i < sharkFilter.size(); i++) {
+			System.out.println(sharkFilter.get(i).getShark().getName() + " " + sharkFilter.get(i).getTime());
 		}
 		System.out.println("Done!");
-		return getSharkList;
 	}
 	
 	public String getAcknowledgement(){
@@ -120,11 +122,16 @@ public class Query {
 	public Location getLocation(String sharkName){
 		return jawAPI.getLastLocation(sharkName);
 	}
+	
+	public ArrayList<String> getTagLocations() {
+		return jawAPI.getTagLocations();
+	}
 
-	public static void main(String[] args) {
-		Query testing = new Query();
-		
-		ArrayList<SharkTime> getSharkList = testing.implementAllSearch("Month", "All Genders", "All stage of life", "All locations");		
+	public ArrayList<SharkTime> getSharkList() {
+		return sharkFilter;
 	}
 	
+	public static void main(String[] args) {
+		Query testing = new Query();
+	}	
 }
