@@ -129,9 +129,5 @@ public class Query {
 
 	public ArrayList<SharkTime> getSharkList() {
 		return sharkFilter;
-	}
-	
-	public static void main(String[] args) {
-		Query testing = new Query();
 	}	
 }
