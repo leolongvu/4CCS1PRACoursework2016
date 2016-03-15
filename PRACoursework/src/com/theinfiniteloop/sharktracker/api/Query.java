@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import api.jaws.Jaws;
+import api.jaws.Location;
 import api.jaws.Ping;
 import api.jaws.Shark;
 
@@ -115,10 +116,15 @@ public class Query {
 	public String getAcknowledgement(){
 		return jawAPI.getAcknowledgement();
 	}
+	
+	public Location getLocation(String sharkName){
+		return jawAPI.getLastLocation(sharkName);
+	}
 
 	public static void main(String[] args) {
 		Query testing = new Query();
 		
 		ArrayList<SharkTime> getSharkList = testing.implementAllSearch("Month", "All Genders", "All stage of life", "All locations");		
 	}
+	
 }

@@ -9,13 +9,20 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.theinfiniteloop.sharktracker.api.Query;
+import com.theinfiniteloop.sharktracker.api.SharkTime;
+
+import api.jaws.Location;
+
 public class FavouritesFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	DefaultTableModel model;
+	private DefaultTableModel model;
+	private Query query;
 
 	public FavouritesFrame() {
+		query = new Query();
 		createPanel();
 		createFrame();
 	}
@@ -51,8 +58,32 @@ public class FavouritesFrame {
 	}
 
 	// To do: method to add a favourite shark to the table
-	public void addFavourite() {
+	public void addFavourite(SharkTime s) {
+		Location l = query.getLocation(s.getShark().getName());
+		double dist = getDistance(l);
+		String name = s.getShark().getName();
 		
+		model.addRow(new Object[]{name, dist});
+		
+	}
+	
+	public double getDistance(Location l){
+		double lat = l.getLatitude();
+		double lon = l.getLongitude();
+		
+		double klat = 51.51193;
+		double klon = -0.11698;
+		
+		double l1 = (lat-klat);
+		double l11 = l1*l1;
+		
+		double l2 = (lon-klon);
+		double l22 = l2*l2;
+		
+		double l3 = l11+l22;
+		double dist = Math.sqrt(l3);
+		
+		return dist;
 	}
 
 	public static void main(String[] args) {
