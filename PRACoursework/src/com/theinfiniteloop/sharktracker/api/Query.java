@@ -115,7 +115,6 @@ public class Query {
 	public static void main(String[] args) {
 		Query testing = new Query();
 		
-		ArrayList<SharkTime> getSharkList = testing.implementAllSearch("Month", "All Genders", "All stage of life", "All locations");
-		
+		ArrayList<SharkTime> getSharkList = testing.implementAllSearch("Month", "All Genders", "All stage of life", "All locations");		
 	}
 }
