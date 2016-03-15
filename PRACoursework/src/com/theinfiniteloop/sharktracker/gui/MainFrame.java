@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -23,18 +25,26 @@ import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import com.theinfiniteloop.sharktracker.api.Query;
+import com.theinfiniteloop.sharktracker.api.SharkTime;
+
 public class MainFrame {
 
 	private JPanel contentPane;
 	private JFrame frame;
 	private JButton searchButton;
 	private JButton favouritesButton;
+	
+	private Query query;
+	private ArrayList<SharkTime> sharkFilter; 
 
 	public MainFrame() {
 		createPanel();
 		createSidePanel();
 		createMainPanel();
 		createFrame();
+		query = new Query();
+		sharkFilter = new ArrayList<SharkTime>();
 	}
 
 	// Create the content pane
@@ -152,6 +162,15 @@ public class MainFrame {
 
 		// Search button
 		searchButton = new JButton("Search");
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub	
+				sharkFilter = query.implementAllSearch(trackingRangeBox.getSelectedItem().toString(), 
+						genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(), 
+						tagLocationBox.getSelectedItem().toString());
+			}			
+		});
 		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		searchButton.setMaximumSize(new Dimension(250, 25));
 		sidePanel.add(searchButton);
@@ -213,5 +232,4 @@ public class MainFrame {
 	public void enableFavourites() {
 		favouritesButton.setEnabled(true);
 	}
-
 }
