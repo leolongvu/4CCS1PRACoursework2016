@@ -76,30 +76,33 @@ public class Query {
 	}
 
 	public ArrayList<SharkTime> getSharkByGender(String gender, ArrayList<SharkTime> sharkFilter) {
-		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!gender.equals("All Genders") && !sharkFilter.get(i).getShark().getGender().equals(gender)) {
-				sharkFilter.remove(i);
+		ArrayList<SharkTime> returnList = new ArrayList<SharkTime>();
+		for (int i = 0; i < sharkFilter.size(); i++) {			
+			if (gender.equals("All Genders") || sharkFilter.get(i).getShark().getGender().equals(gender)) {				
+				returnList.add(sharkFilter.get(i));
 			}
 		}
-		return sharkFilter;
+		return returnList;
 	}
 
 	public ArrayList<SharkTime> getSharkByLifeStage(String lifeStage, ArrayList<SharkTime> sharkFilter) {
+		ArrayList<SharkTime> returnList = new ArrayList<SharkTime>();
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!lifeStage.equals("All Stages of Life") && !sharkFilter.get(i).getShark().getStageOfLife().equals(lifeStage)) {
-				sharkFilter.remove(i);
+			if (lifeStage.equals("All Stages of Life") || sharkFilter.get(i).getShark().getStageOfLife().equals(lifeStage)) {
+				returnList.add(sharkFilter.get(i));
 			}
 		}
-		return sharkFilter;
+		return returnList;
 	}
 
 	public ArrayList<SharkTime> getSharkByLocation(String location, ArrayList<SharkTime> sharkFilter) {
+		ArrayList<SharkTime> returnList = new ArrayList<SharkTime>();
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			if (!location.equals("All Locations") && !sharkFilter.get(i).getShark().getTagLocation().equals(location)) {
-				sharkFilter.remove(i);
+			if (location.equals("All Locations") || sharkFilter.get(i).getShark().getTagLocation().equals(location)) {
+				returnList.add(sharkFilter.get(i));
 			}
 		}
-		return sharkFilter;
+		return returnList;
 	}
 
 	public void implementAllSearch(String timeFrame, String gender, String lifeStage, String location) {
@@ -109,10 +112,10 @@ public class Query {
 		sharkFilter = getSharkByGender(gender, sharkFilter);
 		sharkFilter = getSharkByLifeStage(lifeStage, sharkFilter);
 		sharkFilter = getSharkByLocation(location, sharkFilter);
+		System.out.println("Done!");		
 		for (int i = 0; i < sharkFilter.size(); i++) {
-			System.out.println(sharkFilter.get(i).getShark().getName() + " " + sharkFilter.get(i).getTime());
+			System.out.println(sharkFilter.get(i).getShark().getName() + " " + sharkFilter.get(i).getShark().getGender() + " " + sharkFilter.get(i).getTime());
 		}
-		System.out.println("Done!");
 	}
 	
 	public String getAcknowledgement(){
@@ -130,4 +133,9 @@ public class Query {
 	public ArrayList<SharkTime> getSharkList() {
 		return sharkFilter;
 	}	
+	
+	public static void main(String[] args) {
+		Query test = new Query();
+		test.implementAllSearch("Month", "All Genders", "Undetermined", "All Locations");
+	}
 }
