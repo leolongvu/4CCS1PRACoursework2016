@@ -134,8 +134,12 @@ public class Query {
 		return sharkFilter;
 	}	
 	
-	public static void main(String[] args) {
-		Query test = new Query();
-		test.implementAllSearch("Month", "All Genders", "Undetermined", "All Locations");
+	public SharkTime getSharkTimeFromName(String sharkName) {
+		for(int i = 0; i < sharkFilter.size(); i++) {
+			if (sharkFilter.get(i).getShark().getName().equals(sharkName)) {
+				return sharkFilter.get(i);
+			}
+		}
+		return null;
 	}
 }

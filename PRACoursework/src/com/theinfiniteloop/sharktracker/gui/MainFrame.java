@@ -175,8 +175,7 @@ public class MainFrame {
 				mainPanel.revalidate();
 				System.out.println("Shark count: " + sharkFilter.size());
 				for (SharkTime s : sharkFilter) {
-					SharkPanel sharkPanel = new SharkPanel(s);
-					sharkPanel.setController(controller);
+					SharkPanel sharkPanel = new SharkPanel(s, controller);
 					mainPanel.add(sharkPanel);
 				}
 				mainPanel.revalidate();
@@ -213,9 +212,10 @@ public class MainFrame {
 		favouritesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FavouritesFrame favouritesFrame = new FavouritesFrame();
+				FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
 				for (int i = 0; i < controller.getFavouriteDistanceList().size(); i++) {
-					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i), controller.getFavouriteDistanceList().get(i));
+					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i),
+							controller.getFavouriteDistanceList().get(i));
 				}
 			}
 		});
@@ -242,5 +242,11 @@ public class MainFrame {
 	// favourites list is not empty
 	public void enableFavourites() {
 		favouritesButton.setEnabled(true);
+	}
+
+	public void selectedShark(SharkTime s) {
+		mainPanel.removeAll();
+		mainPanel.add(new SharkPanel(s, controller));
+		mainPanel.revalidate();
 	}
 }

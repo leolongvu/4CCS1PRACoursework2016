@@ -60,4 +60,20 @@ public class Controller {
 	public ArrayList<Double> getFavouriteDistanceList() {
 		return favourite.getFavouriteDistanceList();
 	}
+	
+	public void removeFavourite(Shark shark) {
+		favourite.removeFavourite(shark);
+	}
+	
+	public void selectShark(SharkTime s) {
+		mainFrame.selectedShark(s);
+	}
+	
+	public SharkTime getSelectedSharkTime(String name) {
+		return query.getSharkTimeFromName(name);
+	}
+	
+	public int checkFavourite(Shark shark) {
+		return favourite.indexOfShark(shark);
+	}
 }

@@ -85,6 +85,7 @@ public class InitialFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainFrame mainFrame = new MainFrame(controller);
+				controller.setMainFrameReference(mainFrame);
 				frame.dispose();
 			}
 		});
@@ -103,7 +104,7 @@ public class InitialFrame {
 		favouritesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FavouritesFrame favouritesFrame = new FavouritesFrame();
+				FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
 				frame.dispose();
 			}
 		});
