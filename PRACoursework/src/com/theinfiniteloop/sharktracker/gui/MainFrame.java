@@ -28,6 +28,9 @@ import javax.swing.border.MatteBorder;
 
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
+import com.theinfiniteloop.sharktracker.controller.Controller;
+
+import api.jaws.Shark;
 
 public class MainFrame {
 
@@ -38,12 +41,10 @@ public class MainFrame {
 
 	private JPanel mainPanel;
 
-	private Query query;
-	private ArrayList<SharkTime> sharkFilter;
+	private Controller controller;
 
-	public MainFrame() {
-		query = new Query();
-		sharkFilter = new ArrayList<SharkTime>();
+	public MainFrame(Controller controller) {
+		this.controller = controller;
 		createPanel();
 		createSidePanel();
 		createMainPanel();
@@ -56,7 +57,7 @@ public class MainFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		JLabel acknowledgementLabel = new JLabel(query.getAcknowledgement());
+		JLabel acknowledgementLabel = new JLabel(controller.getAcknowledgement());
 		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
 	}
 
@@ -146,7 +147,7 @@ public class MainFrame {
 
 		JComboBox tagLocationBox = new JComboBox();
 		tagLocationBox.setMaximumSize(new Dimension(250, 20));
-		ArrayList<String> locations = query.getTagLocations();
+		ArrayList<String> locations = controller.getTagLocations();
 		Collections.sort(locations);
 		locations.add(0, "All Locations");
 		for (String s : locations) {
@@ -163,19 +164,21 @@ public class MainFrame {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				query.implementAllSearch(trackingRangeBox.getSelectedItem().toString(),
+
+				controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
 						genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
 						tagLocationBox.getSelectedItem().toString());
 
-				sharkFilter = query.getSharkList();
-				
-				mainPanel.removeAll();
+				ArrayList<SharkTime> sharkFilter = controller.getSharkList();
 
+				mainPanel.removeAll();
+				mainPanel.revalidate();
 				System.out.println("Shark count: " + sharkFilter.size());
-				//for (SharkTime s : sharkFilter) {
-					mainPanel.add(new SharkPanel());
-				//}
+				for (SharkTime s : sharkFilter) {
+					SharkPanel sharkPanel = new SharkPanel(s);
+					sharkPanel.setController(controller);
+					mainPanel.add(sharkPanel);
+				}
 				mainPanel.revalidate();
 			}
 		});
@@ -203,7 +206,6 @@ public class MainFrame {
 		favouritesButton = new JButton("Favourites");
 		favouritesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		favouritesButton.setMaximumSize(new Dimension(250, 25));
-		favouritesButton.setEnabled(false);
 		sidePanel.add(favouritesButton);
 
 		// Action listener for the favourites button to open the favourites
@@ -212,7 +214,9 @@ public class MainFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FavouritesFrame favouritesFrame = new FavouritesFrame();
-				frame.dispose();
+				for (int i = 0; i < controller.getFavouriteDistanceList().size(); i++) {
+					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i), controller.getFavouriteDistanceList().get(i));
+				}
 			}
 		});
 
@@ -224,14 +228,14 @@ public class MainFrame {
 		// Main panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.setMaximumSize(new Dimension(700,700));
+		mainPanel.setMaximumSize(new Dimension(900, 700));
 
 		// Scroll pane to show information
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBorder(new MatteBorder(3, 0, 3, 3, (Color) new Color(0, 0, 0)));
+		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		scrollPane.setBorder(new MatteBorder(2, 0, 3, 3, (Color) new Color(0, 0, 0)));
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-
 	}
 
 	// Method to enable the favourites button, to be used later when the

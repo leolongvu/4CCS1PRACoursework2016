@@ -1,85 +1,116 @@
 package com.theinfiniteloop.sharktracker.gui;
 
 import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
-
-import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
 import javax.swing.border.MatteBorder;
+import javax.swing.JLabel;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.Component;
+
+import com.theinfiniteloop.sharktracker.api.Favourite;
+import com.theinfiniteloop.sharktracker.api.SharkTime;
+import com.theinfiniteloop.sharktracker.controller.Controller;
 
 public class SharkPanel extends JPanel {
 
-	public SharkPanel() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-
-		JPanel infoPanel = new JPanel();
-		add(infoPanel);
-		infoPanel.setMaximumSize(new Dimension(700,70));
-		infoPanel.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JLabel lblName = new JLabel("Name");
-		infoPanel.add(lblName);
-
-		JLabel lblNamebox = new JLabel("NameBox");
-		infoPanel.add(lblNamebox);
-
-		JLabel lblGender = new JLabel("Gender");
-		infoPanel.add(lblGender);
-
-		JLabel lblGenderbox = new JLabel("GenderBox");
-		infoPanel.add(lblGenderbox);
-
-		JLabel lblStageOfLife = new JLabel("Stage of Life");
-		infoPanel.add(lblStageOfLife);
-
-		JLabel lblStageoflifebox = new JLabel("StageOfLifeBox");
-		infoPanel.add(lblStageoflifebox);
-
-		JLabel lblSpecies = new JLabel("Species");
-		infoPanel.add(lblSpecies);
-
-		JLabel lblSpeciesbox = new JLabel("SpeciesBox");
-		infoPanel.add(lblSpeciesbox);
-
-		JLabel lblLength = new JLabel("Length");
-		infoPanel.add(lblLength);
-
-		JLabel lblLengthbox = new JLabel("LengthBox");
-		infoPanel.add(lblLengthbox);
-
-		JLabel lblWeight = new JLabel("Weight");
-		infoPanel.add(lblWeight);
-
-		JLabel lblWeightbox = new JLabel("WeightBox");
-		infoPanel.add(lblWeightbox);
-
-		JLabel lblDescription = new JLabel("Description");
-		infoPanel.add(lblDescription);
-
-		JPanel descriptionPanel = new JPanel();
-		add(descriptionPanel);
-		descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.Y_AXIS));
+		private Controller controller;
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setMaximumSize(new Dimension(700,200));
-		descriptionPanel.add(textPane);
+        public SharkPanel(SharkTime s) {
+                setSize(new Dimension(900, 300));
+                setMinimumSize(new Dimension(900, 300));
+                setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+                setBorder(new MatteBorder(1, 2, 1, 2, (Color) new Color(0, 0, 0)));
 
-		JPanel pingPanel = new JPanel();
-		add(pingPanel);
+                JPanel infoPanel = new JPanel();
+                infoPanel.setMaximumSize(new Dimension(850, 100));
+                add(infoPanel);
+                infoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 
-		JLabel lblLastPing = new JLabel("Last Ping: ");
-		pingPanel.add(lblLastPing);
+                JLabel lblName = new JLabel("Name:");
+                infoPanel.add(lblName);
 
-		JLabel lblPing = new JLabel("Ping");
-		pingPanel.add(lblPing);
+                JLabel lblNamebox = new JLabel(s.getShark().getName());
+                infoPanel.add(lblNamebox);
 
-		JButton btnFollow = new JButton("Follow");
-		pingPanel.add(btnFollow);
+                JLabel lblGender = new JLabel("Gender:");
+                infoPanel.add(lblGender);
 
-	}
+                JLabel lblGenderbox = new JLabel(s.getShark().getGender());
+                infoPanel.add(lblGenderbox);
+
+                JLabel lblStageOfLife = new JLabel("Stage of Life:");
+                infoPanel.add(lblStageOfLife);
+
+                JLabel lblStageoflifebox = new JLabel(s.getShark().getStageOfLife());
+                infoPanel.add(lblStageoflifebox);
+
+                JLabel lblSpecies = new JLabel("Species:");
+                infoPanel.add(lblSpecies);
+
+                JLabel lblSpeciesbox = new JLabel(s.getShark().getSpecies());
+                infoPanel.add(lblSpeciesbox);
+
+                JLabel lblLength = new JLabel("Length:");
+                infoPanel.add(lblLength);
+
+                JLabel lblLengthbox = new JLabel(s.getShark().getLength());
+                infoPanel.add(lblLengthbox);
+
+                JLabel lblWeight = new JLabel("Weight:");
+                infoPanel.add(lblWeight);
+
+                JLabel lblWeightbox = new JLabel(s.getShark().getWeight());
+                infoPanel.add(lblWeightbox);
+
+                JLabel lblDescription = new JLabel("Description:");
+                infoPanel.add(lblDescription);
+                lblDescription.setMaximumSize(new Dimension(55, 15));
+                lblDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JTextArea textPane = new JTextArea();
+                textPane.setMaximumSize(new Dimension(850, 150));
+                textPane.setMinimumSize(new Dimension(850, 150));
+                textPane.setText(s.getShark().getDescription());
+                textPane.setLineWrap(true);
+                textPane.setWrapStyleWord(true);
+                textPane.setEditable(false);
+                add(textPane);
+
+                JPanel pingPanel = new JPanel();
+                pingPanel.setMaximumSize(new Dimension(850, 35));
+                add(pingPanel);
+                pingPanel.setLayout(new GridLayout(0, 3, 0, 0));
+
+                JLabel lblLastPing = new JLabel("Last Ping: ");
+                pingPanel.add(lblLastPing);
+
+                JLabel lblPing = new JLabel(s.getTime());
+                pingPanel.add(lblPing);
+
+                JButton btnFollow = new JButton("Follow");
+                pingPanel.add(btnFollow);
+
+                JButton btnUnfollow = new JButton("Unfollow");
+
+                btnFollow.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                        	controller.addFavouriteShark(s.getShark());
+                        	System.out.println(controller.getFavouriteSharkList().get((0)));
+                        }
+                });
+        }
+        
+        public void setController(Controller controller) {
+        	this.controller = controller;
+        }
 }
+
+
+

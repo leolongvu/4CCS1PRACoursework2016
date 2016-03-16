@@ -12,13 +12,18 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import com.theinfiniteloop.sharktracker.controller.Controller;
+
 public class InitialFrame {
 
 	private JPanel contentPane;
 	private JFrame frame;
 	private JButton favouritesButton;
+	
+	private Controller controller;
 
-	public InitialFrame() {
+	public InitialFrame(Controller controller) {
+		this.controller = controller;
 		createPanel();
 		createLabels();
 		createButtons();
@@ -79,7 +84,7 @@ public class InitialFrame {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainFrame mainFrame = new MainFrame();
+				MainFrame mainFrame = new MainFrame(controller);
 				frame.dispose();
 			}
 		});
@@ -109,9 +114,5 @@ public class InitialFrame {
 	// favourites list is not empty
 	public void enableFavourites() {
 		favouritesButton.setEnabled(true);
-	}
-
-	public static void main(String[] args) {
-		InitialFrame GUI = new InitialFrame();
 	}
 }
