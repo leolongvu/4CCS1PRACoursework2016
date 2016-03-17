@@ -88,10 +88,4 @@ public class Favourite {
 	public ArrayList<Double> getFavouriteDistanceList() {
 		return sharksDistance;
 	}
-
-	public void addFavourite(String shark, double dist) {
-		String newShark = shark + "," + dist;
-		FileEditor fileEditor = new FileEditor(user);
-		fileEditor.writeThis(newShark);
-	}
 }
