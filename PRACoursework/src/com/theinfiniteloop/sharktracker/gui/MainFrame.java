@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class MainFrame {
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (JOptionPane.showConfirmDialog(frame, "Are you sure to close Shark Tracker?", "Really Closing?",
+				if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to close the Shark Tracker?", "Confirm Exit",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 					// Write the whole shark list here
 					file.writeFavouriteList(controller.getFavouriteSharkList());
