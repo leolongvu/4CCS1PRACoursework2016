@@ -9,6 +9,7 @@ import java.util.HashMap;
 import api.jaws.Jaws;
 import api.jaws.Location;
 import api.jaws.Ping;
+import api.jaws.Shark;
 
 public class Query {
 
@@ -141,5 +142,9 @@ public class Query {
 			}
 		}
 		return null;
+	}
+	
+	public Shark getSharkFromName(String name) {
+		return jawAPI.getShark(name);
 	}
 }

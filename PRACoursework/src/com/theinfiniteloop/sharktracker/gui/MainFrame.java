@@ -4,21 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -26,11 +24,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.controller.Controller;
-
-import api.jaws.Shark;
+import com.theinfiniteloop.sharktracker.controller.FileIO;
 
 public class MainFrame {
 
@@ -38,13 +34,16 @@ public class MainFrame {
 	private JFrame frame;
 	private JButton searchButton;
 	private JButton favouritesButton;
+	private JLabel loader;
 
 	private JPanel mainPanel;
 
 	private Controller controller;
+	private FileIO file;
 
-	public MainFrame(Controller controller) {
+	public MainFrame(Controller controller, FileIO file) {
 		this.controller = controller;
+		this.file = file;
 		createPanel();
 		createSidePanel();
 		createMainPanel();
@@ -66,7 +65,17 @@ public class MainFrame {
 
 		frame = new JFrame();
 		frame.setTitle("Search");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (JOptionPane.showConfirmDialog(frame, "Are you sure to close Shark Tracker?", "Really Closing?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+					// Write the whole shark list here
+					file.writeFavouriteList(controller.getFavouriteSharkList());
+					System.exit(0);
+				}
+			}
+		});
 		frame.setContentPane(contentPane);
 		frame.setSize(1200, 700);
 		frame.setResizable(false);
@@ -159,26 +168,38 @@ public class MainFrame {
 		separator5.setMaximumSize(new Dimension(300, 35));
 		sidePanel.add(separator5);
 
+		createLoader();
+
 		// Search button
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Thread thread = new Thread() {
+					public void run() {
 
-				controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
-						genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
-						tagLocationBox.getSelectedItem().toString());
+						mainPanel.removeAll();
+						mainPanel.add(loader);
+						searchButton.setEnabled(false);
+						searchButton.setText("Searching...");
+						controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
+								genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
+								tagLocationBox.getSelectedItem().toString());
 
-				ArrayList<SharkTime> sharkFilter = controller.getSharkList();
-
-				mainPanel.removeAll();
-				mainPanel.revalidate();
-				System.out.println("Shark count: " + sharkFilter.size());
-				for (SharkTime s : sharkFilter) {
-					SharkPanel sharkPanel = new SharkPanel(s, controller);
-					mainPanel.add(sharkPanel);
-				}
-				mainPanel.revalidate();
+						ArrayList<SharkTime> sharkFilter = controller.getSharkList();
+						mainPanel.removeAll();
+						mainPanel.revalidate();
+						System.out.println("Shark count: " + sharkFilter.size());
+						for (SharkTime s : sharkFilter) {
+							SharkPanel sharkPanel = new SharkPanel(s, controller);
+							mainPanel.add(sharkPanel);
+						}
+						mainPanel.revalidate();
+						searchButton.setText("Search");
+						searchButton.setEnabled(true);
+					}
+				};
+				thread.start();
 			}
 		});
 		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -190,16 +211,11 @@ public class MainFrame {
 		sidePanel.add(separator6);
 
 		// Shark logo
-		JLabel logo = new JLabel("New label");
-		BufferedImage logoPicture = null;
-		try {
-			logoPicture = ImageIO.read(new File("Shark Logo.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		logo = new JLabel(new ImageIcon(logoPicture.getScaledInstance(300, 300, logoPicture.SCALE_DEFAULT)));
-		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(logo);
+		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
+		Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+		JLabel logoLabel = new JLabel(new ImageIcon(image));
+		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		sidePanel.add(logoLabel);
 
 		// Favourites button
 		favouritesButton = new JButton("Favourites");
@@ -229,6 +245,7 @@ public class MainFrame {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.setMaximumSize(new Dimension(900, 700));
+		mainPanel.setBackground(Color.white);
 
 		// Scroll pane to show information
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
@@ -238,15 +255,15 @@ public class MainFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 	}
 
-	// Method to enable the favourites button, to be used later when the
-	// favourites list is not empty
-	public void enableFavourites() {
-		favouritesButton.setEnabled(true);
-	}
-
 	public void selectedShark(SharkTime s) {
 		mainPanel.removeAll();
 		mainPanel.add(new SharkPanel(s, controller));
 		mainPanel.revalidate();
+	}
+
+	public void createLoader() {
+		ImageIcon loaderPicture = new ImageIcon("Loader.gif");
+		loader = new JLabel(loaderPicture);
+		loader.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 }

@@ -76,4 +76,8 @@ public class Controller {
 	public int checkFavourite(Shark shark) {
 		return favourite.indexOfShark(shark);
 	}
+	
+	public Shark getSharkFromName(String name) {
+		return query.getSharkFromName(name);
+	}
 }
