@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.theinfiniteloop.sharktracker.api.Favourite;
 import com.theinfiniteloop.sharktracker.api.Query;
+import com.theinfiniteloop.sharktracker.api.SharkLocation;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.gui.FavouritesFrame;
 import com.theinfiniteloop.sharktracker.gui.MainFrame;
@@ -53,12 +54,8 @@ public class Controller {
 		favourite.addFavourite(shark);
 	}
 	
-	public ArrayList<Shark> getFavouriteSharkList() {
+	public ArrayList<SharkLocation> getFavouriteSharkList() {
 		return favourite.getFavouriteSharkList();
-	}
-	
-	public ArrayList<Double> getFavouriteDistanceList() {
-		return favourite.getFavouriteDistanceList();
 	}
 	
 	public void removeFavourite(Shark shark) {
@@ -79,5 +76,9 @@ public class Controller {
 	
 	public Shark getSharkFromName(String name) {
 		return query.getSharkFromName(name);
+	}
+	
+	public void clearFavourite() {
+		favourite.clearFavourite();
 	}
 }

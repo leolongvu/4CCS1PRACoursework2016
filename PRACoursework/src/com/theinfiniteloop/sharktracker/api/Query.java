@@ -113,9 +113,36 @@ public class Query {
 		sharkFilter = getSharkByGender(gender, sharkFilter);
 		sharkFilter = getSharkByLifeStage(lifeStage, sharkFilter);
 		sharkFilter = getSharkByLocation(location, sharkFilter);
+		sortListByPing();
 		System.out.println("Done!");		
 		for (int i = 0; i < sharkFilter.size(); i++) {
 			System.out.println(sharkFilter.get(i).getShark().getName() + " " + sharkFilter.get(i).getShark().getGender() + " " + sharkFilter.get(i).getTime());
+		}
+	}
+	
+	public void sortListByPing() {
+		// Bubble sort
+		boolean hasSwap = true;
+		SharkTime temp;
+		SimpleDateFormat inFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		while (hasSwap) {
+			hasSwap = false;
+			for (int i = 0 ; i < sharkFilter.size() - 1; i++) {
+				Date pingTime = new Date();
+				Date toComparePingTime = new Date();
+				try {
+					pingTime = inFormat.parse(sharkFilter.get(i).getTime());
+					toComparePingTime = inFormat.parse(sharkFilter.get(i + 1).getTime());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				if (toComparePingTime.after(pingTime)) {
+					temp = sharkFilter.get(i);
+					sharkFilter.set(i, sharkFilter.get(i + 1));
+					sharkFilter.set(i + 1, temp);
+					hasSwap = true;
+				}
+			}
 		}
 	}
 	

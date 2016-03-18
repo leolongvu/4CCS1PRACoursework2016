@@ -8,8 +8,7 @@ import api.jaws.Shark;
 public class Favourite {
 	private String user;
 
-	private ArrayList<Shark> favouriteShark;
-	private ArrayList<Double> sharksDistance;
+	private ArrayList<SharkLocation> favouriteShark;
 	private Query query;
 
 	private final double kingsLat = 51.51193;
@@ -18,8 +17,7 @@ public class Favourite {
 	public Favourite() {
 		user = "user";
 		query = new Query();
-		favouriteShark = new ArrayList<Shark>();
-		sharksDistance = new ArrayList<Double>();
+		favouriteShark = new ArrayList<SharkLocation>();
 	}
 
 	public void setUser(String username) {
@@ -27,25 +25,38 @@ public class Favourite {
 	}
 
 	public void addFavourite(Shark shark) {
-		double distance = calculateDistance(shark);
+		Location l = query.getLocation(shark.getName());
+		double lat = l.getLatitude();
+		double lon = l.getLongitude();
+		double distance = getDistance(lat, lon);
 		boolean loopThroughAll = true;
 		for (int i = 0; i < favouriteShark.size(); i++) {
-			if (sharksDistance.get(i) > distance) {
-				favouriteShark.add(i, shark);
-				sharksDistance.add(i, distance);
+			if (favouriteShark.get(i).getDistance() > distance) {
+				SharkLocation sharkLocation = new SharkLocation(shark);
+				sharkLocation.setDistance(distance);
+				sharkLocation.setLat(lat);
+				sharkLocation.setLon(lon);
+				favouriteShark.add(i, sharkLocation);
 				loopThroughAll = false;
 				break;
 			}
 		}
 		if (loopThroughAll == true) {
-			favouriteShark.add(shark);
-			sharksDistance.add(distance);
+			SharkLocation sharkLocation = new SharkLocation(shark);
+			sharkLocation.setDistance(distance);
+			sharkLocation.setLat(lat);
+			sharkLocation.setLon(lon);
+			favouriteShark.add(sharkLocation);
 		}
+	}
+	
+	public void clearFavourite() {
+		favouriteShark.clear();
 	}
 	
 	public int indexOfShark(Shark shark) {
 		for (int i = 0; i < favouriteShark.size(); i++) {
-			if (shark.getName().equals(favouriteShark.get(i).getName())) {
+			if (shark.getName().equals(favouriteShark.get(i).getShark().getName())) {
 				return i;
 			}
 		}
@@ -56,14 +67,10 @@ public class Favourite {
 		int i = indexOfShark(shark);
 		if (i != -1) {
 			favouriteShark.remove(i);
-			sharksDistance.remove(i);
 		}
 	}
 
-	private double getDistance(Location l) {
-		double lat = l.getLatitude();
-		double lon = l.getLongitude();
-
+	private double getDistance(double lat, double lon) {
 		final int R = 6371; // Radius of the earth
 
 		Double latDistance = Math.toRadians(lat - kingsLat);
@@ -72,20 +79,11 @@ public class Favourite {
 				* Math.cos(Math.toRadians(kingsLat)) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 		Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		double distance = R * c;
-
+		                                          
 		return distance;
 	}
 
-	public double calculateDistance(Shark shark) {
-		Location l = query.getLocation(shark.getName());
-		return getDistance(l);
-	}
-
-	public ArrayList<Shark> getFavouriteSharkList() {
+	public ArrayList<SharkLocation> getFavouriteSharkList() {
 		return favouriteShark;
-	}
-
-	public ArrayList<Double> getFavouriteDistanceList() {
-		return sharksDistance;
 	}
 }
