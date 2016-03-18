@@ -1,5 +1,6 @@
 package com.theinfiniteloop.sharktracker.gui;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -60,9 +61,10 @@ public class StatisticsFrame {
                 
                 trackingGraphPane = new JPanel();
                 trackingGraphPane.setLayout(new GridLayout(3,1));
+                trackingGraphPane.setPreferredSize(new Dimension(800,600));
                 
                 getSharkList = new ArrayList<SharkTime>();
-                //getSharkList = query.getSharkByTimeFrame(rangeChosen);
+                getSharkList = query.getSharkByTimeFrame(rangeChosen);
                 totalCount = getSharkList.size();
                 System.out.println(totalCount);
                 messageGender = new JLabel();
@@ -97,7 +99,7 @@ public class StatisticsFrame {
                 }
                 else
                 {
-                        messageGender.setText("There is no info about the Sharks' Gender.");
+                        messageGender.setText("There is not enough data about the Sharks' Gender.");
                         messageGender.setHorizontalAlignment(JLabel.CENTER);
                         trackingGraphPane.add(messageGender);
                 }
@@ -127,7 +129,7 @@ public class StatisticsFrame {
                 }
                 else
                 {
-                        messageLife.setText("There is no info about the Sharks' life stage.");
+                        messageLife.setText("There is not enough data about the Sharks' life stage.");
                         messageLife.setHorizontalAlignment(JLabel.CENTER);
                         trackingGraphPane.add(messageLife);
                 }
@@ -159,7 +161,7 @@ public class StatisticsFrame {
                 }
                 else
                 {
-                        messageLocation.setText("There is no info about the Sharks' location.");
+                        messageLocation.setText("There is not enugh data about the Sharks' location.");
                         messageLocation.setHorizontalAlignment(JLabel.CENTER);
                         trackingGraphPane.add(messageLocation);
                 }
@@ -200,7 +202,6 @@ public class StatisticsFrame {
         }
         public static void main(String[] args)
         {
-                StatisticsFrame st = new StatisticsFrame("24 Hours");
+                StatisticsFrame st = new StatisticsFrame("Week");
         }
 }
-
