@@ -15,198 +15,193 @@ import com.theinfiniteloop.sharktracker.controller.Controller;
 
 public class InitialFrame {
 
-        private JPanel contentPane;
-        private JFrame frame;
-        private JButton favouritesButton;
+	private JPanel contentPane;
+	private JFrame frame;
+	private JButton favouritesButton;
 
-        private Controller controller;
-        private FileIO file;
+	private Controller controller;
+	private FileIO file;
 
-        public InitialFrame(Controller controller) {
-                this.controller = controller;
-                file = new FileIO(controller);
-                // Testing the disable with account Leo
-                file.setFile("Leo");
-                int count = file.readFavouriteFile("Leo");
-                if (count == 0) {
-                	// Do the enable Favourite button here.
-                }
-                else {
-                	// Do the disable Favourite button here.
-                }
-                createPanel();
-                createLabels();
-                createButtons();
-                createFrame();
-                createMenu();
-                frame.setVisible(true);
+	public InitialFrame(Controller controller) {
+		this.controller = controller;
+		file = new FileIO(controller);
+		file.setFile("user");
 
-        }
+		createPanel();
+		createLabels();
+		createButtons();
+		createFrame();
+		createMenu();
+		frame.setVisible(true);
 
-        // Create the content pane
-        public void createPanel() {
+	}
 
-                contentPane = new JPanel();
-                contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-                contentPane.setBackground(Color.white);
-        }
+	// Create the content pane
+	public void createPanel() {
 
-        // Create the frame
-        public void createFrame() {
-                frame = new JFrame();
-                frame.setTitle("Shark Tracker");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setContentPane(contentPane);
-                frame.setSize(new Dimension(300, 400));
-                frame.setResizable(false);
-                frame.setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		contentPane.setBackground(Color.white);
+	}
 
-        }
+	// Create the frame
+	public void createFrame() {
+		frame = new JFrame();
+		frame.setTitle("Shark Tracker");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setContentPane(contentPane);
+		frame.setSize(new Dimension(300, 400));
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 
-        // Creates the logo and label
-        public void createLabels() {
-                ImageIcon icon = new ImageIcon("Shark Logo.jpg");
-                Image image = icon.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
-                JLabel logoLabel = new JLabel(new ImageIcon(image));
-                logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                contentPane.add(logoLabel);
+	}
 
-                JLabel label = new JLabel("Shark Tracker");
-                label.setAlignmentX(Component.CENTER_ALIGNMENT);
-                contentPane.add(label);
+	// Creates the logo and label
+	public void createLabels() {
+		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
+		Image image = icon.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
+		JLabel logoLabel = new JLabel(new ImageIcon(image));
+		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		contentPane.add(logoLabel);
 
-                contentPane.add(new Box.Filler(new Dimension(10, 20), new Dimension(10, 20), new Dimension(10, 20)));
-        }
+		JLabel label = new JLabel("Shark Tracker");
+		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		contentPane.add(label);
 
-        // Creates the search and favourites buttons
-        public void createButtons() {
-                Border border = BorderFactory.createLineBorder(Color.black, 2);
+		contentPane.add(new Box.Filler(new Dimension(10, 20), new Dimension(10, 20), new Dimension(10, 20)));
+	}
 
-                JButton searchButton = new JButton("Search");
-                searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-                searchButton.setMaximumSize(new Dimension(250, 50));
-                searchButton.setBorder(border);
-                searchButton.setBackground(Color.white);
+	// Creates the search and favourites buttons
+	public void createButtons() {
+		Border border = BorderFactory.createLineBorder(Color.black, 2);
 
-                // Action listener for the search button to open the main frame
-                searchButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                                MainFrame mainFrame = new MainFrame(controller, file);
-                                controller.setMainFrameReference(mainFrame);
-                                frame.dispose();
-                        }
-                });
-                contentPane.add(searchButton);
-                contentPane.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
+		JButton searchButton = new JButton("Search");
+		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		searchButton.setMaximumSize(new Dimension(250, 50));
+		searchButton.setBorder(border);
+		searchButton.setBackground(Color.white);
 
-                favouritesButton = new JButton("Favourites");
-                favouritesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-                favouritesButton.setMaximumSize(new Dimension(250, 50));
-                favouritesButton.setBorder(border);
-                favouritesButton.setBackground(Color.white);
-                favouritesButton.setEnabled(false);
+		// Action listener for the search button to open the main frame
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame mainFrame = new MainFrame(controller, file);
+				controller.setMainFrameReference(mainFrame);
+				frame.dispose();
+			}
+		});
+		contentPane.add(searchButton);
+		contentPane.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
 
-                // Action listener for the favourites button to open the favourites
-                // frame
-                favouritesButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                                FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
-                        }
-                });
-                contentPane.add(favouritesButton);
-        }
+		favouritesButton = new JButton("Favourites");
+		favouritesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		favouritesButton.setMaximumSize(new Dimension(250, 50));
+		favouritesButton.setBorder(border);
+		favouritesButton.setBackground(Color.white);
+		favouritesButton.setEnabled(false);
 
-        public void createMenu() {
-                JMenuBar menuBar = new JMenuBar();
-                frame.setJMenuBar(menuBar);
+		// Action listener for the favourites button to open the favourites
+		// frame
+		favouritesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
+				for (int i = 0; i < controller.getFavouriteDistanceList().size(); i++) {
+					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i),
+							controller.getFavouriteDistanceList().get(i));
+				}
+			}
+		});
+		contentPane.add(favouritesButton);
+	}
 
-                JMenu mnUserOptions = new JMenu("User Options");
-                menuBar.add(mnUserOptions);
+	public void createMenu() {
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
 
-                JMenuItem mntmNewloadUser = new JMenuItem("New / Load User");
-                mnUserOptions.add(mntmNewloadUser);
+		JMenu mnUserOptions = new JMenu("User Options");
+		menuBar.add(mnUserOptions);
 
-                JMenuItem mntmDeleteCurrentUser = new JMenuItem("Delete Current User");
-                mnUserOptions.add(mntmDeleteCurrentUser);
+		JMenuItem mntmNewloadUser = new JMenuItem("New / Load User");
+		mnUserOptions.add(mntmNewloadUser);
 
-                mntmNewloadUser.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                                createUserMenu();
-                        }
-                });
+		JMenuItem mntmDeleteCurrentUser = new JMenuItem("Delete Current User");
+		mnUserOptions.add(mntmDeleteCurrentUser);
 
-                mntmDeleteCurrentUser.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                                file.deleteFile();
-                                file.setFile("user");
-                                favouritesButton.setEnabled(false);
-                                favouritesButton.setText("Favourites");
-                        }
-                });
-        }
+		mntmNewloadUser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				createUserMenu();
+			}
+		});
 
-        public void createUserMenu() {
-                JFrame userFrame = new JFrame();
-                userFrame.setResizable(false);
-                userFrame.setTitle("New / Load User");
-                userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                userFrame.setBounds(100, 100, 300, 130);
-                userFrame.setLocationRelativeTo(null);
+		mntmDeleteCurrentUser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				file.deleteFile();
+				file.setFile("user");
+				favouritesButton.setEnabled(false);
+				favouritesButton.setText("Favourites");
+			}
+		});
+	}
 
-                JPanel pane = new JPanel();
+	public void createUserMenu() {
+		JFrame userFrame = new JFrame();
+		userFrame.setResizable(false);
+		userFrame.setTitle("New / Load User");
+		userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		userFrame.setBounds(100, 100, 300, 130);
+		userFrame.setLocationRelativeTo(null);
 
-                userFrame.setContentPane(pane);
-                userFrame.setVisible(true);
+		JPanel pane = new JPanel();
 
-                JPanel userPanel = new JPanel();
-                pane.add(userPanel);
-                userPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		userFrame.setContentPane(pane);
+		userFrame.setVisible(true);
 
-                JLabel lblEnterUsername = new JLabel("Enter Username:");
-                userPanel.add(lblEnterUsername);
+		JPanel userPanel = new JPanel();
+		pane.add(userPanel);
+		userPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-                JTextField textField = new JTextField();
-                userPanel.add(textField);
-                textField.setColumns(10);
+		JLabel lblEnterUsername = new JLabel("Enter Username:");
+		userPanel.add(lblEnterUsername);
 
-                JPanel buttonPanel = new JPanel();
-                pane.add(buttonPanel);
+		JTextField textField = new JTextField();
+		userPanel.add(textField);
+		textField.setColumns(10);
 
-                JButton btnConfirm = new JButton("Confirm");
-                buttonPanel.add(btnConfirm);
+		JPanel buttonPanel = new JPanel();
+		pane.add(buttonPanel);
 
-                btnConfirm.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                                String user = textField.getText();
-                                if (!user.equals(null) && user.trim().length() > 0) {
-                                        file.setFile(user);
-                                        favouritesButton.setText("Favourites: " + user);
-                                }
-                                if (!file.readFile().isEmpty()) {
-                                        favouritesButton.setEnabled(true);
-                                } else if (file.readFile().size() == 0) {
-                                        favouritesButton.setEnabled(false);
-                                }
-                                favouritesButton.repaint();
-                                userFrame.dispose();
-                        }
-                });
+		JButton btnConfirm = new JButton("Confirm");
+		buttonPanel.add(btnConfirm);
 
-                JButton btnCancel = new JButton("Cancel");
-                buttonPanel.add(btnCancel);
+		btnConfirm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String user = textField.getText();
+				if (!user.equals(null) && user.trim().length() > 0) {
+					file.setFile(user);
+					favouritesButton.setText("Favourites: " + user);
+				}
+				if (file.readFile() > 0) {
+					favouritesButton.setEnabled(true);
+				} else if (file.readFile() == 0) {
+					favouritesButton.setEnabled(false);
+				}
+				favouritesButton.repaint();
+				userFrame.dispose();
+			}
+		});
 
-                btnCancel.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                                userFrame.dispose();
-                        }
-                });
-        }
+		JButton btnCancel = new JButton("Cancel");
+		buttonPanel.add(btnCancel);
+
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				userFrame.dispose();
+			}
+		});
+	}
 }
-
-

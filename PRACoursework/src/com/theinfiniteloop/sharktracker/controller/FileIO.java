@@ -41,19 +41,21 @@ public class FileIO {
 	}
 
 	// returns an array list of strings for every line in the file
-	public ArrayList<String> readFile() {
-		ArrayList<String> lines = new ArrayList<String>();
+	public int readFile() {
+		int count = 0;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
 			String line;
 			while ((line = reader.readLine()) != null) {
-				lines.add(line);
+				count++;
+				Shark shark = controller.getSharkFromName(line);
+				controller.addFavouriteShark(shark);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return lines;
+		return count;
 	}
 
 	// adds a given line to the set file
@@ -141,38 +143,5 @@ public class FileIO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public int readFavouriteFile(String user) {
-		File csvPath = new File(user + ".txt");
-		BufferedReader reader = null;
-		String line = "";
-		int sharkCount = 0;
-		System.out.println("Loading file ...!");
-		try {
-			// Read this file through BufferedReader
-			reader = new BufferedReader(new FileReader(csvPath));
-			// Start reading lines until the readLine() is null
-			while ((line = reader.readLine()) != null) {
-				sharkCount++;
-				System.out.println(line);
-				Shark shark = controller.getSharkFromName(line);
-				controller.addFavouriteShark(shark);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println("Done loading!");
-		return sharkCount;
 	}
 }
