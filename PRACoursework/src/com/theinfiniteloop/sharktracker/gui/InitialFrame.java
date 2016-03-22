@@ -106,9 +106,9 @@ public class InitialFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
-				for (int i = 0; i < controller.getFavouriteDistanceList().size(); i++) {
-					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i),
-							controller.getFavouriteDistanceList().get(i));
+				for (int i = 0; i < controller.getFavouriteSharkList().size(); i++) {
+					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i).getShark(),
+							controller.getFavouriteSharkList().get(i).getDistance());
 				}
 			}
 		});

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import com.theinfiniteloop.sharktracker.api.SharkLocation;
+
 import api.jaws.Shark;
 
 public class FileIO {
@@ -23,7 +25,6 @@ public class FileIO {
 
 	// sets the current file as a given username
 	public void setFile(String user) {
-
 		try {
 			file = new File(user + ".txt");
 			if (user.equals("user")) {
@@ -45,7 +46,7 @@ public class FileIO {
 		int count = 0;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
-
+			controller.clearFavourite();
 			String line;
 			while ((line = reader.readLine()) != null) {
 				count++;
@@ -128,14 +129,14 @@ public class FileIO {
 	}
 
 	// Leo's input out using the same IO basic.
-	public void writeFavouriteList(ArrayList<Shark> list) {
+	public void writeFavouriteList(ArrayList<SharkLocation> list) {
 		try {
 			// Write the list
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw = new BufferedWriter(fw);
-			for (Shark s : list) {
-				bw.write(s.getName());
+			for (SharkLocation s : list) {
+				bw.write(s.getShark().getName());
 				bw.newLine();
 			}
 			bw.close();

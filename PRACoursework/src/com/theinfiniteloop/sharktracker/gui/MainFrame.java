@@ -69,12 +69,8 @@ public class MainFrame {
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to close the Shark Tracker?", "Confirm Exit",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-					// Write the whole shark list here
-					file.writeFavouriteList(controller.getFavouriteSharkList());
-					System.exit(0);
-				}
+				file.writeFavouriteList(controller.getFavouriteSharkList());
+				System.exit(0);
 			}
 		});
 		frame.setContentPane(contentPane);
@@ -230,9 +226,9 @@ public class MainFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
-				for (int i = 0; i < controller.getFavouriteDistanceList().size(); i++) {
-					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i),
-							controller.getFavouriteDistanceList().get(i));
+				for (int i = 0; i < controller.getFavouriteSharkList().size(); i++) {
+					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i).getShark(),
+							controller.getFavouriteSharkList().get(i).getDistance());
 				}
 			}
 		});
