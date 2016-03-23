@@ -14,9 +14,9 @@ public class Favourite {
 	private final double kingsLat = 51.51193;
 	private final double kingsLon = -0.11698;
 
-	public Favourite() {
+	public Favourite(Query query) {
 		user = "user";
-		query = new Query();
+		this.query = query;
 		favouriteShark = new ArrayList<SharkLocation>();
 	}
 

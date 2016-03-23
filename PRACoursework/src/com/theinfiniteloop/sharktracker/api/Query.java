@@ -23,6 +23,7 @@ public class Query {
 	public Query() {
 		jawAPI = new Jaws(privateKey, publicKey, true);
 		sharkFilter = new ArrayList<SharkTime>();
+		sharkFilter = getSharkByTimeFrame("Month");
 	}
 
 	public ArrayList<SharkTime> getSharkByTimeFrame(String timeFrame) {
@@ -162,6 +163,10 @@ public class Query {
 	
 	public Shark getSharkFromName(String name) {
 		return jawAPI.getShark(name);
+	}
+	
+	public String getVideo(String name) {
+		return jawAPI.getVideo(name);
 	}
 	
 	public ArrayList<SharkTime> getSharkList() {

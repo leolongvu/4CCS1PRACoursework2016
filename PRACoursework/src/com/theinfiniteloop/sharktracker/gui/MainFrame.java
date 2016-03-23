@@ -26,7 +26,6 @@ import javax.swing.border.MatteBorder;
 
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.controller.Controller;
-import com.theinfiniteloop.sharktracker.controller.FileIO;
 
 public class MainFrame {
 
@@ -66,7 +65,7 @@ public class MainFrame {
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				setVisible(false);		
+				setVisible(false);
 				controller.setInitialFrameVisibility(true);
 			}
 		});
@@ -214,6 +213,10 @@ public class MainFrame {
 				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString());
 			}
 		});
+		
+		SharkOfTheDayPanel sharkOTD = new SharkOfTheDayPanel();
+		sharkOTD.setAlignmentX(Component.CENTER_ALIGNMENT);
+		sidePanel.add(sharkOTD);
 
 		// Shark logo
 		ImageIcon icon = new ImageIcon("Shark Logo.jpg");

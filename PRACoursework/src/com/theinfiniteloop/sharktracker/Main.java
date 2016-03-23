@@ -10,14 +10,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Query query = new Query();
-		Favourite favourite = new Favourite();
 		Controller controller = new Controller();
+		
+		Query query = new Query();
+		Favourite favourite = new Favourite(query);
 		
 		// Set Reference for controller
 		controller.setQuery(query);
 		controller.setFavourite(favourite);
-		
+			
 		InitialFrame initial = new InitialFrame(controller);
 		controller.setInitialFrameReference(initial);
 		MainFrame search = new MainFrame(controller);

@@ -33,7 +33,7 @@ public class InitialFrame {
 		createButtons();
 		createFrame();
 		createMenu();
-		frame.setVisible(true);
+		setVisible(true);
 
 	}
 
@@ -192,13 +192,7 @@ public class InitialFrame {
 					file.setFile(user);
 					favouritesButton.setText("Favourites: " + user);
 				}
-				if (file.readFile() > 0) {
-					favouritesButton.setEnabled(true);
-				} else if (file.readFile() == 0) {
-					favouritesButton.setEnabled(false);
-				}
-				favouritesButton.repaint();
-				userFrame.dispose();
+				file.readFile();				
 			}
 		});
 
@@ -215,6 +209,12 @@ public class InitialFrame {
 	
 	public void setVisible(boolean visible) {
 		frame.setVisible(visible);
+		if (controller.getFavouriteSharkList().size() > 0) {
+			favouritesButton.setEnabled(true);
+		} 
+		else {
+			favouritesButton.setEnabled(false);
+		}
 	}
 	
 	public void enableSearchButton() {
