@@ -83,6 +83,7 @@ public class SharkPanel extends JPanel {
 		textPane.setLineWrap(true);
 		textPane.setWrapStyleWord(true);
 		textPane.setEditable(false);
+		textPane.setOpaque(false);
 		add(textPane);
 
 		pingPanel = new JPanel();

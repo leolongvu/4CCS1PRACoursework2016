@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class MapFrame {
 
@@ -19,13 +20,16 @@ public class MapFrame {
 
 		String map = "http://maps.googleapis.com/maps/api/staticmap?center=London&zoom=0&scale=2&size=260x200&maptype=satellite&key=AIzaSyB-2CcsptTIkDO5X3kX45pUMbBw7YNzuVo&format=png&visual_refresh=true";
 
-		String marker = "&markers=size:tiny%7Ccolor:0xff0000%7Clabel:1%7C";
+		char letter = 'A';
 
+		String marker1 = "&markers=size:mid%7Ccolor:0xff0000%7Clabel:";
+		String marker2 = "%7C";
 		String locations = "";
 
 		for (String loc : coords) {
-			String locMarker = marker + loc;
+			String locMarker = marker1 + letter + marker2 + loc;
 			locations = locations.concat(locMarker);
+			letter++;
 		}
 
 		try {
@@ -52,7 +56,8 @@ public class MapFrame {
 				(new ImageIcon("map.jpg")).getImage().getScaledInstance(520, 400, java.awt.Image.SCALE_SMOOTH))));
 
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 }
