@@ -53,7 +53,7 @@ public class MapFrame {
 		}
 
 		frame.add(new JLabel(new ImageIcon(
-				(new ImageIcon("map.jpg")).getImage().getScaledInstance(520, 400, java.awt.Image.SCALE_SMOOTH))));
+				(new ImageIcon("Map.jpg")).getImage().getScaledInstance(520, 400, java.awt.Image.SCALE_SMOOTH))));
 
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,6 @@ public class InitialFrame {
 		createButtons();
 		createFrame();
 		createMenu();
-		setVisible(true);
 
 	}
 
@@ -71,7 +71,10 @@ public class InitialFrame {
 		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(logoLabel);
 
+		Font font = new Font("Comic Sans MS", Font.BOLD, 15);
 		JLabel label = new JLabel("Shark Tracker");
+		label.setForeground(Color.BLACK);
+		label.setFont(font);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(label);
 
@@ -192,7 +195,8 @@ public class InitialFrame {
 					file.setFile(user);
 					favouritesButton.setText("Favourites: " + user);
 				}
-				file.readFile();				
+				file.readFile();
+				userFrame.dispose();
 			}
 		});
 
