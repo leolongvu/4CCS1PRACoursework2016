@@ -215,6 +215,7 @@ public class MainFrame {
 			}
 		});
 
+		
 		SharkOfTheDayPanel sharkOTD = new SharkOfTheDayPanel();
 		sharkOTD.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(sharkOTD);
@@ -248,6 +249,12 @@ public class MainFrame {
 	public void selectedShark(SharkTime s) {
 		mainPanel.removeAll();
 		mainPanel.add(new SharkPanel(s, controller));
+		ImageIcon icon = new ImageIcon("Sharks/" + s.getShark().getSpecies() + ".jpg");
+		Image image = icon.getImage().getScaledInstance(850, 350, java.awt.Image.SCALE_SMOOTH);
+		JLabel sharkPic = new JLabel(new ImageIcon(image));
+		sharkPic.setBorder(new MatteBorder(0, 2, 2, 2, Color.BLACK));
+		sharkPic.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(sharkPic);
 		mainPanel.revalidate();
 	}
 

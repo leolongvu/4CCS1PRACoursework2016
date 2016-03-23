@@ -28,7 +28,7 @@ public class SharkPanel extends JPanel {
 		setSize(new Dimension(900, 300));
 		setMinimumSize(new Dimension(900, 300));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(new MatteBorder(1, 2, 1, 2, (Color) new Color(0, 0, 0)));
+		setBorder(new MatteBorder(1, 2, 1, 2, Color.BLACK));
 
 		JPanel infoPanel = new JPanel();
 		infoPanel.setMaximumSize(new Dimension(850, 100));
