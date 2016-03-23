@@ -42,7 +42,7 @@ public class SharkOfTheDayPanel extends JPanel {
 	public void getShark() {
 		Calendar calendar = Calendar.getInstance();
 		dayOfMonth = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-		month = Integer.toString(calendar.get(Calendar.MONTH));
+		month = Integer.toString(calendar.get(Calendar.MONTH)+1);
 		FileIO file = new FileIO("SharkOfTheDay");
 		if (!dayOfMonth.equals(file.readLines().get(0))) {
 			file.deleteFile();
