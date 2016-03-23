@@ -31,236 +31,235 @@ import com.theinfiniteloop.sharktracker.controller.FileIO;
 
 public class MainFrame {
 
-	private JPanel contentPane;
-	private JFrame frame;
-	private JButton searchButton;
-	private JButton favouritesButton;
-	private JLabel loader;
+        private JPanel contentPane;
+        private JFrame frame;
+        private JButton searchButton;
+        private JButton statsButton;
+        private JLabel loader;
 
-	private JPanel mainPanel;
+        private JPanel mainPanel;
 
-	private Controller controller;
-	private FileIO file;
+        private Controller controller;
+        private FileIO file;
 
-	public MainFrame(Controller controller, FileIO file) {
-		this.controller = controller;
-		this.file = file;
-		createPanel();
-		createSidePanel();
-		createMainPanel();
-		createFrame();
-	}
+        public MainFrame(Controller controller, FileIO file) {
+                this.controller = controller;
+                this.file = file;
+                createPanel();
+                createSidePanel();
+                createMainPanel();
+                createFrame();
+        }
 
-	// Create the content pane
-	public void createPanel() {
+        // Create the content pane
+        public void createPanel() {
 
-		contentPane = new JPanel();
-		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		JLabel acknowledgementLabel = new JLabel(controller.getAcknowledgement());
-		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
-	}
+                contentPane = new JPanel();
+                contentPane.setLayout(new BorderLayout(0, 0));
+                contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+                JLabel acknowledgementLabel = new JLabel(controller.getAcknowledgement());
+                contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
+        }
 
-	// Create the frame
-	public void createFrame() {
+        // Create the frame
+        public void createFrame() {
 
-		frame = new JFrame();
-		frame.setTitle("Search");
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				file.writeFavouriteList(controller.getFavouriteSharkList());
-				System.exit(0);
-			}
-		});
-		frame.setContentPane(contentPane);
-		frame.setSize(1200, 700);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-	}
+                frame = new JFrame();
+                frame.setTitle("Search");
+                frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                file.writeFavouriteList(controller.getFavouriteSharkList());
+                                System.exit(0);
+                        }
+                });
+                frame.setContentPane(contentPane);
+                frame.setSize(1200, 700);
+                frame.setResizable(false);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+        }
 
-	public void createSidePanel() {
+        public void createSidePanel() {
 
-		// Side panel
-		JPanel sidePanel = new JPanel();
-		sidePanel.setBackground(Color.white);
-		sidePanel.setPreferredSize(new Dimension(300, 700));
-		sidePanel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
-		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+                // Side panel
+                JPanel sidePanel = new JPanel();
+                sidePanel.setBackground(Color.white);
+                sidePanel.setPreferredSize(new Dimension(300, 700));
+                sidePanel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
+                sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
 
-		JLabel sharkTrackerLabel = new JLabel("Shark Tracker");
-		sharkTrackerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(sharkTrackerLabel);
+                JLabel sharkTrackerLabel = new JLabel("Shark Tracker");
+                sharkTrackerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                sidePanel.add(sharkTrackerLabel);
 
-		JSeparator separator1 = new JSeparator();
-		separator1.setMaximumSize(new Dimension(300, 20));
-		sidePanel.add(separator1);
+                JSeparator separator1 = new JSeparator();
+                separator1.setMaximumSize(new Dimension(300, 20));
+                sidePanel.add(separator1);
 
-		// Tracking Range
-		JLabel trackingRangeLabel = new JLabel("Tracking Range");
-		trackingRangeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(trackingRangeLabel);
+                // Tracking Range
+                JLabel trackingRangeLabel = new JLabel("Tracking Range");
+                trackingRangeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                sidePanel.add(trackingRangeLabel);
 
-		JComboBox trackingRangeBox = new JComboBox();
-		trackingRangeBox.setMaximumSize(new Dimension(250, 20));
-		trackingRangeBox.addItem("24 Hours");
-		trackingRangeBox.addItem("Week");
-		trackingRangeBox.addItem("Month");
-		sidePanel.add(trackingRangeBox);
+                JComboBox trackingRangeBox = new JComboBox();
+                trackingRangeBox.setMaximumSize(new Dimension(250, 20));
+                trackingRangeBox.addItem("24 Hours");
+                trackingRangeBox.addItem("Week");
+                trackingRangeBox.addItem("Month");
+                sidePanel.add(trackingRangeBox);
 
-		JSeparator separator2 = new JSeparator();
-		separator2.setMaximumSize(new Dimension(300, 20));
-		sidePanel.add(separator2);
+                JSeparator separator2 = new JSeparator();
+                separator2.setMaximumSize(new Dimension(300, 20));
+                sidePanel.add(separator2);
 
-		// Gender
-		JLabel genderLabel = new JLabel("Gender");
-		genderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(genderLabel);
+                // Gender
+                JLabel genderLabel = new JLabel("Gender");
+                genderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                sidePanel.add(genderLabel);
 
-		JComboBox genderBox = new JComboBox();
-		genderBox.setMaximumSize(new Dimension(250, 20));
-		genderBox.addItem("All Genders");
-		genderBox.addItem("Male");
-		genderBox.addItem("Female");
-		sidePanel.add(genderBox);
+                JComboBox genderBox = new JComboBox();
+                genderBox.setMaximumSize(new Dimension(250, 20));
+                genderBox.addItem("All Genders");
+                genderBox.addItem("Male");
+                genderBox.addItem("Female");
+                sidePanel.add(genderBox);
 
-		JSeparator separator3 = new JSeparator();
-		separator3.setMaximumSize(new Dimension(300, 20));
-		sidePanel.add(separator3);
+                JSeparator separator3 = new JSeparator();
+                separator3.setMaximumSize(new Dimension(300, 20));
+                sidePanel.add(separator3);
 
-		// Stage of Life
-		JLabel stageOfLifeLabel = new JLabel("Stage of Life");
-		stageOfLifeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(stageOfLifeLabel);
+                // Stage of Life
+                JLabel stageOfLifeLabel = new JLabel("Stage of Life");
+                stageOfLifeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                sidePanel.add(stageOfLifeLabel);
 
-		JComboBox stageOfLifeBox = new JComboBox();
-		stageOfLifeBox.setMaximumSize(new Dimension(250, 20));
-		stageOfLifeBox.addItem("All Stages of Life");
-		stageOfLifeBox.addItem("Mature");
-		stageOfLifeBox.addItem("Immature");
-		stageOfLifeBox.addItem("Undetermined");
-		sidePanel.add(stageOfLifeBox);
+                JComboBox stageOfLifeBox = new JComboBox();
+                stageOfLifeBox.setMaximumSize(new Dimension(250, 20));
+                stageOfLifeBox.addItem("All Stages of Life");
+                stageOfLifeBox.addItem("Mature");
+                stageOfLifeBox.addItem("Immature");
+                stageOfLifeBox.addItem("Undetermined");
+                sidePanel.add(stageOfLifeBox);
 
-		JSeparator separator4 = new JSeparator();
-		separator4.setMaximumSize(new Dimension(300, 20));
-		sidePanel.add(separator4);
+                JSeparator separator4 = new JSeparator();
+                separator4.setMaximumSize(new Dimension(300, 20));
+                sidePanel.add(separator4);
 
-		// Tag Location
-		JLabel tagLocationLabel = new JLabel("Tag Location");
-		tagLocationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(tagLocationLabel);
+                // Tag Location
+                JLabel tagLocationLabel = new JLabel("Tag Location");
+                tagLocationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                sidePanel.add(tagLocationLabel);
 
-		JComboBox tagLocationBox = new JComboBox();
-		tagLocationBox.setMaximumSize(new Dimension(250, 20));
-		ArrayList<String> locations = controller.getTagLocations();
-		Collections.sort(locations);
-		locations.add(0, "All Locations");
-		for (String s : locations) {
-			tagLocationBox.addItem(s);
-		}
-		sidePanel.add(tagLocationBox);
+                JComboBox tagLocationBox = new JComboBox();
+                tagLocationBox.setMaximumSize(new Dimension(250, 20));
+                ArrayList<String> locations = controller.getTagLocations();
+                Collections.sort(locations);
+                locations.add(0, "All Locations");
+                for (String s : locations) {
+                        tagLocationBox.addItem(s);
+                }
+                sidePanel.add(tagLocationBox);
 
-		JSeparator separator5 = new JSeparator();
-		separator5.setMaximumSize(new Dimension(300, 35));
-		sidePanel.add(separator5);
+                JSeparator separator5 = new JSeparator();
+                separator5.setMaximumSize(new Dimension(300, 35));
+                sidePanel.add(separator5);
 
-		createLoader();
+                createLoader();
 
-		// Search button
-		searchButton = new JButton("Search");
-		searchButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Thread thread = new Thread() {
-					public void run() {
+                // Search button
+                searchButton = new JButton("Search");
+                searchButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                Thread thread = new Thread() {
+                                        public void run() {
 
-						mainPanel.removeAll();
-						mainPanel.add(loader);
-						searchButton.setEnabled(false);
-						searchButton.setText("Searching...");
-						controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
-								genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
-								tagLocationBox.getSelectedItem().toString());
+                                                mainPanel.removeAll();
+                                                mainPanel.add(loader);
+                                                searchButton.setEnabled(false);
+                                                searchButton.setText("Searching...");
+                                                controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
+                                                                genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
+                                                                tagLocationBox.getSelectedItem().toString());
 
-						ArrayList<SharkTime> sharkFilter = controller.getSharkList();
-						mainPanel.removeAll();
-						mainPanel.revalidate();
-						System.out.println("Shark count: " + sharkFilter.size());
-						for (SharkTime s : sharkFilter) {
-							SharkPanel sharkPanel = new SharkPanel(s, controller);
-							mainPanel.add(sharkPanel);
-						}
-						mainPanel.revalidate();
-						searchButton.setText("Search");
-						searchButton.setEnabled(true);
-					}
-				};
-				thread.start();
-			}
-		});
-		searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		searchButton.setMaximumSize(new Dimension(250, 25));
-		sidePanel.add(searchButton);
+                                                ArrayList<SharkTime> sharkFilter = controller.getSharkList();
+                                                mainPanel.removeAll();
+                                                mainPanel.revalidate();
+                                                System.out.println("Shark count: " + sharkFilter.size());
+                                                for (SharkTime s : sharkFilter) {
+                                                        SharkPanel sharkPanel = new SharkPanel(s, controller);
+                                                        mainPanel.add(sharkPanel);
+                                                }
+                                                mainPanel.revalidate();
+                                                searchButton.setText("Search");
+                                                searchButton.setEnabled(true);
+                                        }
+                                };
+                                thread.start();
+                        }
+                });
+                searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                searchButton.setMaximumSize(new Dimension(250, 25));
+                sidePanel.add(searchButton);
+                
+                JSeparator separator6 = new JSeparator();
+                separator6.setMaximumSize(new Dimension(300, 30));
+                sidePanel.add(separator6);
+                
+                statsButton = new JButton("Statistics");
+                statsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                statsButton.setMaximumSize(new Dimension(250, 25));
+                sidePanel.add(statsButton);
+                
+                statsButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString());
+                        }
+                });
 
-		JSeparator separator6 = new JSeparator();
-		separator6.setMaximumSize(new Dimension(300, 10));
-		sidePanel.add(separator6);
+        
 
-		// Shark logo
-		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
-		Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
-		JLabel logoLabel = new JLabel(new ImageIcon(image));
-		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		sidePanel.add(logoLabel);
+                // Shark logo
+                ImageIcon icon = new ImageIcon("Shark Logo.jpg");
+                Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+                JLabel logoLabel = new JLabel(new ImageIcon(image));
+                logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                sidePanel.add(logoLabel);
 
-		// Favourites button
-		favouritesButton = new JButton("Favourites");
-		favouritesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		favouritesButton.setMaximumSize(new Dimension(250, 25));
-		sidePanel.add(favouritesButton);
+                
+                
+                contentPane.add(sidePanel, BorderLayout.WEST);
+        }
 
-		// Action listener for the favourites button to open the favourites
-		// frame
-		favouritesButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FavouritesFrame favouritesFrame = new FavouritesFrame(controller);
-				for (int i = 0; i < controller.getFavouriteSharkList().size(); i++) {
-					favouritesFrame.addShark(controller.getFavouriteSharkList().get(i).getShark(),
-							controller.getFavouriteSharkList().get(i).getDistance());
-				}
-			}
-		});
+        public void createMainPanel() {
 
-		contentPane.add(sidePanel, BorderLayout.WEST);
-	}
+                // Main panel
+                mainPanel = new JPanel();
+                mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+                mainPanel.setMaximumSize(new Dimension(900, 700));
+                mainPanel.setBackground(Color.white);
 
-	public void createMainPanel() {
+                // Scroll pane to show information
+                JScrollPane scrollPane = new JScrollPane(mainPanel);
+                scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+                scrollPane.setBorder(new MatteBorder(2, 0, 3, 3, (Color) new Color(0, 0, 0)));
+                contentPane.add(scrollPane, BorderLayout.CENTER);
+        }
 
-		// Main panel
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.setMaximumSize(new Dimension(900, 700));
-		mainPanel.setBackground(Color.white);
+        public void selectedShark(SharkTime s) {
+                mainPanel.removeAll();
+                mainPanel.add(new SharkPanel(s, controller));
+                mainPanel.revalidate();
+        }
 
-		// Scroll pane to show information
-		JScrollPane scrollPane = new JScrollPane(mainPanel);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		scrollPane.setBorder(new MatteBorder(2, 0, 3, 3, (Color) new Color(0, 0, 0)));
-		contentPane.add(scrollPane, BorderLayout.CENTER);
-	}
-
-	public void selectedShark(SharkTime s) {
-		mainPanel.removeAll();
-		mainPanel.add(new SharkPanel(s, controller));
-		mainPanel.revalidate();
-	}
-
-	public void createLoader() {
-		ImageIcon loaderPicture = new ImageIcon("Loader.gif");
-		loader = new JLabel(loaderPicture);
-		loader.setAlignmentX(Component.CENTER_ALIGNMENT);
-	}
+        public void createLoader() {
+                ImageIcon loaderPicture = new ImageIcon("Loader.gif");
+                loader = new JLabel(loaderPicture);
+                loader.setAlignmentX(Component.CENTER_ALIGNMENT);
+        }
 }
+
+

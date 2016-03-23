@@ -109,7 +109,7 @@ public class SharkPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (btnFollow.getText().equals("Follow")) {
-					controller.addFavouriteShark(s.getShark());
+					controller.addFavourite(s.getShark());
 					btnFollow.setText("Unfollow");
 					revalidate();
 				} else {

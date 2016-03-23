@@ -146,6 +146,24 @@ public class Query {
 		}
 	}
 	
+	public ArrayList<String> getAllSharkNames() {
+		return jawAPI.getSharkNames();
+	}
+	
+	// Getter methods
+	public SharkTime getSharkTimeFromName(String sharkName) {
+		for(int i = 0; i < sharkFilter.size(); i++) {
+			if (sharkFilter.get(i).getShark().getName().equals(sharkName)) {
+				return sharkFilter.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<SharkTime> getSharkList() {
+		return sharkFilter;
+	}	
+	
 	public String getAcknowledgement(){
 		return jawAPI.getAcknowledgement();
 	}
@@ -156,22 +174,5 @@ public class Query {
 	
 	public ArrayList<String> getTagLocations() {
 		return jawAPI.getTagLocations();
-	}
-
-	public ArrayList<SharkTime> getSharkList() {
-		return sharkFilter;
-	}	
-	
-	public SharkTime getSharkTimeFromName(String sharkName) {
-		for(int i = 0; i < sharkFilter.size(); i++) {
-			if (sharkFilter.get(i).getShark().getName().equals(sharkName)) {
-				return sharkFilter.get(i);
-			}
-		}
-		return null;
-	}
-	
-	public Shark getSharkFromName(String name) {
-		return jawAPI.getShark(name);
 	}
 }

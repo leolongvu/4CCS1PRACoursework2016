@@ -18,6 +18,7 @@ public class Controller {
 	private Query query;
 	private Favourite favourite;
 	
+	// Set reference methods
 	public void setMainFrameReference(MainFrame frame) {
 		mainFrame = frame;
 	}
@@ -34,6 +35,7 @@ public class Controller {
 		this.favourite = favourite;
 	}
 	
+	// API getter methods	
 	public String getAcknowledgement() {
 		return query.getAcknowledgement();
 	}
@@ -42,43 +44,40 @@ public class Controller {
 		return query.getTagLocations();
 	}
 	
-	public void searchShark(String timeFrame, String gender, String lifeStage, String location) {
-		query.implementAllSearch(timeFrame, gender, lifeStage, location);
-	}
-	
 	public ArrayList<SharkTime> getSharkList() {
 		return query.getSharkList();
-	}
-	
-	public void addFavouriteShark(Shark shark) {
-		favourite.addFavourite(shark);
 	}
 	
 	public ArrayList<SharkLocation> getFavouriteSharkList() {
 		return favourite.getFavouriteSharkList();
 	}
 	
-	public void removeFavourite(Shark shark) {
-		favourite.removeFavourite(shark);
-	}
-	
-	public void selectShark(SharkTime s) {
-		mainFrame.selectedShark(s);
-	}
-	
 	public SharkTime getSelectedSharkTime(String name) {
 		return query.getSharkTimeFromName(name);
+	}
+	
+	// API functional methods
+	public void searchShark(String timeFrame, String gender, String lifeStage, String location) {
+		query.implementAllSearch(timeFrame, gender, lifeStage, location);
+	}
+	
+	public void addFavourite(Shark shark) {
+		favourite.addFavourite(shark);
+	}
+	
+	public void removeFavourite(Shark shark) {
+		favourite.removeFavourite(shark);
 	}
 	
 	public int checkFavourite(Shark shark) {
 		return favourite.indexOfShark(shark);
 	}
 	
-	public Shark getSharkFromName(String name) {
-		return query.getSharkFromName(name);
-	}
-	
 	public void clearFavourite() {
 		favourite.clearFavourite();
+	}
+	
+	public void selectShark(SharkTime s) {
+		mainFrame.selectedShark(s);
 	}
 }

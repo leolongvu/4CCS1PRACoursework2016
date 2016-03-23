@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.theinfiniteloop.sharktracker.api.Query;
@@ -78,6 +77,8 @@ public class StatisticsFrame {
                 statistics.add(trackingGraphPane);
                 statistics.setVisible(true);
                 statistics.pack();
+                statistics.setLocationRelativeTo(null);
+                statistics.setDefaultCloseOperation(statistics.DISPOSE_ON_CLOSE);
         }
         
         public void createGenderChart()
@@ -205,3 +206,5 @@ public class StatisticsFrame {
                 StatisticsFrame st = new StatisticsFrame("Week");
         }
 }
+
+

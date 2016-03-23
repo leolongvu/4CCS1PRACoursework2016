@@ -14,74 +14,57 @@ import javax.swing.JPanel;
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 
-public class SharkOfTheDayFrame {
+public class SharkOfTheDayFrame extends JFrame {
 
-	private Query query;
+        private Query query;
 
-	private JFrame jfShark;
+        private JPanel jpShark;
 
-	private JPanel jpShark;
+        private ArrayList<String> sharkList;
 
-	private JLabel sharkOfTheDay;
+        private String sharkOTD;
 
-	private ArrayList<String> sharkList;
+        public SharkOfTheDayFrame(String rangeChosen) {
+                query = new Query();
 
-	private Random randomNameGenerator;
+                jpShark = new JPanel();
+                jpShark.setLayout(new FlowLayout());
 
-	private String sharkOTD;
+                sharkList = new ArrayList<String>();
+                sharkList = query.getAllSharkNames();
 
-	public SharkOfTheDayFrame(String rangeChosen) {
-		query = new Query();
+                this.add(jpShark);
+        }
 
-		jfShark = new JFrame();
+        public void setDate() {
+                Calendar calendar = Calendar.getInstance();
+                String dayOfMonth = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+                FileIO file = new FileIO("SharkOfTheDay");
 
-		jpShark = new JPanel();
-		jpShark.setLayout(new FlowLayout());
+                if (!dayOfMonth.equals(file.readLines().get(0))) {
+                        System.out.println("new day");
+                        file.deleteFile();
+                        file.setFile("SharkOfTheDay");
 
-		sharkList = new ArrayList<String>();
-		sharkList = query.getAllSharksNames();
+                        file.addLine(dayOfMonth);
 
-	}
+                        System.out.println("day added");
+                        Random rnd = new Random();
+                        int i = rnd.nextInt(sharkList.size() - 1);
+                        sharkOTD = sharkList.get(i);
+                        file.addLine(sharkOTD);
+                }
+                else {
+                        System.out.println("same day");
+                        sharkOTD = file.readLines().get(1);
+                }
 
-	/*
-	 * public void getTheSharkName() { int index =
-	 * randomNameGenerator.nextInt(sharkList.size());
-	 * sharkOfTheDay.setText(sharkList.get(index).getShark().getName());
-	 * jpShark.add(sharkOfTheDay); jfShark.add(jpShark); }
-	 */
+                System.out.println(sharkOTD);
+        }
 
-	public void setDate() {
-		Calendar calendar = Calendar.getInstance();
-		String dayOfMonth = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-		FileIO file = new FileIO("SharkOfTheDay");
-
-		if (!dayOfMonth.equals(file.readFile().get(0))) {
-			System.out.println("new day");
-			// FileIO file2 = new FileIO("tempShark");
-			file.deleteFile();
-			file.setFile("SharkOfTheDay");
-
-			file.addLine(dayOfMonth);
-
-			System.out.println("day added");
-			Random rnd = new Random();
-			int i = rnd.nextInt(sharkList.size() - 1);
-			sharkOTD = sharkList.get(i);
-			file.addLine(sharkOTD);
-			// file2.renameFile("SharkOfTheDay");
-		}
-
-		else {
-			System.out.println("same day");
-			sharkOTD = file.readFile().get(1);
-		}
-
-		System.out.println(sharkOTD);
-
-	}
-
-	public static void main(String[] args) {
-		SharkOfTheDayFrame shark = new SharkOfTheDayFrame("Week");
-		shark.setDate();
-	}
+        public static void main(String[] args) {
+                SharkOfTheDayFrame shark = new SharkOfTheDayFrame("Week");
+                shark.setDate();
+        }
 }
+
