@@ -4,6 +4,7 @@ import com.theinfiniteloop.sharktracker.api.Favourite;
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.controller.Controller;
 import com.theinfiniteloop.sharktracker.gui.InitialFrame;
+import com.theinfiniteloop.sharktracker.gui.MainFrame;
 
 public class Main {
 
@@ -17,6 +18,9 @@ public class Main {
 		controller.setQuery(query);
 		controller.setFavourite(favourite);
 		
-		InitialFrame gui = new InitialFrame(controller);
+		InitialFrame initial = new InitialFrame(controller);
+		controller.setInitialFrameReference(initial);
+		MainFrame search = new MainFrame(controller);
+		controller.setMainFrameReference(search);
 	}
 }

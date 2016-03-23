@@ -76,6 +76,7 @@ public class FavouritesFrame {
 					System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
 					controller.selectShark(
 							controller.getSelectedSharkTime(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					controller.setMainFrameVisibility(true);
 					frame.dispose();
 				}
 			}

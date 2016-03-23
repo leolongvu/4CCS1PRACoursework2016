@@ -54,7 +54,8 @@ public class FileIO {
                         String line;
                         while ((line = reader.readLine()) != null) {
                                 count++;
-                                Shark shark = controller.getSelectedSharkTime(line).getShark();
+                                System.out.println(line);
+                                Shark shark = controller.getSharkFromName(line);
                                 controller.addFavourite(shark);
                         }
                 } catch (IOException e) {

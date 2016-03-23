@@ -160,6 +160,10 @@ public class Query {
 		return null;
 	}
 	
+	public Shark getSharkFromName(String name) {
+		return jawAPI.getShark(name);
+	}
+	
 	public ArrayList<SharkTime> getSharkList() {
 		return sharkFilter;
 	}	
