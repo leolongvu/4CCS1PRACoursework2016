@@ -33,7 +33,6 @@ public class MainFrame {
 	private JFrame frame;
 	private JButton searchButton;
 	private JButton statsButton;
-	private JLabel loader;
 
 	private JPanel mainPanel;
 
@@ -160,18 +159,17 @@ public class MainFrame {
 		separator5.setMaximumSize(new Dimension(300, 35));
 		sidePanel.add(separator5);
 
-		createLoader();
-
 		// Search button
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				Thread thread = new Thread() {
 					public void run() {
-
 						mainPanel.removeAll();
-						mainPanel.add(loader);
+						mainPanel.repaint();
+						createLoader();
 						searchButton.setEnabled(false);
 						searchButton.setText("Searching...");
 						controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
@@ -180,11 +178,14 @@ public class MainFrame {
 
 						ArrayList<SharkTime> sharkFilter = controller.getSharkList();
 						mainPanel.removeAll();
-						mainPanel.revalidate();
-						System.out.println("Shark count: " + sharkFilter.size());
-						for (SharkTime s : sharkFilter) {
-							SharkPanel sharkPanel = new SharkPanel(s, controller);
-							mainPanel.add(sharkPanel);
+						if (sharkFilter.size() == 0) {
+							noSharkFound();
+						} else {
+							System.out.println("Shark Count: " + sharkFilter.size());
+							for (SharkTime s : sharkFilter) {
+								SharkPanel sharkPanel = new SharkPanel(s, controller);
+								mainPanel.add(sharkPanel);
+							}
 						}
 						mainPanel.revalidate();
 						searchButton.setText("Search");
@@ -213,7 +214,7 @@ public class MainFrame {
 				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString());
 			}
 		});
-		
+
 		SharkOfTheDayPanel sharkOTD = new SharkOfTheDayPanel();
 		sharkOTD.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(sharkOTD);
@@ -252,8 +253,19 @@ public class MainFrame {
 
 	public void createLoader() {
 		ImageIcon loaderPicture = new ImageIcon("Loader.gif");
-		loader = new JLabel(loaderPicture);
+		JLabel loader = new JLabel(loaderPicture);
 		loader.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(loader);
+		mainPanel.repaint();
+	}
+
+	public void noSharkFound() {
+		ImageIcon icon = new ImageIcon("No Shark.jpg");
+		Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+		JLabel noShark = new JLabel(new ImageIcon(image));
+		noShark.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(noShark);
+		mainPanel.repaint();
 	}
 
 	public void setVisible(boolean visible) {
