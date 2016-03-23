@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ public class LoadingScreen {
 	private JWindow window;
 	private JLabel timer;
 	private boolean stopTimer;
+	private static DecimalFormat df2 = new DecimalFormat(".##");
 
 	public LoadingScreen() {
 		window = new JWindow();
@@ -58,7 +60,7 @@ public class LoadingScreen {
 		Thread thread = new Thread() {
 			public void run() {
 				while (stopTimer = true) {
-					timer.setText("" + (System.currentTimeMillis() - startTime));
+					timer.setText(("" + df2.format((System.currentTimeMillis() - startTime)/1000.000))+"s");
 					timer.repaint();
 				}
 			}

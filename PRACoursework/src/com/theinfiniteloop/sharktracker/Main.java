@@ -1,5 +1,10 @@
 package com.theinfiniteloop.sharktracker;
 
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+
 import com.theinfiniteloop.sharktracker.api.Favourite;
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.controller.Controller;
@@ -24,13 +29,13 @@ public class Main {
 
 		InitialFrame initial = new InitialFrame(controller);
 		controller.setInitialFrameReference(initial);
-		
 
 		MainFrame search = new MainFrame(controller);
 		controller.setMainFrameReference(search);
-		
+
 		l.stopLoading();
 		initial.setVisible(true);
 		System.out.println(System.currentTimeMillis() - n);
+
 	}
 }

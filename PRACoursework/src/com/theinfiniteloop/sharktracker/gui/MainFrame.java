@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -215,7 +214,6 @@ public class MainFrame {
 			}
 		});
 
-		
 		SharkOfTheDayPanel sharkOTD = new SharkOfTheDayPanel();
 		sharkOTD.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(sharkOTD);
@@ -226,6 +224,18 @@ public class MainFrame {
 		JLabel logoLabel = new JLabel(new ImageIcon(image));
 		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(logoLabel);
+
+		JButton backButton = new JButton("Go Back");
+		backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		backButton.setMaximumSize(new Dimension(250, 25));
+		sidePanel.add(backButton);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				controller.setInitialFrameVisibility(true);
+			}
+		});
 
 		contentPane.add(sidePanel, BorderLayout.WEST);
 	}
