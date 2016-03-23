@@ -24,7 +24,6 @@ public class SharkOfTheDayPanel extends JPanel {
 	private Query query;
 
 	public SharkOfTheDayPanel() {
-
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		query = new Query();
 		getShark();
@@ -46,7 +45,11 @@ public class SharkOfTheDayPanel extends JPanel {
 		Calendar calendar = Calendar.getInstance();
 		dayOfMonth = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 		month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
+
 		FileIO file = new FileIO("SharkOfTheDay");
+
+		// If todays date does not equal the previous shark of the day date saved then
+		// set todays date and a new shark as the shark of the day
 		if (!dayOfMonth.equals(file.readLines().get(0))) {
 			file.deleteFile();
 			file.setFile("SharkOfTheDay");

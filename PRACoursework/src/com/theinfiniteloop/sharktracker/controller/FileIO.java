@@ -3,11 +3,9 @@ package com.theinfiniteloop.sharktracker.controller;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.theinfiniteloop.sharktracker.api.SharkLocation;
@@ -27,11 +25,11 @@ public class FileIO {
 		setFile(user);
 	}
 
-	// sets the current file as a given username
+	// sets the current file as a given user name
 	public void setFile(String user) {
 		try {
 			file = new File(user + ".txt");
-			if (user.equals("user")) {
+			if (user.equals("User")) {
 				file.delete();
 			}
 
@@ -39,13 +37,11 @@ public class FileIO {
 				file.createNewFile();
 				System.out.println("File created: " + user + ".txt");
 			}
-			System.out.println("File set: " + user + ".txt");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// returns an array list of strings for every line in the file
 	public void readFile() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -61,6 +57,7 @@ public class FileIO {
 		}
 	}
 
+	// returns an array list of all the text in a file
 	public ArrayList<String> readLines() {
 		ArrayList<String> lines = new ArrayList<String>();
 		try {
@@ -90,55 +87,6 @@ public class FileIO {
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	// removes a given line from the file
-	public void removeLine(String lineToRemove) {
-
-		try {
-
-			File inFile = file;
-
-			if (!inFile.isFile()) {
-				return;
-			}
-
-			// Construct the new file that will later be renamed to the original
-			// filename.
-			File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
-
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
-
-			String line = null;
-
-			// Read from the original file and write to the new
-			// unless content matches data to be removed.
-			while ((line = br.readLine()) != null) {
-
-				if (!line.trim().equals(lineToRemove)) {
-
-					pw.println(line);
-					pw.flush();
-				}
-			}
-			pw.close();
-			br.close();
-
-			// Delete the original file
-			if (!inFile.delete()) {
-				System.out.println("Could not delete file");
-				return;
-			}
-			// Rename the new file to the filename the original file had.
-			if (!tempFile.renameTo(inFile))
-				System.out.println("Could not rename file");
-
-		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			ex.printStackTrace();
 		}
 	}
 

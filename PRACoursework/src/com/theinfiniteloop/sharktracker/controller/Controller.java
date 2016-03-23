@@ -6,7 +6,6 @@ import com.theinfiniteloop.sharktracker.api.Favourite;
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.api.SharkLocation;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
-import com.theinfiniteloop.sharktracker.gui.FavouritesFrame;
 import com.theinfiniteloop.sharktracker.gui.InitialFrame;
 import com.theinfiniteloop.sharktracker.gui.MainFrame;
 
@@ -86,6 +85,10 @@ public class Controller {
 	// GUI functions
 	public void selectShark(SharkTime s) {
 		mainFrame.selectedShark(s);
+	}
+
+	public void showSearch() {
+		mainFrame.showSearch();
 	}
 
 	public void setMainFrameVisibility(boolean visible) {

@@ -22,11 +22,14 @@ public class LoadingScreen {
 
 	public LoadingScreen() {
 		window = new JWindow();
+
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
 		JLabel logo = new JLabel(new ImageIcon("Splash.gif"));
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(logo);
+
 		Font font = new Font("Comic Sans MS", Font.BOLD, 40);
 		JLabel text = new JLabel("Loading...");
 		text.setFont(font);
@@ -46,6 +49,7 @@ public class LoadingScreen {
 		window.setContentPane(contentPane);
 		window.setSize(new Dimension(310, 410));
 		window.setLocationRelativeTo(null);
+		window.setAlwaysOnTop(true);
 		window.setVisible(true);
 	}
 
@@ -60,7 +64,7 @@ public class LoadingScreen {
 		Thread thread = new Thread() {
 			public void run() {
 				while (stopTimer = true) {
-					timer.setText(("" + df2.format((System.currentTimeMillis() - startTime)/1000.000))+"s");
+					timer.setText(("" + df2.format((System.currentTimeMillis() - startTime) / 1000.000)) + "s");
 					timer.repaint();
 				}
 			}

@@ -19,9 +19,6 @@ import com.theinfiniteloop.sharktracker.controller.Controller;
 public class SharkPanel extends JPanel {
 
 	private Controller controller;
-	private JButton btnFollow;
-	private JButton btnUnfollow;
-	private JPanel pingPanel;
 
 	public SharkPanel(SharkTime s, Controller controller) {
 		this.controller = controller;
@@ -86,7 +83,7 @@ public class SharkPanel extends JPanel {
 		textPane.setOpaque(false);
 		add(textPane);
 
-		pingPanel = new JPanel();
+		JPanel pingPanel = new JPanel();
 		pingPanel.setMaximumSize(new Dimension(850, 35));
 		add(pingPanel);
 		pingPanel.setLayout(new GridLayout(0, 3, 0, 0));
@@ -97,7 +94,7 @@ public class SharkPanel extends JPanel {
 		JLabel lblPing = new JLabel(s.getTime());
 		pingPanel.add(lblPing);
 
-		btnFollow = new JButton();
+		JButton btnFollow = new JButton();
 		if (controller.checkFavourite(s.getShark()) == -1) {
 			btnFollow.setText("Follow");
 		} else {

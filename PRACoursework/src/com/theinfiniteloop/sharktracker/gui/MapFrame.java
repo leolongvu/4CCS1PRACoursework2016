@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class MapFrame {
 
@@ -34,7 +33,7 @@ public class MapFrame {
 
 		try {
 			String imageUrl = map + locations;
-			String destinationFile = "map.jpg";
+			String destinationFile = "Map.jpg";
 			String str = destinationFile;
 			URL url = new URL(imageUrl);
 			InputStream is = url.openStream();

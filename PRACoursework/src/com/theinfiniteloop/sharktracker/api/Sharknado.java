@@ -11,10 +11,11 @@ public class Sharknado {
 
 	private static final Pattern p = Pattern.compile("(\"elevation\"\\s:\\s)(\\-?\\d*)");
 
-	// Takes in coordinates and checks the elevation and returns true if higher
-	// than 0 meters
+	// Takes in coordinates and checks the elevation and returns
+	// true if higher than 0 meters
 	public static boolean checkSharknado(String location) {
 
+		// uses googles elevation api
 		String query = "https://maps.googleapis.com/maps/api/elevation/json?locations=";
 
 		String key = "&key=AIzaSyD6_J9SKMDa57kjk-k6vuMmYRTAPotiSJU";

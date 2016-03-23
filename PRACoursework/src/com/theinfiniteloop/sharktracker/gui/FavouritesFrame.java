@@ -26,101 +26,102 @@ import api.jaws.Shark;
 
 public class FavouritesFrame {
 
-    private static DecimalFormat df2 = new DecimalFormat(".##");
-    private JFrame frame;
-    private JPanel contentPane;
-    private DefaultTableModel model;
-    private Controller controller;
-    
-    ArrayList<String> coords;
+	private static DecimalFormat df2 = new DecimalFormat(".##");
 
-    public FavouritesFrame(Controller controller) {
-        this.controller = controller;
-        createPanel();
-        createFrame();    
-        sharknadoLoad();     
-    }
+	private JFrame frame;
+	private JPanel contentPane;
 
-    private void createPanel() {
-        contentPane = new JPanel();
-        contentPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	private DefaultTableModel model;
+	private Controller controller;
+	private ArrayList<String> coords;
 
-        JLabel label = new JLabel("Your favourite sharks are this far away from you right now:");
-        contentPane.add(label);
+	public FavouritesFrame(Controller controller) {
+		this.controller = controller;
+		createPanel();
+		createFrame();
+		sharknadoLoad();
+	}
 
-        JTable table = new JTable();
-        model = (DefaultTableModel) table.getModel();
+	private void createPanel() {
+		contentPane = new JPanel();
+		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        model.addColumn("Name of Shark");
-        model.addColumn("Distance from Kings (km)");
+		JLabel label = new JLabel("Your favourite sharks are this far away from you right now:");
+		contentPane.add(label);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        contentPane.add(scrollPane);
+		JTable table = new JTable();
+		model = (DefaultTableModel) table.getModel();
 
-        JButton mapButton = new JButton("Show Map");
-        contentPane.add(mapButton);
+		model.addColumn("Name of Shark");
+		model.addColumn("Distance from Kings (KM)");
 
-        mapButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MapFrame map = new MapFrame(coords);
-            }
-        });
+		JScrollPane scrollPane = new JScrollPane(table);
+		contentPane.add(scrollPane);
 
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (table.getSelectedRow() > -1) {
-                    System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-                    controller.selectShark(
-                            controller.getSelectedSharkTime(table.getValueAt(table.getSelectedRow(), 0).toString()));
-                    controller.setMainFrameVisibility(true);
-                    frame.dispose();
-                }
-            }
-        });
-    }
+		JButton mapButton = new JButton("Show Map");
+		contentPane.add(mapButton);
+		mapButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MapFrame map = new MapFrame(coords);
+			}
+		});
 
-    private void createFrame() {
-        frame = new JFrame();
-        frame.setTitle("Favourites");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setContentPane(contentPane);
-        frame.setSize(450, 520);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent event) {
+				if (table.getSelectedRow() > -1) {
+					System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+					controller.selectShark(
+							controller.getSelectedSharkTime(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					controller.setMainFrameVisibility(true);
+					controller.setInitialFrameVisibility(false);
+					frame.dispose();
+				}
+			}
+		});
+	}
 
-    public void addShark(Shark s, double dist) {
-        model.addRow(new Object[] { s.getName(), df2.format(dist) });
-        contentPane.repaint();
-    }
+	private void createFrame() {
+		frame = new JFrame();
+		frame.setTitle("Favourites");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setContentPane(contentPane);
+		frame.setSize(450, 520);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
 
-    private void sharknadoLoad() {
-        coords = new ArrayList<String>();
-        for (SharkLocation sl : controller.getFavouriteSharkList()) {
-            String loc = sl.getLat() + "," + sl.getLon();
-            coords.add(loc);
-        }
-        
-        String sharknado = "";
-        boolean sharknadoEvent = false;
-        for (int i = 0; i < coords.size(); i++) {
-            if (Sharknado.checkSharknado(coords.get(i)) == true) {
-                sharknadoEvent = true;
-                if (sharknado.length() != 0) {
-                    sharknado += ", " + controller.getFavouriteSharkList().get(i).getShark().getName();
-                }
-                else {
-                    sharknado += controller.getFavouriteSharkList().get(i).getShark().getName();
-                }
-            }
-        }
-        if (sharknadoEvent) {
-            JOptionPane.showMessageDialog(frame, "These sharks are on land: " + sharknado, 
-                    "Sharknado Alert!", JOptionPane.WARNING_MESSAGE);
-        }
-    }
+	public void addShark(Shark s, double dist) {
+		model.addRow(new Object[] { s.getName(), df2.format(dist) });
+		contentPane.repaint();
+	}
+
+	private void sharknadoLoad() {
+		coords = new ArrayList<String>();
+
+		for (SharkLocation sl : controller.getFavouriteSharkList()) {
+			String loc = sl.getLat() + "," + sl.getLon();
+			coords.add(loc);
+		}
+
+		String sharknado = "";
+		boolean sharknadoEvent = false;
+		for (int i = 0; i < coords.size(); i++) {
+			if (Sharknado.checkSharknado(coords.get(i)) == true) {
+				sharknadoEvent = true;
+				if (sharknado.length() != 0) {
+					sharknado += ", " + controller.getFavouriteSharkList().get(i).getShark().getName();
+				} else {
+					sharknado += controller.getFavouriteSharkList().get(i).getShark().getName();
+				}
+			}
+		}
+		if (sharknadoEvent) {
+			JOptionPane.showMessageDialog(frame, "These sharks are on land: " + sharknado, "Sharknado Alert!",
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
 }

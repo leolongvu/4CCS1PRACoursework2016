@@ -1,10 +1,5 @@
 package com.theinfiniteloop.sharktracker;
 
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.JButton;
-
 import com.theinfiniteloop.sharktracker.api.Favourite;
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.controller.Controller;
@@ -15,27 +10,25 @@ import com.theinfiniteloop.sharktracker.gui.MainFrame;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		LoadingScreen l = new LoadingScreen();
-		long n = System.currentTimeMillis();
+		// create loading screen and controller
+		LoadingScreen splashScreen = new LoadingScreen();
 		Controller controller = new Controller();
 
 		Query query = new Query();
 		Favourite favourite = new Favourite(query);
 
-		// Set Reference for controller
+		// set reference for controller
 		controller.setQuery(query);
 		controller.setFavourite(favourite);
 
+		// create GUI
 		InitialFrame initial = new InitialFrame(controller);
 		controller.setInitialFrameReference(initial);
-
 		MainFrame search = new MainFrame(controller);
 		controller.setMainFrameReference(search);
 
-		l.stopLoading();
+		// stop loading screen and show initial GUI once everything is ready
+		splashScreen.stopLoading();
 		initial.setVisible(true);
-		System.out.println(System.currentTimeMillis() - n);
-
 	}
 }

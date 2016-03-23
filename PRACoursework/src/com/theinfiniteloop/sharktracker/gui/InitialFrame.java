@@ -27,19 +27,17 @@ public class InitialFrame {
 	public InitialFrame(Controller controller) {
 		this.controller = controller;
 		file = new FileIO(controller);
-		file.setFile("user");
+		file.setFile("User");
 
 		createPanel();
 		createLabels();
 		createButtons();
 		createFrame();
 		createMenu();
-
 	}
 
 	// Create the content pane
 	public void createPanel() {
-
 		contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		contentPane.setBackground(Color.white);
@@ -49,6 +47,10 @@ public class InitialFrame {
 	public void createFrame() {
 		frame = new JFrame();
 		frame.setTitle("Shark Tracker");
+		frame.setContentPane(contentPane);
+		frame.setSize(new Dimension(300, 400));
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -56,14 +58,9 @@ public class InitialFrame {
 				System.exit(0);
 			}
 		});
-		frame.setContentPane(contentPane);
-		frame.setSize(new Dimension(300, 400));
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-
 	}
 
-	// Creates the logo and label
+	// Creates the picture and label
 	public void createLabels() {
 		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
 		Image image = icon.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
@@ -89,12 +86,11 @@ public class InitialFrame {
 		searchButton.setMaximumSize(new Dimension(250, 50));
 		searchButton.setBorder(border);
 		searchButton.setBackground(Color.white);
-
-		// Action listener for the search button to open the main frame
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.setMainFrameVisibility(true);
+				controller.showSearch();
 				setVisible(false);
 			}
 		});
@@ -107,9 +103,6 @@ public class InitialFrame {
 		favouritesButton.setBorder(border);
 		favouritesButton.setBackground(Color.white);
 		favouritesButton.setEnabled(false);
-
-		// Action listener for the favourites button to open the favourites
-		// frame
 		favouritesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,7 +141,7 @@ public class InitialFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				file.deleteFile();
-				file.setFile("user");
+				file.setFile("User");
 				favouritesButton.setEnabled(false);
 				favouritesButton.setText("Favourites");
 			}
@@ -159,7 +152,7 @@ public class InitialFrame {
 		JFrame userFrame = new JFrame();
 		userFrame.setResizable(false);
 		userFrame.setTitle("New / Load User");
-		userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		userFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		userFrame.setBounds(100, 100, 300, 130);
 		userFrame.setLocationRelativeTo(null);
 
@@ -172,7 +165,7 @@ public class InitialFrame {
 		pane.add(userPanel);
 		userPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JLabel lblEnterUsername = new JLabel("Enter Username:");
+		JLabel lblEnterUsername = new JLabel("Enter Username: ");
 		userPanel.add(lblEnterUsername);
 
 		JTextField textField = new JTextField();
@@ -184,24 +177,21 @@ public class InitialFrame {
 
 		JButton btnConfirm = new JButton("Confirm");
 		buttonPanel.add(btnConfirm);
-
 		btnConfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String user = textField.getText();
 				if (!user.equals(null) && user.trim().length() > 0) {
 					file.setFile(user);
-					favouritesButton.setText("Favourites: " + user);
+					favouritesButton.setText("Favourites for: " + user);
+					file.readFile();
+					checkFavouriteButton();
+					userFrame.dispose();
 				}
-				file.readFile();
-				checkFavouriteButton();
-				userFrame.dispose();
 			}
 		});
-
 		JButton btnCancel = new JButton("Cancel");
 		buttonPanel.add(btnCancel);
-
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
