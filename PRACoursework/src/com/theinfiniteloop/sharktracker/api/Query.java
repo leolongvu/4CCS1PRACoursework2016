@@ -15,6 +15,7 @@ import api.jaws.Shark;
  * The query class which retrieves all of the information about the sharks from the API
  * 
  * @author The Infinite loops
+ * @see PRACoursework / Coursework Resources / doc / api / jaws /
  *
  */
 public class Query {
