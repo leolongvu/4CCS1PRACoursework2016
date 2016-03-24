@@ -26,7 +26,7 @@ public abstract class Sharknado {
 	 * 
 	 * @param location The input location to be checked as a string
 	 * @return If the location is above sea level or not as a boolean
-	 * @see https://developers.google.com/maps/documentation/elevation/intro
+	 * @see  <a href="https://developers.google.com/maps/documentation/elevation/intro">Google elevation api documentation</a>
 	 */
 	public static boolean checkSharknado(String location) {
 
