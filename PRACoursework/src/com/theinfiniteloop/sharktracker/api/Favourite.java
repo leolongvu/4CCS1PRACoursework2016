@@ -6,10 +6,11 @@ import api.jaws.Location;
 import api.jaws.Shark;
 
 /**
+ * The Favourite class which stores the favourite sharks of a particular user in an ArrayList
  * 
  * @authors The Infinite Loops
  *
- *	A class which stores the favourite sharks of a particular user in an ArrayList
+ *	
  */
 public class Favourite {
 	private String user;
