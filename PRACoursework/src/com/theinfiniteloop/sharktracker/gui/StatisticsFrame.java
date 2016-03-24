@@ -14,25 +14,14 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
+import com.theinfiniteloop.sharktracker.controller.Controller;
 
-/**
- * 
- * @author Laura
- * 
- *          A class which creates pie charts which indicate the number of sharks
- *          in the tracking range selected for each possible option(Gender,
- *          Stage of Life, Tag of Location). I had to import jcommon and
- *          jfreechart libraries in order to be able to create the pie charts.
- *
- */
 public class StatisticsFrame {
 
-	private Query query;
+	private Controller controller;
 
 	private JFrame statistics;
-
 	private JPanel trackingGraphPane;
-
 	private JLabel messageGender;
 	private JLabel messageLife;
 	private JLabel messageLocation;
@@ -40,12 +29,7 @@ public class StatisticsFrame {
 	private ChartPanel genderChartPanel;
 	private ChartPanel stageOfLifeChartPanel;
 	private ChartPanel locationChartPanel;
-
 	private DefaultPieDataset data;
-
-	public DefaultPieDataset getData() {
-		return data;
-	}
 
 	private int totalCount;
 	private int maleCount;
@@ -55,31 +39,23 @@ public class StatisticsFrame {
 	private int undeterminedCount;
 
 	private ArrayList<SharkTime> getSharkList;
-
 	private ArrayList<String> locations;
 
 	private int[] numberByLocation;
 
-	/**
-	 * Constructor for the StatisticsFramec class, intialises the fields and
-	 * creates the pie charts when called.
-	 * 
-	 * @param rangeChosen
-	 *            A String parameter which represents the option chosen in the
-	 *            "Tracking Range" option.
-	 */
-	public StatisticsFrame(String rangeChosen) {
+	public StatisticsFrame(String rangeChosen, Controller controller) {
 		statistics = new JFrame();
+		this.controller = controller;
 
-		query = new Query();
-		locations = query.getTagLocations();
+		// query = new Query();
+		locations = controller.getTagLocations();
 
 		trackingGraphPane = new JPanel();
 		trackingGraphPane.setLayout(new GridLayout(3, 1));
 		trackingGraphPane.setPreferredSize(new Dimension(800, 600));
 
 		getSharkList = new ArrayList<SharkTime>();
-		getSharkList = query.getSharkByTimeFrame(rangeChosen);
+		getSharkList = controller.getSharkByTimeFrame(rangeChosen);
 		totalCount = getSharkList.size();
 		System.out.println(totalCount);
 		messageGender = new JLabel();
@@ -97,11 +73,6 @@ public class StatisticsFrame {
 		statistics.setDefaultCloseOperation(statistics.DISPOSE_ON_CLOSE);
 	}
 
-	/**
-	 * Void method creates the Pie Chart for the Gender Option.
-	 * If
-	 * 
-	 */
 	public void createGenderChart() {
 		getNumberOfSharksByGender();
 		if (femaleCount + maleCount != 0) {
@@ -169,12 +140,12 @@ public class StatisticsFrame {
 		}
 	}
 
-	/**
-	 * Get method used to get the number of male sharks and female sharks, respectively.
-	 * I used an ArrayList of type SharkTime to store the male sharks.
-	 */
+	public DefaultPieDataset getData() {
+		return data;
+	}
+
 	public void getNumberOfSharksByGender() {
-		ArrayList<SharkTime> getSharkListTest = query.getSharkByGender("Male", getSharkList);
+		ArrayList<SharkTime> getSharkListTest = controller.getSharkByGender("Male", getSharkList);
 		maleCount = getSharkListTest.size();
 		femaleCount = totalCount - maleCount;
 		System.out.println(maleCount + " " + femaleCount);
@@ -182,9 +153,9 @@ public class StatisticsFrame {
 	}
 
 	public void getNumberOfSharksByStageOfLife() {
-		ArrayList<SharkTime> getSharkListTest = query.getSharkByLifeStage("Mature", getSharkList);
+		ArrayList<SharkTime> getSharkListTest = controller.getSharkByLifeStage("Mature", getSharkList);
 		matureCount = getSharkListTest.size();
-		getSharkListTest = query.getSharkByLifeStage("Immature", getSharkList);
+		getSharkListTest = controller.getSharkByLifeStage("Immature", getSharkList);
 		immatureCount = getSharkListTest.size();
 		undeterminedCount = totalCount - matureCount - immatureCount;
 		System.out.println(matureCount + " " + immatureCount + " " + undeterminedCount);
@@ -194,17 +165,11 @@ public class StatisticsFrame {
 		int i = 0;
 		numberByLocation = new int[locations.size()];
 		for (String s : locations) {
-			ArrayList<SharkTime> getSharkListTest = query.getSharkByLocation(s, getSharkList);
+			ArrayList<SharkTime> getSharkListTest = controller.getSharkByLocation(s, getSharkList);
 			numberByLocation[i] = getSharkListTest.size();
 			System.out.println(s + " " + numberByLocation[i]);
 			i++;
 		}
-
 		return numberByLocation;
-
-	}
-
-	public static void main(String[] args) {
-		StatisticsFrame st = new StatisticsFrame("Week");
 	}
 }
