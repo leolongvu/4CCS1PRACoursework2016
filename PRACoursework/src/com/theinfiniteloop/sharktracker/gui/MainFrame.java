@@ -346,7 +346,7 @@ public class MainFrame {
 		JLabel noShark = new JLabel(new ImageIcon(image));
 		noShark.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.add(noShark);
-		mainPanel.repaint();
+		mainPanel.revalidate();
 	}
 
 	/**
