@@ -13,6 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
+/**
+ * @author Raf, the infinite loop. This class adds a splash screen when the
+ *         program is first run
+ *
+ */
 public class LoadingScreen {
 
 	private JWindow window;
@@ -20,6 +25,9 @@ public class LoadingScreen {
 	private boolean stopTimer;
 	private static DecimalFormat df2 = new DecimalFormat(".##");
 
+	/**
+	 * constructor for this, creates a new loading screen
+	 */
 	public LoadingScreen() {
 		window = new JWindow();
 
@@ -53,12 +61,18 @@ public class LoadingScreen {
 		window.setVisible(true);
 	}
 
+	/**
+	 * method to remove the loading screen
+	 */
 	public void stopLoading() {
 		stopTimer = false;
 		window.dispose();
 	}
 
-	public void addTimer() {
+	/**
+	 * adds a timer to the loading screen
+	 */
+	private void addTimer() {
 		long startTime = System.currentTimeMillis();
 		stopTimer = true;
 		Thread thread = new Thread() {

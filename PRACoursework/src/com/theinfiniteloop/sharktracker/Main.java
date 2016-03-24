@@ -7,6 +7,10 @@ import com.theinfiniteloop.sharktracker.gui.InitialFrame;
 import com.theinfiniteloop.sharktracker.gui.LoadingScreen;
 import com.theinfiniteloop.sharktracker.gui.MainFrame;
 
+/**
+ * @author The Infinite Loop this is the main class which contains the main
+ *         method and instantiates the program
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -14,6 +18,7 @@ public class Main {
 		LoadingScreen splashScreen = new LoadingScreen();
 		Controller controller = new Controller();
 
+		// creates the query and favourites list
 		Query query = new Query();
 		Favourite favourite = new Favourite(query);
 

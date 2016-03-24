@@ -12,20 +12,41 @@ import com.theinfiniteloop.sharktracker.api.SharkLocation;
 
 import api.jaws.Shark;
 
+/**
+ * @author Raf, the infinite loop this class facilitates saving, deleting and
+ *         reading of physical files
+ *
+ */
 public class FileIO {
 
 	private File file;
 	private Controller controller;
 
+	/**
+	 * constructor where you need a reference to a controller
+	 * 
+	 * @param controller
+	 */
 	public FileIO(Controller controller) {
 		this.controller = controller;
 	}
 
+	/**
+	 * contructor where you only need a user name
+	 * 
+	 * @param user
+	 */
 	public FileIO(String user) {
 		setFile(user);
 	}
 
-	// sets the current file as a given user name
+	/**
+	 * sets the current file as a given user name, if the file already exists
+	 * then it just loads that. Also, if the name is "User" which is what we
+	 * have given to the default user, the it resets it every time it is loaded
+	 * 
+	 * @param user
+	 */
 	public void setFile(String user) {
 		try {
 			file = new File(user + ".txt");
@@ -42,6 +63,9 @@ public class FileIO {
 		}
 	}
 
+	/**
+	 * gives the constructor the names all the sharks in the file
+	 */
 	public void readFile() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -57,7 +81,12 @@ public class FileIO {
 		}
 	}
 
-	// returns an array list of all the text in a file
+	/**
+	 * returns all the text as an array list, where each line is a new string in
+	 * the list
+	 * 
+	 * @return array list of the text
+	 */
 	public ArrayList<String> readLines() {
 		ArrayList<String> lines = new ArrayList<String>();
 		try {
@@ -75,7 +104,12 @@ public class FileIO {
 		return lines;
 	}
 
-	// adds a given line to the set file
+	/**
+	 * adds a given line to the file
+	 * 
+	 * @param lineToAdd
+	 *            which is a string
+	 */
 	public void addLine(String lineToAdd) {
 		try {
 			FileWriter fw = new FileWriter(file, true);
@@ -90,12 +124,19 @@ public class FileIO {
 		}
 	}
 
+	/**
+	 * deletes a selected file
+	 */
 	public void deleteFile() {
 		System.out.println("File deleted: " + file.getName());
 		file.delete();
 	}
 
-	// Leo's input out using the same IO basic.
+	/**
+	 * this method adds a given array list to a file as text
+	 * 
+	 * @param list
+	 */
 	public void writeFavouriteList(ArrayList<SharkLocation> list) {
 		try {
 			// Write the list
