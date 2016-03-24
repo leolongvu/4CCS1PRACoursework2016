@@ -203,7 +203,7 @@ public class MainFrame {
 		statsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString());
+				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString(), controller);
 			}
 		});
 
