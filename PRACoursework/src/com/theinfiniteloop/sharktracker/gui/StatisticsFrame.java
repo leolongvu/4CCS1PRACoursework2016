@@ -17,11 +17,12 @@ import com.theinfiniteloop.sharktracker.api.SharkTime;
 
 /**
  * 
- * @authors The Infinite Loops
+ * @author Laura
  * 
  *          A class which creates pie charts which indicate the number of sharks
  *          in the tracking range selected for each possible option(Gender,
- *          Stage of Life, Tag of Location)
+ *          Stage of Life, Tag of Location). I had to import jcommon and
+ *          jfreechart libraries in order to be able to create the pie charts.
  *
  */
 public class StatisticsFrame {
@@ -96,6 +97,11 @@ public class StatisticsFrame {
 		statistics.setDefaultCloseOperation(statistics.DISPOSE_ON_CLOSE);
 	}
 
+	/**
+	 * Void method creates the Pie Chart for the Gender Option.
+	 * If
+	 * 
+	 */
 	public void createGenderChart() {
 		getNumberOfSharksByGender();
 		if (femaleCount + maleCount != 0) {
@@ -163,6 +169,10 @@ public class StatisticsFrame {
 		}
 	}
 
+	/**
+	 * Get method used to get the number of male sharks and female sharks, respectively.
+	 * I used an ArrayList of type SharkTime to store the male sharks.
+	 */
 	public void getNumberOfSharksByGender() {
 		ArrayList<SharkTime> getSharkListTest = query.getSharkByGender("Male", getSharkList);
 		maleCount = getSharkListTest.size();
