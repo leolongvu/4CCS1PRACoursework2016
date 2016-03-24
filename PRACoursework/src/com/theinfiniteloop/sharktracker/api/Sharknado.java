@@ -7,12 +7,26 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sharknado {
+/**
+ * An abstract class for checking if the elevation of a given coordinate is above sea level
+ * 
+ * @author The infinite loops
+ *
+ */
+
+public abstract class Sharknado {
 
 	private static final Pattern p = Pattern.compile("(\"elevation\"\\s:\\s)(\\-?\\d*)");
 
 	// Takes in coordinates and checks the elevation and returns
 	// true if higher than 0 meters
+	/**
+	 * A static method that takes a location string and checks the the google API
+	 * to see if the given location is above sea level
+	 * 
+	 * @param location The input location to be checked as a string
+	 * @return If the location is above sea level or not as a boolean
+	 */
 	public static boolean checkSharknado(String location) {
 
 		// uses googles elevation api
