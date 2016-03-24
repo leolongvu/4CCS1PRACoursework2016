@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.data.general.DefaultPieDataset;
-
-import com.theinfiniteloop.sharktracker.api.Query;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.controller.Controller;
 
@@ -47,7 +45,6 @@ public class StatisticsFrame {
 		statistics = new JFrame();
 		this.controller = controller;
 
-		// query = new Query();
 		locations = controller.getTagLocations();
 
 		trackingGraphPane = new JPanel();
