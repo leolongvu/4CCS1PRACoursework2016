@@ -24,6 +24,9 @@ import com.theinfiniteloop.sharktracker.controller.Controller;
 
 import api.jaws.Shark;
 
+/**
+ * @author the infinite loop. This class shows the users list of favourites
+ */
 public class FavouritesFrame {
 
 	private static DecimalFormat df2 = new DecimalFormat(".##");
@@ -35,6 +38,12 @@ public class FavouritesFrame {
 	private Controller controller;
 	private ArrayList<String> coords;
 
+	/**
+	 * creates a new favourites frame
+	 * 
+	 * @param controller
+	 *            reference to a controller
+	 */
 	public FavouritesFrame(Controller controller) {
 		this.controller = controller;
 		createPanel();
@@ -42,6 +51,9 @@ public class FavouritesFrame {
 		sharknadoLoad();
 	}
 
+	/**
+	 * creates the content pane for the frame
+	 */
 	private void createPanel() {
 		contentPane = new JPanel();
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -59,6 +71,7 @@ public class FavouritesFrame {
 		JScrollPane scrollPane = new JScrollPane(table);
 		contentPane.add(scrollPane);
 
+		// button to open a map
 		JButton mapButton = new JButton("Show Map");
 		contentPane.add(mapButton);
 		mapButton.addActionListener(new ActionListener() {
@@ -68,6 +81,7 @@ public class FavouritesFrame {
 			}
 		});
 
+		// action listener for the table, to open a shark in the search
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent event) {
@@ -83,6 +97,9 @@ public class FavouritesFrame {
 		});
 	}
 
+	/**
+	 * creates the frame
+	 */
 	private void createFrame() {
 		frame = new JFrame();
 		frame.setTitle("Favourites");
@@ -94,11 +111,23 @@ public class FavouritesFrame {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * adds a sharks information to the table
+	 * 
+	 * @param s
+	 *            is a shark object
+	 * @param dist
+	 *            is the distance to kings
+	 */
 	public void addShark(Shark s, double dist) {
 		model.addRow(new Object[] { s.getName(), df2.format(dist) });
 		contentPane.repaint();
 	}
 
+	/**
+	 * iterates through the list of favourite sharks and checks for sharknado
+	 * events, and then gives a popup alert if true
+	 */
 	private void sharknadoLoad() {
 		coords = new ArrayList<String>();
 

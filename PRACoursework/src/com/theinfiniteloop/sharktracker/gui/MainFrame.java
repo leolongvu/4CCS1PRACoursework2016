@@ -26,6 +26,11 @@ import javax.swing.border.MatteBorder;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.controller.Controller;
 
+/**
+ * @author Raf, the infinite loop. This class is the main search frame and
+ *         facilitates searching and displaying information of sharks
+ *
+ */
 public class MainFrame {
 
 	private JFrame frame;
@@ -40,6 +45,12 @@ public class MainFrame {
 
 	private Controller controller;
 
+	/**
+	 * constructs a new search frame
+	 * 
+	 * @param controller
+	 *            is the reference to the controller
+	 */
 	public MainFrame(Controller controller) {
 		this.controller = controller;
 		createPanel();
@@ -48,8 +59,10 @@ public class MainFrame {
 		createFrame();
 	}
 
-	// Create the content pane
-	public void createPanel() {
+	/**
+	 * creates the panel for the content pane and adds the acknowledgement
+	 */
+	private void createPanel() {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,8 +70,11 @@ public class MainFrame {
 		contentPane.add(acknowledgementLabel, BorderLayout.SOUTH);
 	}
 
-	// Create the frame
-	public void createFrame() {
+	/**
+	 * creates the frame and adds a window listener so that when this frame is
+	 * closed, it shows the initial frame
+	 */
+	private void createFrame() {
 		frame = new JFrame();
 		frame.setTitle("Search");
 		frame.setContentPane(contentPane);
@@ -74,8 +90,10 @@ public class MainFrame {
 		});
 	}
 
-	// Create the side panel
-	public void createSidePanel() {
+	/**
+	 * creates the options panel on the side which allows searching
+	 */
+	private void createSidePanel() {
 		// Side panel
 		JPanel sidePanel = new JPanel();
 		sidePanel.setBackground(Color.white);
@@ -177,7 +195,7 @@ public class MainFrame {
 		separator6.setMaximumSize(new Dimension(300, 30));
 		sidePanel.add(separator6);
 
-		// Stats button
+		// Statistics button
 		statsButton = new JButton("Statistics");
 		statsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		statsButton.setMaximumSize(new Dimension(250, 25));
@@ -185,7 +203,7 @@ public class MainFrame {
 		statsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString());
+				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString(), controller);
 			}
 		});
 
@@ -217,8 +235,10 @@ public class MainFrame {
 		contentPane.add(sidePanel, BorderLayout.WEST);
 	}
 
-	public void createMainPanel() {
-
+	/**
+	 * creates the main panel which shows all the search results
+	 */
+	private void createMainPanel() {
 		// Main panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -233,7 +253,11 @@ public class MainFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 	}
 
-	public void search() {
+	/**
+	 * method to search for sharks and display them, this is called when the
+	 * search button is pressed
+	 */
+	private void search() {
 		Thread thread = new Thread() {
 			public void run() {
 				mainPanel.removeAll();
@@ -241,10 +265,12 @@ public class MainFrame {
 				createLoader();
 				searchButton.setEnabled(false);
 				searchButton.setText("Searching...");
+				// the controller calls the search function
 				controller.searchShark(trackingRangeBox.getSelectedItem().toString(),
 						genderBox.getSelectedItem().toString(), stageOfLifeBox.getSelectedItem().toString(),
 						tagLocationBox.getSelectedItem().toString());
 
+				// the filtered shark list
 				ArrayList<SharkTime> sharkFilter = controller.getSharkList();
 				mainPanel.removeAll();
 				if (sharkFilter.size() == 0) {
@@ -264,6 +290,14 @@ public class MainFrame {
 		thread.start();
 	}
 
+	/**
+	 * this method is to display the information of one shark selected in the
+	 * favourites list. It also shows a picture of the particular species of
+	 * shark
+	 * 
+	 * @param s
+	 *            which is a shark time object
+	 */
 	public void selectedShark(SharkTime s) {
 		mainPanel.removeAll();
 		mainPanel.add(new SharkPanel(s, controller));
@@ -278,8 +312,12 @@ public class MainFrame {
 		mainPanel.add(sharkPic);
 		mainPanel.revalidate();
 	}
-	
-	public void showSearch(){
+
+	/**
+	 * this method is to display the initial "choose your options" message when
+	 * the frame is loaded
+	 */
+	public void showSearch() {
 		ImageIcon loaderPicture = new ImageIcon("Search.png");
 		JLabel searchPic = new JLabel(loaderPicture);
 		searchPic.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -288,7 +326,10 @@ public class MainFrame {
 		mainPanel.repaint();
 	}
 
-	public void createLoader() {
+	/**
+	 * this method shows a loading image when sharks are being searched for
+	 */
+	private void createLoader() {
 		ImageIcon loaderPicture = new ImageIcon("Loader.gif");
 		JLabel loader = new JLabel(loaderPicture);
 		loader.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -296,15 +337,24 @@ public class MainFrame {
 		mainPanel.repaint();
 	}
 
-	public void noSharkFound() {
+	/**
+	 * this method shows a message when the result of a search is empty
+	 */
+	private void noSharkFound() {
 		ImageIcon icon = new ImageIcon("No Shark.jpg");
 		Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
 		JLabel noShark = new JLabel(new ImageIcon(image));
 		noShark.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.add(noShark);
-		mainPanel.repaint();
+		mainPanel.revalidate();
 	}
 
+	/**
+	 * this is to show or hide the frame
+	 * 
+	 * @param visible
+	 *            can be true or false
+	 */
 	public void setVisible(boolean visible) {
 		frame.setVisible(visible);
 	}

@@ -16,10 +16,23 @@ import java.awt.Component;
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.controller.Controller;
 
+/**
+ * @author Raf, the infinite loop. This class is a panel to display the
+ *         information of a shark
+ *
+ */
 public class SharkPanel extends JPanel {
 
 	private Controller controller;
 
+	/**
+	 * creates a shark panel
+	 * 
+	 * @param s
+	 *            which is a sharktime object
+	 * @param controller
+	 *            is the reference to the controller
+	 */
 	public SharkPanel(SharkTime s, Controller controller) {
 		this.controller = controller;
 		setSize(new Dimension(900, 300));
@@ -94,6 +107,8 @@ public class SharkPanel extends JPanel {
 		JLabel lblPing = new JLabel(s.getTime());
 		pingPanel.add(lblPing);
 
+		// action for the follow button, tells the controller to follow
+		// or un follow a shark
 		JButton btnFollow = new JButton();
 		if (controller.checkFavourite(s.getShark()) == -1) {
 			btnFollow.setText("Follow");

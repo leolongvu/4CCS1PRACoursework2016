@@ -6,10 +6,11 @@ import api.jaws.Location;
 import api.jaws.Shark;
 
 /**
+ * The Favourite class which stores the favourite sharks of a particular user in an ArrayList
  * 
  * @authors The Infinite Loops
  *
- *	A class which stores the favourite sharks of a particular user in an ArrayList
+ *	
  */
 public class Favourite {
 	private String user;
@@ -22,7 +23,7 @@ public class Favourite {
 
 	/**
 	 * Constructor for the Favourite class, initialises all the un-initialised fields
-	 * and takes a query as argument why?
+	 * and takes a query as argument to keep track of the object pointers
 	 */
 	public Favourite(Query query) {
 		user = "user";
@@ -107,7 +108,8 @@ public class Favourite {
 	}
 	/**
 	 * Calculates the distance to the shark using the radius of the earth and 
-	 * longitude and latitude values relative to Kings College
+	 * longitude and latitude values relative to Kings College to be able to work out the 
+	 * arc length.
 	 * 
 	 * @param l The location of the point and therefore the second point in the distance calculation
 	 * @return The distance to the point defined
