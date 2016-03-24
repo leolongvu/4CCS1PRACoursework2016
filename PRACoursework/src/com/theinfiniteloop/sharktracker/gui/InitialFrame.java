@@ -14,6 +14,10 @@ import javax.swing.border.Border;
 import com.theinfiniteloop.sharktracker.controller.FileIO;
 import com.theinfiniteloop.sharktracker.controller.Controller;
 
+/**
+ * @author Raf, the infinite loop. This class is the inital gui shown when the
+ *         program starts
+ */
 public class InitialFrame {
 
 	private JPanel contentPane;
@@ -24,6 +28,12 @@ public class InitialFrame {
 	private Controller controller;
 	private FileIO file;
 
+	/**
+	 * constructs the initial gui
+	 * 
+	 * @param controller
+	 *            is the reference to the controller
+	 */
 	public InitialFrame(Controller controller) {
 		this.controller = controller;
 		file = new FileIO(controller);
@@ -36,15 +46,20 @@ public class InitialFrame {
 		createMenu();
 	}
 
-	// Create the content pane
-	public void createPanel() {
+	/**
+	 * creates the content pane
+	 */
+	private void createPanel() {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		contentPane.setBackground(Color.white);
 	}
 
-	// Create the frame
-	public void createFrame() {
+	/**
+	 * creates the frame, and has a window listener so that when it is closed,
+	 * the list of favourites is saved
+	 */
+	private void createFrame() {
 		frame = new JFrame();
 		frame.setTitle("Shark Tracker");
 		frame.setContentPane(contentPane);
@@ -60,8 +75,10 @@ public class InitialFrame {
 		});
 	}
 
-	// Creates the picture and label
-	public void createLabels() {
+	/**
+	 * creates the labels
+	 */
+	private void createLabels() {
 		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
 		Image image = icon.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
 		JLabel logoLabel = new JLabel(new ImageIcon(image));
@@ -76,8 +93,10 @@ public class InitialFrame {
 		contentPane.add(label);
 	}
 
-	// Creates the search and favourites buttons
-	public void createButtons() {
+	/**
+	 * creates the buttons
+	 */
+	private void createButtons() {
 		Border border = BorderFactory.createLineBorder(Color.black, 2);
 
 		searchButton = new JButton("Search");
@@ -117,7 +136,10 @@ public class InitialFrame {
 		contentPane.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
 	}
 
-	public void createMenu() {
+	/**
+	 * creates the user menu
+	 */
+	private void createMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 
@@ -130,6 +152,8 @@ public class InitialFrame {
 		JMenuItem mntmDeleteCurrentUser = new JMenuItem("Delete Current User");
 		mnUserOptions.add(mntmDeleteCurrentUser);
 
+		// if the new / load user button is pressed it open a dialog to enter a
+		// user
 		mntmNewloadUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -137,6 +161,7 @@ public class InitialFrame {
 			}
 		});
 
+		// if the delete option is pressed it delets the current user
 		mntmDeleteCurrentUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,7 +173,10 @@ public class InitialFrame {
 		});
 	}
 
-	public void createUserMenu() {
+	/**
+	 * creates a frame to enter user details
+	 */
+	private void createUserMenu() {
 		JFrame userFrame = new JFrame();
 		userFrame.setResizable(false);
 		userFrame.setTitle("New / Load User");
@@ -175,6 +203,9 @@ public class InitialFrame {
 		JPanel buttonPanel = new JPanel();
 		pane.add(buttonPanel);
 
+		// when the confirm button is pressed, if the username is not blank or
+		// just white space,
+		// it creates a new user, or loads an existing user with the same name
 		JButton btnConfirm = new JButton("Confirm");
 		buttonPanel.add(btnConfirm);
 		btnConfirm.addActionListener(new ActionListener() {
@@ -190,6 +221,7 @@ public class InitialFrame {
 				}
 			}
 		});
+		// closes the new user dialog
 		JButton btnCancel = new JButton("Cancel");
 		buttonPanel.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
@@ -200,15 +232,28 @@ public class InitialFrame {
 		});
 	}
 
+	/**
+	 * sets this frame to be visible or not
+	 * 
+	 * @param visible
+	 *            boolean true or false
+	 */
 	public void setVisible(boolean visible) {
 		frame.setVisible(visible);
 		checkFavouriteButton();
 	}
 
+	/**
+	 * enables the search button once everything has loaded
+	 */
 	public void enableSearchButton() {
 		searchButton.setEnabled(true);
 	}
 
+	/**
+	 * this method enables or disables the favourites button based on the size
+	 * of the favourites list
+	 */
 	private void checkFavouriteButton() {
 		if (controller.getFavouriteSharkList().size() > 0) {
 			favouritesButton.setEnabled(true);

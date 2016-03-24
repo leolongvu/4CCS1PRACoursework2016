@@ -20,8 +20,9 @@ public class Query {
 	
 	private Jaws jawAPI;
 
+	
 	public Query() {
-		jawAPI = new Jaws(privateKey, publicKey, true);
+		jawAPI = new Jaws(privateKey, publicKey, false);
 		sharkFilter = new ArrayList<SharkTime>();
 		sharkFilter = getSharkByTimeFrame("Month");
 	}
