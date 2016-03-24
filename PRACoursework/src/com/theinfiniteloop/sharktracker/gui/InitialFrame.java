@@ -213,6 +213,7 @@ public class InitialFrame {
 			public void actionPerformed(ActionEvent e) {
 				String user = textField.getText();
 				if (!user.equals(null) && user.trim().length() > 0) {
+					file.writeFavouriteList(controller.getFavouriteSharkList());
 					file.setFile(user);
 					favouritesButton.setText("Favourites for: " + user);
 					file.readFile();
