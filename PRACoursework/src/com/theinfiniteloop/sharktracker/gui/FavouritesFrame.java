@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import com.theinfiniteloop.sharktracker.api.SharkLocation;
 import com.theinfiniteloop.sharktracker.api.Sharknado;
 import com.theinfiniteloop.sharktracker.controller.Controller;
+import com.theinfiniteloop.sharktracker.gui.map.MapExtension;
 
 import api.jaws.Shark;
 
@@ -77,7 +78,7 @@ public class FavouritesFrame {
 		mapButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MapFrame map = new MapFrame(coords);
+				MapExtension map = new MapExtension(controller);
 			}
 		});
 
