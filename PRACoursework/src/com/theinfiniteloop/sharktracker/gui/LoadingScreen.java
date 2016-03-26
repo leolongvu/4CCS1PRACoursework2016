@@ -38,7 +38,7 @@ public class LoadingScreen {
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(logo);
 
-		Font font = new Font("Comic Sans MS", Font.BOLD, 40);
+		Font font = new Font("Impact", Font.ITALIC, 40);
 		JLabel text = new JLabel("Loading...");
 		text.setFont(font);
 		text.setForeground(Color.black);

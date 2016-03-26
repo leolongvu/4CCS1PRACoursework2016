@@ -323,7 +323,7 @@ public class MainFrame {
 		searchPic.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.removeAll();
 		mainPanel.add(searchPic);
-		mainPanel.repaint();
+		mainPanel.revalidate();
 	}
 
 	/**
@@ -334,7 +334,7 @@ public class MainFrame {
 		JLabel loader = new JLabel(loaderPicture);
 		loader.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.add(loader);
-		mainPanel.repaint();
+		mainPanel.revalidate();
 	}
 
 	/**

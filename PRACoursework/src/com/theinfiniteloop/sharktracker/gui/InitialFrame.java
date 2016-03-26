@@ -85,8 +85,9 @@ public class InitialFrame {
 		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(logoLabel);
 
-		Font font = new Font("Comic Sans MS", Font.BOLD, 15);
+		Font font = new Font("Impact", Font.ITALIC, 20);
 		JLabel label = new JLabel("Shark Tracker");
+		label.setMaximumSize(new Dimension(120, 15));
 		label.setForeground(Color.BLACK);
 		label.setFont(font);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);

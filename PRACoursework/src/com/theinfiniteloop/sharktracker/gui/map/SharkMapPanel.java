@@ -44,12 +44,12 @@ public class SharkMapPanel extends JPanel {
 		name.setFont(font);
 		panel_1.add(name);
 
-		JLabel gender = new JLabel("Gender: " + shark.getName());
+		JLabel gender = new JLabel("Gender: " + shark.getGender());
 		gender.setForeground(Color.WHITE);
 		gender.setFont(font);
 		panel_1.add(gender);
 
-		JLabel stage = new JLabel("Stage Of Life: " + shark.getStageOfLife());
+		JLabel stage = new JLabel("Age: " + shark.getStageOfLife());
 		stage.setForeground(Color.WHITE);
 		stage.setFont(font);
 		panel_1.add(stage);
@@ -59,7 +59,7 @@ public class SharkMapPanel extends JPanel {
 		spi.setFont(font);
 		panel_1.add(spi);
 
-		JLabel weight = new JLabel("Length: " + shark.getWeight());
+		JLabel weight = new JLabel("Weight: " + shark.getWeight());
 		weight.setForeground(Color.WHITE);
 		weight.setFont(font);
 		panel_1.add(weight);
