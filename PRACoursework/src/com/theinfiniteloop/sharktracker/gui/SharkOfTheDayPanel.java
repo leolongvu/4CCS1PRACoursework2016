@@ -1,9 +1,11 @@
 package com.theinfiniteloop.sharktracker.gui;
 
+import com.theinfiniteloop.sharktracker.controller.Controller;
 import com.theinfiniteloop.sharktracker.controller.FileIO;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,6 +14,7 @@ import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
 import com.theinfiniteloop.sharktracker.api.Query;
@@ -25,23 +28,25 @@ public class SharkOfTheDayPanel extends JPanel {
 	private String sharkOTD;
 	private String dayOfMonth;
 	private String month;
-	private Query query;
+	private Controller controller;
 
 	/**
-	 * Constructor creates the SharkOfTheDayPanel when called. Initializes the
-	 * un-initialized fields.
+	 * Constructor creates the SharkOfTheDayPanel when called. Creates the
+	 * fields
 	 */
-	public SharkOfTheDayPanel() {
+	public SharkOfTheDayPanel(Controller controller) {
+		this.controller = controller;
+
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		//new Query created in order to be able to access methods from the Query class.
-		query = new Query();
 		getShark();
 
 		JLabel lbl = new JLabel("Shark of the Day for " + dayOfMonth + "/" + month + " : " + sharkOTD);
 		lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lbl);
 
-		JLabel videolbl = new JLabel("Video Link: " + query.getVideo(sharkOTD));
+		JLabel videolbl = new JLabel(
+				"<html><a href=#>" + "Video Link: " + controller.getVideo(sharkOTD) + "</a></html>");
+		videolbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		videolbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(videolbl);
 
@@ -69,7 +74,7 @@ public class SharkOfTheDayPanel extends JPanel {
 			file.addLine(dayOfMonth);
 			// getAllSharkNames() is called in order to store the names of all
 			// the existing sharks in an ArrayList of type String
-			ArrayList<String> sharkList = query.getAllSharkNames();
+			ArrayList<String> sharkList = controller.getAllSharkNames();
 
 			// Created a random generator to get a random number <= the size of
 			// the sharkList Array
@@ -79,7 +84,7 @@ public class SharkOfTheDayPanel extends JPanel {
 			file.addLine(sharkOTD);
 
 		}
-		//Otherwise sharkOTD stores the name of the current shark in the file
+		// Otherwise sharkOTD stores the name of the current shark in the file
 		else {
 			sharkOTD = file.readLines().get(1);
 		}

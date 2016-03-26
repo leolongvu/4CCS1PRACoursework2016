@@ -158,6 +158,19 @@ public class Controller {
 	public Shark getSharkFromName(String name) {
 		return query.getSharkFromName(name);
 	}
+	
+	/**
+	 * method to get the video link of a shark from the query class
+	 * @param name
+	 * @return
+	 */
+	public String getVideo(String name){
+		return query.getVideo(name);
+	}
+	
+	public ArrayList<String> getAllSharkNames() {
+		return query.getAllSharkNames();
+	}
 
 	/**
 	 * searches for sharks on given constraints

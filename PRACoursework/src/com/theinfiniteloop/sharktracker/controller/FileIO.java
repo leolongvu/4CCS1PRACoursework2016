@@ -13,7 +13,7 @@ import com.theinfiniteloop.sharktracker.api.SharkLocation;
 import api.jaws.Shark;
 
 /**
- * @author Raf, the infinite loop this class facilitates saving, deleting and
+ * @author Raf, Leo the infinite loop this class facilitates saving, deleting and
  *         reading of physical files
  *
  */
@@ -32,7 +32,7 @@ public class FileIO {
 	}
 
 	/**
-	 * contructor where you only need a user name
+	 * constructor where you only need a user name
 	 * 
 	 * @param user
 	 */
@@ -49,7 +49,7 @@ public class FileIO {
 	 */
 	public void setFile(String user) {
 		try {
-			file = new File(user + ".txt");
+			file = new File("data/" + user + ".txt");
 			if (user.equals("User")) {
 				file.delete();
 			}

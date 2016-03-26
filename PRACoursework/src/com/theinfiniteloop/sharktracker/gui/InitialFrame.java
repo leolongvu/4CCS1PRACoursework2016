@@ -79,7 +79,7 @@ public class InitialFrame {
 	 * creates the labels
 	 */
 	private void createLabels() {
-		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
+		ImageIcon icon = new ImageIcon("images/Shark Logo.jpg");
 		Image image = icon.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
 		JLabel logoLabel = new JLabel(new ImageIcon(image));
 		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -92,6 +92,7 @@ public class InitialFrame {
 		label.setFont(font);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(label);
+		contentPane.add(new Box.Filler(new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10)));
 	}
 
 	/**
@@ -162,7 +163,7 @@ public class InitialFrame {
 			}
 		});
 
-		// if the delete option is pressed it delets the current user
+		// if the delete option is pressed it deletes the current user
 		mntmDeleteCurrentUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -204,8 +205,8 @@ public class InitialFrame {
 		JPanel buttonPanel = new JPanel();
 		pane.add(buttonPanel);
 
-		// when the confirm button is pressed, if the username is not blank or
-		// just white space,
+		// when the confirm button is pressed, if the user name is not blank or
+		// just white space, (so it is valid)
 		// it creates a new user, or loads an existing user with the same name
 		JButton btnConfirm = new JButton("Confirm");
 		buttonPanel.add(btnConfirm);

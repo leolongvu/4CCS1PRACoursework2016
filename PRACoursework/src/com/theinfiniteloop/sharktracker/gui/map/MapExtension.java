@@ -19,12 +19,25 @@ import com.theinfiniteloop.sharktracker.controller.Controller;
 
 import api.jaws.Shark;
 
+/**
+ * @author Leo, the infinite loop. This class creates a map showing the
+ *         locations of all of the users favourite sharks by placing pins on an
+ *         image of the Earth. Hovering over a pin also shows that Shark's
+ *         information
+ *
+ */
 public class MapExtension extends JFrame {
 	private JLayeredPane mapPanel;
 	private JPanel panel;
 	private JLabel coordinates;
 	private Controller controller;
 
+	/**
+	 * creates the map and has a reference to the controller to get the
+	 * locations of all the favourite sharks
+	 * 
+	 * @param controller
+	 */
 	public MapExtension(Controller controller) {
 		this.controller = controller;
 		mapPanel = new JLayeredPane();
@@ -45,7 +58,7 @@ public class MapExtension extends JFrame {
 			}
 		});
 
-		ImageIcon map = new ImageIcon("Map/Earth Map.jpg");
+		ImageIcon map = new ImageIcon("images/Map/Earth Map.jpg");
 		Image imageMap = map.getImage().getScaledInstance(1366, 683, java.awt.Image.SCALE_SMOOTH);
 		JLabel mapLabel = new JLabel(new ImageIcon(imageMap));
 
@@ -61,19 +74,19 @@ public class MapExtension extends JFrame {
 		coordinates.setBounds(25, 576, 500, 20);
 		mapPanel.add(coordinates, new Integer(1), 0);
 
-		JLabel rollOver = new JLabel("Roll over pins for shark's details");
+		JLabel rollOver = new JLabel("Roll over pins for Shark's details");
 		rollOver.setFont(font);
 		rollOver.setForeground(Color.WHITE);
 		rollOver.setBounds(120, 534, 500, 20);
 		mapPanel.add(rollOver, new Integer(1), 0);
 
-		ImageIcon compass = new ImageIcon("Map/Compass.png");
+		ImageIcon compass = new ImageIcon("images/Map/Compass.png");
 		Image compassImage = compass.getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
 		JLabel compassLabel = new JLabel(new ImageIcon(compassImage));
 		compassLabel.setBounds(30, 450, 100, 100);
 		mapPanel.add(compassLabel, new Integer(1), 0);
 
-		ImageIcon king = new ImageIcon("Map/Kings.png");
+		ImageIcon king = new ImageIcon("images/Map/Kings.png");
 		Image kingImage = king.getImage().getScaledInstance(35, 50, java.awt.Image.SCALE_SMOOTH);
 		JLabel kingLabel = new JLabel(new ImageIcon(kingImage));
 		kingLabel.setBounds(665, 95, 35, 50);
@@ -83,7 +96,7 @@ public class MapExtension extends JFrame {
 		panel.setLayout(new BorderLayout());
 		panel.add(mapPanel, BorderLayout.CENTER);
 
-		ImageIcon blackIcon = new ImageIcon("Map/black.png");
+		ImageIcon blackIcon = new ImageIcon("images/Map/black.png");
 		Image imageBlack = blackIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 		JLabel blackLabel = new JLabel(new ImageIcon(imageBlack));
 		blackLabel.setBounds(20, 652, 30, 30);
@@ -93,7 +106,7 @@ public class MapExtension extends JFrame {
 		sharknado.setBounds(60, 652, 100, 30);
 		mapPanel.add(sharknado, new Integer(1), 0);
 
-		ImageIcon yellowIcon = new ImageIcon("Map/yellow.png");
+		ImageIcon yellowIcon = new ImageIcon("images/Map/yellow.png");
 		Image imageyellow = yellowIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 		JLabel yellowLabel = new JLabel(new ImageIcon(imageyellow));
 		yellowLabel.setBounds(140, 652, 30, 30);
@@ -103,7 +116,7 @@ public class MapExtension extends JFrame {
 		yellow.setBounds(180, 652, 200, 30);
 		mapPanel.add(yellow, new Integer(1), 0);
 
-		ImageIcon redIcon = new ImageIcon("Map/red.png");
+		ImageIcon redIcon = new ImageIcon("images/Map/red.png");
 		Image imagered = redIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 		JLabel redLabel = new JLabel(new ImageIcon(imagered));
 		redLabel.setBounds(379, 652, 30, 30);
@@ -113,7 +126,7 @@ public class MapExtension extends JFrame {
 		red.setBounds(419, 652, 250, 30);
 		mapPanel.add(red, new Integer(1), 0);
 
-		ImageIcon blueIcon = new ImageIcon("Map/blue.png");
+		ImageIcon blueIcon = new ImageIcon("images/Map/blue.png");
 		Image imageblue = blueIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 		JLabel blueLabel = new JLabel(new ImageIcon(imageblue));
 		blueLabel.setBounds(660, 652, 30, 30);
@@ -123,7 +136,7 @@ public class MapExtension extends JFrame {
 		blue.setBounds(700, 652, 250, 30);
 		mapPanel.add(blue, new Integer(1), 0);
 
-		ImageIcon greenIcon = new ImageIcon("Map/green.png");
+		ImageIcon greenIcon = new ImageIcon("images/Map/green.png");
 		Image imagegreen = greenIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 		JLabel greenLabel = new JLabel(new ImageIcon(imagegreen));
 		greenLabel.setBounds(900, 652, 30, 30);
@@ -138,10 +151,14 @@ public class MapExtension extends JFrame {
 		this.setBounds(40, 40, 1366, 734);
 		this.setLocationRelativeTo(null);
 		this.setContentPane(panel);
+		this.setResizable(false);
+		this.setTitle("Map of Shark Locations");
 		this.setVisible(true);
-		this.setTitle("Map of the sharks");
 	}
 
+	/**
+	 * adds a pin marker for each shark
+	 */
 	private void addSharkPin() {
 		for (int i = 0; i < controller.getFavouriteSharkList().size(); i++) {
 			double lon = controller.getFavouriteSharkList().get(i).getLon();
@@ -156,20 +173,20 @@ public class MapExtension extends JFrame {
 			String loc = lat + "," + lon;
 
 			if (Sharknado.checkSharknado(loc) == true) {
-				setPin("Map/NadoPin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+				setPin("images/Map/NadoPin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 			} else {
 				switch (controller.getFavouriteSharkList().get(i).getShark().getSpecies()) {
 				case "White Shark (Carcharodon carcharias)":
-					setPin("Map/Pin1.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("images/Map/Pin1.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				case "Tiger Shark  (Galeocerdo cuvier)":
-					setPin("Map/Pin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("images/Map/Pin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				case "Hammerhead Shark (Sphyrna)":
-					setPin("Map/Pin3.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("images/Map/Pin3.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				case "Mako Shark (Isurus oxyrinchus)":
-					setPin("Map/Pin2.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("images/Map/Pin2.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				}
 			}
@@ -177,6 +194,14 @@ public class MapExtension extends JFrame {
 		mapPanel.revalidate();
 	}
 
+	/**
+	 * action events and coordinates for setting a pin
+	 * 
+	 * @param fileName
+	 * @param x
+	 * @param y
+	 * @param shark
+	 */
 	private void setPin(String fileName, int x, int y, Shark shark) {
 		ImageIcon pin = new ImageIcon(fileName);
 		Image pinImage = pin.getImage().getScaledInstance(30, 48, java.awt.Image.SCALE_SMOOTH);

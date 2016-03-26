@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.theinfiniteloop.sharktracker.api.SharkLocation;
@@ -63,11 +64,18 @@ public class FavouritesFrame {
 		JLabel label = new JLabel("Your favourite sharks are this far away from you right now:");
 		contentPane.add(label);
 
+		JLabel label2 = new JLabel("Click on a shark to view additional information.");
+		contentPane.add(label2);
+
 		JTable table = new JTable();
 		model = (DefaultTableModel) table.getModel();
-
 		model.addColumn("Name of Shark");
 		model.addColumn("Distance from Kings (KM)");
+
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		contentPane.add(scrollPane);
@@ -106,7 +114,7 @@ public class FavouritesFrame {
 		frame.setTitle("Favourites");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setContentPane(contentPane);
-		frame.setSize(450, 520);
+		frame.setSize(450, 550);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);

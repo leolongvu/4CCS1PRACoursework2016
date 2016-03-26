@@ -6,11 +6,12 @@ import api.jaws.Location;
 import api.jaws.Shark;
 
 /**
- * The Favourite class which stores the favourite sharks of a particular user in an ArrayList
+ * The Favourite class which stores the favourite sharks of a particular user in
+ * an ArrayList
  * 
  * @authors The Infinite Loops
  *
- *	
+ * 
  */
 public class Favourite {
 	private String user;
@@ -22,8 +23,8 @@ public class Favourite {
 	private final double kingsLon = -0.11698;
 
 	/**
-	 * Constructor for the Favourite class, initialises all the un-initialised fields
-	 * and takes a query as argument to keep track of the object pointers
+	 * Constructor for the Favourite class, initialises all the un-initialised
+	 * fields and takes a query as argument to keep track of the object pointers
 	 */
 	public Favourite(Query query) {
 		user = "user";
@@ -34,18 +35,20 @@ public class Favourite {
 	/**
 	 * Sets the user for the class by overwriting userName with an input string.
 	 * 
-	 * @param username A string input which is the required userName to be set
+	 * @param username
+	 *            A string input which is the required userName to be set
 	 */
 	public void setUser(String username) {
 		user = username;
 	}
 
 	/**
-	 * Adds a shark to the ArrayList favouriteShark after checking its distance against 
-	 * all the other favourite sharks and then adding into the ArrayList in ascending distance order,
-	 * or at the end if it farthest away.
+	 * Adds a shark to the ArrayList favouriteShark after checking its distance
+	 * against all the other favourite sharks and then adding into the ArrayList
+	 * in ascending distance order, or at the end if it farthest away.
 	 * 
-	 * @param shark The shark to be added to the favourites
+	 * @param shark
+	 *            The shark to be added to the favourites
 	 */
 	public void addFavourite(Shark shark) {
 		Location l = query.getLocation(shark.getName());
@@ -72,18 +75,21 @@ public class Favourite {
 			favouriteShark.add(sharkLocation);
 		}
 	}
+
 	/**
-	 *  Clears the ArrayList of favourite sharks
+	 * Clears the ArrayList of favourite sharks
 	 */
 	public void clearFavourite() {
 		favouriteShark.clear();
 	}
-	
+
 	/**
-	 * Checks the input sharks name against all the shark names in the favouriteShark ArrayList
-	 * then returns the index position if the names match. Otherwise it returns -1
+	 * Checks the input sharks name against all the shark names in the
+	 * favouriteShark ArrayList then returns the index position if the names
+	 * match. Otherwise it returns -1
 	 * 
-	 * @param shark The input shark to be compared
+	 * @param shark
+	 *            The input shark to be compared
 	 * @return The index position of the favourite shark
 	 */
 	public int indexOfShark(Shark shark) {
@@ -94,11 +100,13 @@ public class Favourite {
 		}
 		return -1;
 	}
-	
+
 	/**
-	 * Removes a given shark from the favourites list, if the index of the shark is not equal -1
+	 * Removes a given shark from the favourites list, if the index of the shark
+	 * is not equal -1
 	 * 
-	 * @param shark The input shark to be removed
+	 * @param shark
+	 *            The input shark to be removed
 	 */
 	public void removeFavourite(Shark shark) {
 		int i = indexOfShark(shark);
@@ -106,12 +114,15 @@ public class Favourite {
 			favouriteShark.remove(i);
 		}
 	}
+
 	/**
-	 * Calculates the distance to the shark using the radius of the earth and 
-	 * longitude and latitude values relative to Kings College to be able to work out the 
-	 * arc length.
+	 * Calculates the distance to the shark using the radius of the earth and
+	 * longitude and latitude values relative to Kings College to be able to
+	 * work out the arc length.
 	 * 
-	 * @param l The location of the point and therefore the second point in the distance calculation
+	 * @param l
+	 *            The location of the point and therefore the second point in
+	 *            the distance calculation
 	 * @return The distance to the point defined
 	 */
 	private double getDistance(double lat, double lon) {
@@ -123,11 +134,13 @@ public class Favourite {
 				* Math.cos(Math.toRadians(kingsLat)) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 		Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		double distance = R * c;
-		                                          
+
 		return distance;
 	}
+
 	/**
-	 *  Gets the ArrayList favouriteShark
+	 * Gets the ArrayList favouriteShark
+	 * 
 	 * @return The favouriteShark ArrayList
 	 */
 	public ArrayList<SharkLocation> getFavouriteSharkList() {

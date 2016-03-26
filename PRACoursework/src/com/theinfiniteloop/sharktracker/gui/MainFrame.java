@@ -25,6 +25,7 @@ import javax.swing.border.MatteBorder;
 
 import com.theinfiniteloop.sharktracker.api.SharkTime;
 import com.theinfiniteloop.sharktracker.controller.Controller;
+import com.theinfiniteloop.sharktracker.gui.map.MapPanel;
 
 /**
  * @author Raf, the infinite loop. This class is the main search frame and
@@ -208,12 +209,12 @@ public class MainFrame {
 		});
 
 		// Shark of the day
-		SharkOfTheDayPanel sharkOTD = new SharkOfTheDayPanel();
+		SharkOfTheDayPanel sharkOTD = new SharkOfTheDayPanel(controller);
 		sharkOTD.setAlignmentX(Component.CENTER_ALIGNMENT);
 		sidePanel.add(sharkOTD);
 
 		// Shark picture
-		ImageIcon icon = new ImageIcon("Shark Logo.jpg");
+		ImageIcon icon = new ImageIcon("images/Shark Logo.jpg");
 		Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
 		JLabel logoLabel = new JLabel(new ImageIcon(image));
 		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -300,16 +301,22 @@ public class MainFrame {
 	 */
 	public void selectedShark(SharkTime s) {
 		mainPanel.removeAll();
-		mainPanel.add(new SharkPanel(s, controller));
 
-		ImageIcon icon = new ImageIcon("Sharks/" + s.getShark().getSpecies() + ".jpg");
+		ImageIcon icon = new ImageIcon("images/Sharks/" + s.getShark().getSpecies() + ".jpg");
 		Image image = icon.getImage().getScaledInstance(850, 350, java.awt.Image.SCALE_SMOOTH);
 		JLabel sharkPic = new JLabel(new ImageIcon(image));
 
 		sharkPic.setBorder(new MatteBorder(0, 2, 2, 2, Color.BLACK));
 		sharkPic.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+		int i = controller.checkFavourite(s.getShark());
+
+		MapPanel map = new MapPanel(controller.getFavouriteSharkList().get(i).getLat(),
+				controller.getFavouriteSharkList().get(i).getLon());
+
+		mainPanel.add(new SharkPanel(s, controller));
 		mainPanel.add(sharkPic);
+		mainPanel.add(map);
 		mainPanel.revalidate();
 	}
 
@@ -318,7 +325,7 @@ public class MainFrame {
 	 * the frame is loaded
 	 */
 	public void showSearch() {
-		ImageIcon loaderPicture = new ImageIcon("Search.png");
+		ImageIcon loaderPicture = new ImageIcon("images/Search.png");
 		JLabel searchPic = new JLabel(loaderPicture);
 		searchPic.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.removeAll();
@@ -330,7 +337,7 @@ public class MainFrame {
 	 * this method shows a loading image when sharks are being searched for
 	 */
 	private void createLoader() {
-		ImageIcon loaderPicture = new ImageIcon("Loader.gif");
+		ImageIcon loaderPicture = new ImageIcon("images/Loader.gif");
 		JLabel loader = new JLabel(loaderPicture);
 		loader.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.add(loader);
@@ -341,7 +348,7 @@ public class MainFrame {
 	 * this method shows a message when the result of a search is empty
 	 */
 	private void noSharkFound() {
-		ImageIcon icon = new ImageIcon("No Shark.jpg");
+		ImageIcon icon = new ImageIcon("images/No Shark.jpg");
 		Image image = icon.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
 		JLabel noShark = new JLabel(new ImageIcon(image));
 		noShark.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -29,7 +29,7 @@ public class SharkPanel extends JPanel {
 	 * creates a shark panel
 	 * 
 	 * @param s
-	 *            which is a sharktime object
+	 *            which is a shark time object
 	 * @param controller
 	 *            is the reference to the controller
 	 */

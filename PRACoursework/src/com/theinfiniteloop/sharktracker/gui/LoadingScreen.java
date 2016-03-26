@@ -23,7 +23,7 @@ public class LoadingScreen {
 	private JWindow window;
 	private JLabel timer;
 	private boolean stopTimer;
-	private static DecimalFormat df2 = new DecimalFormat(".##");
+	private static DecimalFormat df = new DecimalFormat(".#");
 
 	/**
 	 * constructor for this, creates a new loading screen
@@ -34,7 +34,7 @@ public class LoadingScreen {
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-		JLabel logo = new JLabel(new ImageIcon("Splash.gif"));
+		JLabel logo = new JLabel(new ImageIcon("images/Splash.gif"));
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contentPane.add(logo);
 
@@ -78,7 +78,12 @@ public class LoadingScreen {
 		Thread thread = new Thread() {
 			public void run() {
 				while (stopTimer = true) {
-					timer.setText(("" + df2.format((System.currentTimeMillis() - startTime) / 1000.000)) + "s");
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					timer.setText(("" + df.format((System.currentTimeMillis() - startTime) / 1000.000)) + "s");
 					timer.repaint();
 				}
 			}

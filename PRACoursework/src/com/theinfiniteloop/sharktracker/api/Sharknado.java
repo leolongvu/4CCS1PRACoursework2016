@@ -8,7 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * An abstract class for checking if the elevation of a given coordinate is above sea level
+ * An abstract class for checking if the elevation of a given coordinate is
+ * above sea level
  * 
  * @author The infinite loops
  *
@@ -18,15 +19,16 @@ public abstract class Sharknado {
 
 	private static final Pattern p = Pattern.compile("(\"elevation\"\\s:\\s)(\\-?\\d*)");
 
-	// Takes in coordinates and checks the elevation and returns
-	// true if higher than 0 meters
 	/**
-	 * A static method that takes a location string and checks the the google API
-	 * to see if the given location is above sea level
+	 * A static method that takes a location string and checks the the google
+	 * API to see if the given location is above sea level
 	 * 
-	 * @param location The input location to be checked as a string
+	 * @param location
+	 *            The input location to be checked as a string
 	 * @return If the location is above sea level or not as a boolean
-	 * @see  <a href="https://developers.google.com/maps/documentation/elevation/intro">Google elevation api documentation</a>
+	 * @see <a href=
+	 *      "https://developers.google.com/maps/documentation/elevation/intro">
+	 *      Google elevation api documentation </a>
 	 */
 	public static boolean checkSharknado(String location) {
 
@@ -50,6 +52,7 @@ public abstract class Sharknado {
 			while ((length = is.read(b)) != -1) {
 				os.write(b, 0, length);
 			}
+			// writes the JSON output from google to a string
 			text = new String(os.toByteArray(), "UTF-8");
 			is.close();
 			os.close();
@@ -59,10 +62,13 @@ public abstract class Sharknado {
 		}
 
 		String elevation = null;
+
+		// uses regular expression to find the elevation from the JSON string
 		Matcher m = p.matcher(text);
 		if (m.find()) {
 			elevation = m.group(2);
 		}
+		// returns true if the elevation is above sea level
 		if (Integer.parseInt(elevation) > 0) {
 			System.out.println("Sharknado found for elevation: " + elevation + "m");
 			return true;

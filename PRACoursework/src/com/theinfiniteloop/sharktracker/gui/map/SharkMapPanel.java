@@ -14,12 +14,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
+/**
+ * @author Leo, the infinite loop. This class is for showing a small panel
+ *         holding the information about a shark, and is visible when clicking
+ *         or hovering over a pin on the map
+ *
+ */
 public class SharkMapPanel extends JPanel {
 
 	private JLayeredPane layeredPane;
 
 	/**
-	 * Create the panel.
+	 * creates the panel for a shark on the map
+	 * 
+	 * @param shark
 	 */
 	public SharkMapPanel(Shark shark) {
 		setOpaque(false);
@@ -27,7 +35,7 @@ public class SharkMapPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(layeredPane, BorderLayout.CENTER);
 
-		ImageIcon map = new ImageIcon("Map/SharkMap.png");
+		ImageIcon map = new ImageIcon("images/Map/SharkMap.png");
 		Image imageMap = map.getImage().getScaledInstance(350, 136, java.awt.Image.SCALE_SMOOTH);
 		JLabel mapLabel = new JLabel(new ImageIcon(imageMap));
 		mapLabel.setBounds(0, 0, 350, 136);
@@ -74,20 +82,25 @@ public class SharkMapPanel extends JPanel {
 
 		switch (shark.getSpecies()) {
 		case "White Shark (Carcharodon carcharias)":
-			setImage("Map/WhiteShark.jpg");
+			setImage("images/Map/WhiteShark.jpg");
 			break;
 		case "Tiger Shark  (Galeocerdo cuvier)":
-			setImage("Map/TigerShark.jpg");
+			setImage("images/Map/TigerShark.jpg");
 			break;
 		case "Hammerhead Shark (Sphyrna)":
-			setImage("Map/Hammerhead.jpg");
+			setImage("images/Map/Hammerhead.jpg");
 			break;
 		case "Mako Shark (Isurus oxyrinchus)":
-			setImage("Map/MakoShark.jpg");
+			setImage("images/Map/MakoShark.jpg");
 			break;
 		}
 	}
 
+	/**
+	 * sets the image of a shark species
+	 * 
+	 * @param image
+	 */
 	private void setImage(String image) {
 		ImageIcon sharkIcon = new ImageIcon(image);
 		Image imageShark = sharkIcon.getImage().getScaledInstance(110, 110, java.awt.Image.SCALE_SMOOTH);
