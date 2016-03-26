@@ -155,22 +155,21 @@ public class MapExtension extends JFrame {
 
 			String loc = lat + "," + lon;
 
-			System.out.print(controller.getFavouriteSharkList().get(i).getShark().getSpecies());
 			if (Sharknado.checkSharknado(loc) == true) {
-				setPin("NadoPin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+				setPin("Map/NadoPin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 			} else {
 				switch (controller.getFavouriteSharkList().get(i).getShark().getSpecies()) {
 				case "White Shark (Carcharodon carcharias)":
-					setPin("Pin1.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("Map/Pin1.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				case "Tiger Shark  (Galeocerdo cuvier)":
-					setPin("Pin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("Map/Pin.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				case "Hammerhead Shark (Sphyrna)":
-					setPin("Pin3.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("Map/Pin3.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				case "Mako Shark (Isurus oxyrinchus)":
-					setPin("Pin2.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
+					setPin("Map/Pin2.png", x, y, controller.getFavouriteSharkList().get(i).getShark());
 					break;
 				}
 			}

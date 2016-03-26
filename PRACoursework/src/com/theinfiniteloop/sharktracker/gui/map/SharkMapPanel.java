@@ -74,16 +74,16 @@ public class SharkMapPanel extends JPanel {
 
 		switch (shark.getSpecies()) {
 		case "White Shark (Carcharodon carcharias)":
-			setImage("WhiteShark.jpg");
+			setImage("Map/WhiteShark.jpg");
 			break;
 		case "Tiger Shark  (Galeocerdo cuvier)":
-			setImage("TigerShark.jpg");
+			setImage("Map/TigerShark.jpg");
 			break;
 		case "Hammerhead Shark (Sphyrna)":
-			setImage("Hammerhead.jpg");
+			setImage("Map/Hammerhead.jpg");
 			break;
 		case "Mako Shark (Isurus oxyrinchus)":
-			setImage("MakoShark.jpg");
+			setImage("Map/MakoShark.jpg");
 			break;
 		}
 	}
