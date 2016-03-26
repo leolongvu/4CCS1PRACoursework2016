@@ -106,6 +106,49 @@ public class Controller {
 	}
 
 	/**
+	 * returns all the sharks in a particular time frame
+	 * 
+	 * @param timeFrame
+	 * @return array list of shark time objects
+	 */
+	public ArrayList<SharkTime> getSharkByTimeFrame(String timeFrame) {
+		return query.getSharkByTimeFrame(timeFrame);
+	}
+
+	/**
+	 * returns all the sharks at a particular life stage
+	 * 
+	 * @param lifeStage
+	 * @param sharkFilter
+	 * @return array list of shark time objects
+	 */
+	public ArrayList<SharkTime> getSharkByLifeStage(String lifeStage, ArrayList<SharkTime> sharkFilter) {
+		return query.getSharkByLifeStage(lifeStage, sharkFilter);
+	}
+
+	/**
+	 * returns all the sharks at a location
+	 * 
+	 * @param location
+	 * @param sharkFilter
+	 * @return array list of shark time objects
+	 */
+	public ArrayList<SharkTime> getSharkByLocation(String location, ArrayList<SharkTime> sharkFilter) {
+		return query.getSharkByLocation(location, sharkFilter);
+	}
+
+	/**
+	 * returns all the sharks of a gender
+	 * 
+	 * @param gender
+	 * @param sharkFilter
+	 * @return array list of shark time objects
+	 */
+	public ArrayList<SharkTime> getSharkByGender(String gender, ArrayList<SharkTime> sharkFilter) {
+		return query.getSharkByGender(gender, sharkFilter);
+	}
+
+	/**
 	 * gets a shark from the api from a given name
 	 * 
 	 * @param name

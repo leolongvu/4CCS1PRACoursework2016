@@ -203,7 +203,7 @@ public class MainFrame {
 		statsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString());
+				StatisticsFrame stats = new StatisticsFrame(trackingRangeBox.getSelectedItem().toString(), controller);
 			}
 		});
 
@@ -346,7 +346,7 @@ public class MainFrame {
 		JLabel noShark = new JLabel(new ImageIcon(image));
 		noShark.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.add(noShark);
-		mainPanel.repaint();
+		mainPanel.revalidate();
 	}
 
 	/**
