@@ -38,6 +38,7 @@ public class SharkOfTheDayPanel extends JPanel {
 		this.controller = controller;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
 		getShark();
 
 		JLabel lbl = new JLabel("Shark of the Day for " + dayOfMonth + "/" + month + " : " + sharkOTD);
@@ -59,7 +60,7 @@ public class SharkOfTheDayPanel extends JPanel {
 	 * Void method creates SharkOfTheDay file which stores a random Shark name
 	 * and changes it every 24 hours.
 	 */
-	public void getShark() {
+	private void getShark() {
 		Calendar calendar = Calendar.getInstance();
 		dayOfMonth = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 		month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
@@ -72,6 +73,7 @@ public class SharkOfTheDayPanel extends JPanel {
 			file.deleteFile();
 			file.setFile("SharkOfTheDay");
 			file.addLine(dayOfMonth);
+			
 			// getAllSharkNames() is called in order to store the names of all
 			// the existing sharks in an ArrayList of type String
 			ArrayList<String> sharkList = controller.getAllSharkNames();
@@ -82,7 +84,6 @@ public class SharkOfTheDayPanel extends JPanel {
 			int i = rnd.nextInt(sharkList.size() - 1);
 			sharkOTD = sharkList.get(i);
 			file.addLine(sharkOTD);
-
 		}
 		// Otherwise sharkOTD stores the name of the current shark in the file
 		else {
